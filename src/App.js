@@ -1,25 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <img
+                src={require("./Assets/Background/Background (2).jpg")}
+                style={{...styles.background, zIndex: -2}}
+                alt="background"/>
+            <img className="background"
+                 src={require("./Assets/Background/Background (2).jpg")}
+                 style={{...styles.background, zIndex: -1, filter: 'blur(10px)'}}
+                 alt="background"/>
+            <span style={{display: 'flex'}}>
+            <span style={{width: '23%', height: '100vh', padding: 10}}>
+                <div style={{ display: 'flex', width: '100%'}}>
+                    <img src={require('./Assets/logo.png')} style={{width: '17%'}} alt="Logo"/>
+                    <span style={{
+                            fontFamily: 'Debby Script',
+                            fontSize: '3vw',
+                            color: "white",
+                            marginLeft: 20
+                        }}>
+                        Talkrr
+                    </span>
+                </div>
+            </span>
+            <span style={{width: '77%', height: '100vh', backgroundColor: '#000000'}}>
+            </span>
+            </span>
+        </>
+    );
+}
+
+const styles = {
+    background: {
+        width: '100vw',
+        height: '100vh',
+        position: 'absolute',
+    }
 }
 
 export default App;
