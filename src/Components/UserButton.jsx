@@ -3,12 +3,12 @@ import Button from "@mui/material/Button";
 
 function UserButton() {
     return (<Button style={styles.sideUserContainer}>
-            <img src={require('../Assets/thumbnail (1).png')} style={styles.sideUserImg} />
-            <span style={styles.sideUserText}>
+        <img src={require('../Assets/thumbnail (1).png')} style={styles.sideUserImg}/>
+        <span style={styles.sideUserText}>
                 <div style={styles.sideUserName}>John Smith</div>
                 <div style={styles.sideUserMessage}>Yo man what's up...</div>
             </span>
-        </Button>)
+    </Button>)
 }
 
 const styles = {
@@ -23,17 +23,22 @@ const styles = {
         marginTop: 10,
         borderRadius: 10,
         padding: 0,
-        overflow: 'hidden'
-    }, sideUserImg: {
+        overflow: 'hidden',
+        backdropFilter: "blur(4px)"
+    },
+    sideUserImg: {
         height: '85%', margin: "auto 0", marginLeft: 7
-    }, sideUserText: {
+    },
+    sideUserText: {
         display: 'flex',
         margin: "auto 0",
         marginLeft: 10,
         flexDirection: 'column',
         alignItems: 'flex-start',
         whiteSpace: 'nowrap'
-    }, sideUserName: {fontSize: 17, color: 'black'}, sideUserMessage: {fontSize: 12, color: 'rgb(71,71,71)'},
+    },
+    sideUserName: {fontSize: 17, color: 'black', textTransform: 'capitalize'},
+    sideUserMessage: {fontSize: 12, color: 'rgb(71,71,71)', textTransform: 'capitalize'},
 };
 
 export default UserButton;

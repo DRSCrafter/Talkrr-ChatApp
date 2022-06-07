@@ -25,12 +25,12 @@ function SidePanel() {
                 </div>
                 <SideBottom/>
             </span>
-        </>);
+    </>);
 }
 
 const styles = {
     sidePanel: {
-        width: '23%', minWidth: 250, minHeight: 700, height: '100vh', padding: 10, paddingRight: 0
+        width: '23%', minWidth: 250, minHeight: 700, height: '100vh', padding: 10, paddingRight: 0, marginTop: 30
     }, usersContainer: {
         width: '100%', height: '70%', minHeight: 400, overflow: 'scroll', overflowX: 'hidden'
     }

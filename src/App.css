@@ -46,6 +46,16 @@ html {
   background-color: rgba(255, 255, 255, 0.6);
 }
 
-.searchBar ::placeholder {
+.input ::placeholder {
   color: rgba(255, 255, 255, 0.77);
+}
+
+.draggable {
+  /*-webkit-user-select: none;*/
+  /*user-select: none;*/
+  -webkit-app-region: drag;
+}
+
+.not-draggable {
+  -webkit-app-region: no-drag;
 }
