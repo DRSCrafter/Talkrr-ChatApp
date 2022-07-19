@@ -24,7 +24,8 @@ function Root({children}) {
                     backgroundColor: 'rgba(0,0,0,0.39)'
                 }}>
                     <span data-tauri-drag-region style={{width: '100%', height: 30, position: "absolute", zIndex: 10}}/>
-                    <IconButton onClick={closeWindow} className="not-draggable" style={{width: 30, height: 30, color: 'red'}}>
+                    <IconButton onClick={closeWindow} className="not-draggable"
+                                style={{width: 30, height: 30, color: 'red'}}>
                         <CloseIcon style={{color: 'white', position: 'absolute', zIndex: 11}} fontSize="small"/>
                     </IconButton>
                 </span>

@@ -6,7 +6,7 @@ function TypingBox() {
     return (
         <div style={{width: '100%', height: '12%'}}>
             <div style={styles.container}>
-                <input className="input" placeholder="Type and Press Enter to Send"
+                <input className="input" placeholder="Type and Press Login to Send"
                        style={styles.input}/>
                 <IconButton
                     style={styles.button}>
