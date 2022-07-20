@@ -8,10 +8,10 @@ import ContactPanel from "./Sections/ContactPanel";
 function App() {
     return (
         <Root>
-             <SidePanel />
-             <MessagingSection />
-             <ContactPanel />
-         </Root>
+            <SidePanel />
+            <MessagingSection />
+            <ContactPanel />
+        </Root>
     );
 }
 

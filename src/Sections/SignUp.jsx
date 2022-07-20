@@ -42,7 +42,6 @@ class SignUp extends Component {
         console.log(obj);
         const schema = Joi.object({[key]: this.schema.extract(key)});
         const {error} = schema.validate(obj);
-        // const {error} = Joi.validate(obj, schema);
         return error ? error.details[0].message : null;
     };
 
@@ -59,7 +58,6 @@ class SignUp extends Component {
     handleChange = ({currentTarget: input}) => {
         const errors = {...this.state.errors};
         const errorMessage = this.validateProperty(input);
-        // const errorMessage = "Yo something wrong!";
         if (errorMessage) errors[input.name] = errorMessage;
         else delete errors[input.name];
 
@@ -79,18 +77,9 @@ class SignUp extends Component {
             <>
                 <img className="background" src={require('../Assets/Background/login.jpg')}/>
                 <div className="root-container">
-                    <div className="form-container">
+                    <form className="form-container">
                         <span className="header">Welcome to Talkrr</span>
                         <div className="signUp-Window">
-                            {/*<TextField id="outlined-basic" label="First Name" variant="outlined" size="small"/>*/}
-                            {/*<TextField id="outlined-basic" label="Last Name" variant="outlined" size="small"/>*/}
-                            {/*<TextField id="outlined-basic" label="E-mail" variant="outlined" size="small"/>*/}
-                            {/*<TextField id="outlined-basic" label="Phone Number(Optional)" variant="outlined"*/}
-                            {/*           size="small"/>*/}
-                            {/*<TextField id="outlined-basic" label="Password" variant="outlined" size="small"/>*/}
-                            {/*<TextField id="outlined-basic" label="Repeat Password" variant="outlined" size="small"/>*/}
-                            {/*<TextField className="bio-field" id="outlined-basic" label="Bio(100 Max characters)"*/}
-                            {/*           variant="outlined" size="small"/>*/}
                             <TextField id="outlined-basic" variant="outlined" size="small"
                                        name="firstName" value={data.firstName} onChange={this.handleChange}
                                        label={errors.firstName ? "error" : "First Name"}
@@ -119,20 +108,12 @@ class SignUp extends Component {
                                        name="bio" value={data.bio} onChange={this.handleChange}
                                        label={errors.bio ? "error" : "Bio(100 Max characters)"}
                                        error={errors.bio} helperText={errors.bio} className="bio-field"/>
-                            {/*<Input value={data.firstName} onChange={handleChange} label="First Name" error={errorss.firstName} />*/}
-                            {/*<Input value={data.lastName} onChange={handleChange} label="Last Name" error={errorss.lastName} />*/}
-                            {/*<Input value={data.email} onChange={handleChange} label="E-mail" error={errorss.email} />*/}
-                            {/*<Input value={data.phoneNumber} onChange={handleChange} label="Phone Number(Optional)" error={errorss.phoneNumber} />*/}
-                            {/*<Input value={data.password} onChange={handleChange} label="Password" error={errorss.password} />*/}
-                            {/*<Input value={data.passwordConfirm} onChange={handleChange} label="Repeat Password" error={errorss.passwordConfirm} />*/}
-                            {/*<Input className="bio-field" value={data.bio} onChange={handleChange} label="Bio(100 Max characters)" error={errorss.bio} />*/}
-
                             <span className="btn-section">
                             <Button sx={{width: 100, height: 40, marginRight: 1}} variant="contained">Submit</Button>
                             <Button sx={{width: 100, height: 40}} variant="text">Cancel</Button>
                         </span>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </>
         );
