@@ -1,0 +1,79 @@
+.contact-panel-root {
+    display: flex;
+    width: 23%;
+    height: 100%;
+}
+
+.contact-panel-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 90%;
+    height: 95%;
+    margin: auto;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px #333333;
+    font-family: "Segoe UI Light", serif;
+    color: white;
+    overflow: hidden;
+}
+
+.identity-container {
+    width: 90%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.profile-image {
+    width: 60%;
+    border-radius: 50%;
+    box-shadow: 0 0 7px #333333;
+    margin: auto;
+}
+
+.profile-name {
+    font-size: 30px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.details-container {
+    width: 90%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.profile-details {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-block: 10px;
+    font-size: 15px;
+}
+
+.bio {
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.controls-container {
+    width: 90%;
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+}
+
+.control-btn {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    margin-block: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 15px;
+}

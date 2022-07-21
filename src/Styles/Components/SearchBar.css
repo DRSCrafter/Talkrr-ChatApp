@@ -1,0 +1,29 @@
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    height: 6%;
+    border-radius: 15px;
+    margin-block: 10px;
+    padding-right: 20px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
+    color: white;
+}
+
+.search-bar-input {
+    width: 100%;
+    color: white;
+    height: 100%;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    border: 0;
+}
+
+.search-bar-image {
+    color: white;
+    margin-inline: 5px;
+}

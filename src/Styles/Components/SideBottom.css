@@ -1,0 +1,19 @@
+.side-bottom-container {
+    display: flex;
+    justify-content: space-between;
+    min-height: 50px;
+    align-items: center;
+    width: 80%;
+    height: 9%;
+    margin: 10px auto auto;
+}
+
+.side-bottom-image {
+    width: 50px;
+    height: 50px;
+}
+
+.side-bottom-icon {
+    width: 50px;
+    color: white;
+}

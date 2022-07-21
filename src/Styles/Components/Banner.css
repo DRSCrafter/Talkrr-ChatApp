@@ -1,0 +1,12 @@
+.banner-container {
+    display: flex;
+    width: 100%;
+    margin-block: 15px;
+}
+
+.banner-name {
+    font-family: Debby Script, serif;
+    font-size: 35px;
+    color: white;
+    margin-left: 20px;
+}
