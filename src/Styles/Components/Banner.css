@@ -1,7 +1,7 @@
 .banner-container {
     display: flex;
     width: 100%;
-    margin-block: 15px;
+    height: 100%;
 }
 
 .banner-name {

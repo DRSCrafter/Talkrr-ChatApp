@@ -1,0 +1,24 @@
+.root-container {
+    display: grid;
+    grid-template-columns: 22fr 50fr 25fr;
+    grid-template-rows: 100vh;
+    grid-gap: 5px;
+    width: 100vw;
+    height: 100vh;
+}
+
+.root-background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: -10;
+    overflow-x: hidden;
+}
+
+@media (max-width: 920px) {
+    .root-container {
+        grid-template-columns: 35fr 65fr;
+        grid-gap: 0;
+        padding-inline: 15px;
+    }
+}

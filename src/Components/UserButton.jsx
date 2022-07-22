@@ -17,6 +17,9 @@ const styles = {
     sideUserContainer: {
         backgroundColor: 'rgba(256, 256, 256, 0.4)',
         color: '#ffffff',
+        margin: '10px auto auto',
+        borderRadius: 10,
+        padding: 0,
     },
 };
 
