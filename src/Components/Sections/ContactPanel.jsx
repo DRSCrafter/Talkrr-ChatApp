@@ -1,5 +1,5 @@
 import React from "react";
-import '../Styles/Sections/ContactPanel.css';
+import '../../Styles/Sections/ContactPanel.css';
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -12,7 +12,7 @@ function ContactPanel() {
         <div className="contact-panel-root">
             <div className="contact-panel-container">
                 <div className="identity-container">
-                    <img src={require('../Assets/thumbnail (1).png')} className="profile-image"/>
+                    <img src={require('../../Assets/thumbnail (1).png')} className="profile-image"/>
                     <span className="profile-name">John Smith</span>
                 </div>
 

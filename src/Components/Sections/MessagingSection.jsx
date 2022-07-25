@@ -1,9 +1,9 @@
 import React from "react";
-import '../Styles/Sections/MessagingSection.css';
+import '../../Styles/Sections/MessagingSection.css';
 
-import Message from "../Components/Message";
-import TypingBox from "../Components/TypingBox";
-import MessagingHeader from "../Components/MessagingHeader";
+import Message from "../Message";
+import TypingBox from "../TypingBox";
+import MessagingHeader from "../MessagingHeader";
 
 function MessagingSection() {
     return (

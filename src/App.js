@@ -1,17 +1,10 @@
 import './App.css';
 import React from "react";
-import SidePanel from "./Sections/SidePanel";
-import Root from "./Sections/Root";
-import MessagingSection from "./Sections/MessagingSection";
-import ContactPanel from "./Sections/ContactPanel";
+import MainPage from "./Pages/MainPage";
 
 function App() {
     return (
-        <Root>
-            <SidePanel />
-            <MessagingSection />
-            <ContactPanel />
-        </Root>
+        <MainPage />
     );
 }
 

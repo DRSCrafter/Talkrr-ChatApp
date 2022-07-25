@@ -1,10 +1,10 @@
-import '../App.css';
-import '../Styles/Sections/SidePanel.css';
+import '../../App.css';
+import '../../Styles/Sections/SidePanel.css';
 
-import UserButton from "../Components/UserButton";
-import SearchBar from "../Components/SearchBar";
-import SideBottom from "../Components/SideBottom";
-import Banner from "../Components/Banner";
+import UserButton from "../UserButton";
+import SearchBar from "../SearchBar";
+import SideBottom from "../SideBottom";
+import Banner from "../Banner";
 
 function SidePanel() {
     return (<>
