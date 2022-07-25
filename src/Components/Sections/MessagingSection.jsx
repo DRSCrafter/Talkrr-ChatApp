@@ -1,5 +1,5 @@
 import React from "react";
-import '../../Styles/Sections/MessagingSection.css';
+import '../../Styles/Components/Sections/MessagingSection.css';
 
 import Message from "../Message";
 import TypingBox from "../TypingBox";

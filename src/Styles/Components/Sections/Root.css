@@ -1,10 +1,10 @@
 .root-container {
     display: grid;
     grid-template-columns: 22fr 50fr 25fr;
-    grid-template-rows: 100vh;
+    grid-template-rows: calc(100vh - 30px);
     grid-gap: 5px;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 30px);
 }
 
 .root-background {

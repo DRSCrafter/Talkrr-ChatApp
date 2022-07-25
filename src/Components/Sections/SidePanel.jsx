@@ -1,5 +1,5 @@
 import '../../App.css';
-import '../../Styles/Sections/SidePanel.css';
+import '../../Styles/Components/Sections/SidePanel.css';
 
 import UserButton from "../UserButton";
 import SearchBar from "../SearchBar";

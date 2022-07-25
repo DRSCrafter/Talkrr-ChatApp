@@ -1,5 +1,5 @@
 import React from "react";
-import '../../Styles/Sections/ContactPanel.css';
+import '../../Styles/Components/Sections/ContactPanel.css';
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PhoneIcon from '@mui/icons-material/Phone';

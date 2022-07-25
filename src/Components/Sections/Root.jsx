@@ -1,4 +1,4 @@
-import '../../Styles/Sections/Root.css';
+import '../../Styles/Components/Sections/Root.css';
 import React from "react";
 
 function closeWindow() {

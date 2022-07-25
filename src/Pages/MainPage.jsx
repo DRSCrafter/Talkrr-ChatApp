@@ -8,9 +8,9 @@ import ContactPanel from "../Components/Sections/ContactPanel";
 function MainPage() {
     return (
         <Root>
-            <SidePanel />
-            <MessagingSection />
-            <ContactPanel />
+            <SidePanel/>
+            <MessagingSection/>
+            <ContactPanel/>
         </Root>
     );
 }
