@@ -9,10 +9,12 @@
 
 .root-background {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 30px);
     position: absolute;
     z-index: -10;
     overflow-x: hidden;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 
 @media (max-width: 920px) {

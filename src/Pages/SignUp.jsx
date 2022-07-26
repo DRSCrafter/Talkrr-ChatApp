@@ -1,4 +1,4 @@
-import '../Styles/Components/SignUp.css';
+import '../Styles/Pages/SignUp.css';
 import React, {Component} from "react";
 import Button from "@mui/material/Button";
 import Joi from 'joi';

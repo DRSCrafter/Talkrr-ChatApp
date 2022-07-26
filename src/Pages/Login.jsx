@@ -1,12 +1,12 @@
 import React from 'react';
-import '../Styles/Components/Login.css';
+import '../Styles/Pages/Login.css';
 import {TextField} from "@mui/material";
 import Button from '@mui/material/Button';
 
 function Login() {
     return (
         <>
-            <img className="background" src={require('../Assets/Background/login.jpg')}/>
+            <img className="background" src={require('../Assets/Background/login.jpg')} alt="Background"/>
             <div className="root-container">
                 <form className="form-container">
                     <span className="title">Talkrr</span>
