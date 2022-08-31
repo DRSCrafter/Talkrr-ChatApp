@@ -1,14 +1,19 @@
 import '../Styles/Components/UserButton.css';
 import React from "react";
 import Button from "@mui/material/Button";
+import {useContext} from "react";
+import TalkContext from "../Context/talkContext";
 
-function UserButton() {
+function UserButton({talk}) {
+
     return (
         <Button className="user-button-container" style={styles.sideUserContainer}>
-            <img src={require('../Assets/thumbnail (1).png')} className="user-button-profile-image"/>
+            <span className="user-button-profile-image-container">
+                <img src={require('../Assets/thumbnail (1).png')} className="user-button-profile-image"/>
+            </span>
             <span className="user-button-profile-text">
-                <div className="user-button-profile-name">John Smith</div>
-                <div className="user-button-profile-message">Yo man what's up...</div>
+                <div className="user-button-profile-name">{talk.name}</div>
+                <div className="user-button-profile-message">{talk.lastMessage}</div>
             </span>
         </Button>)
 }

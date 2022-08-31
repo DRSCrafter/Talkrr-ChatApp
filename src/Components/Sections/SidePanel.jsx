@@ -6,23 +6,13 @@ import SearchBar from "../SearchBar";
 import SideBottom from "../SideBottom";
 import Banner from "../Banner";
 
-function SidePanel() {
+function SidePanel({talks}) {
     return (<>
             <span className="side-panel-container">
                 <Banner/>
                 <SearchBar/>
                 <div className="users-container">
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
-                    <UserButton/>
+                    {talks.map(talk => (<UserButton talk={talk}/>))}
                 </div>
                 <SideBottom/>
             </span>

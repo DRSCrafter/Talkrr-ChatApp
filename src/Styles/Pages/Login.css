@@ -1,17 +1,17 @@
-.background {
+.login-background {
     min-width: 100vw;
     height: 100vh;
     position: absolute;
     z-index: -1;
 }
 
-.root-container {
+.login-root-container {
     display: flex;
     width: 100%;
     height: 100vh;
 }
 
-.form-container {
+.login-form-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -28,34 +28,33 @@
     white-space: nowrap;
 }
 
-.title {
+.login-title {
     font-size: 30px;
     font-family: 'Segoe UI Light', serif;
     margin-inline: auto;
 }
-
 .MuiInputBase-root {
     width: 100%;
     max-width: 100%;
 }
 
-.btn-section {
+.login-btn-section {
     display: flex;
     margin-bottom: 10px;
 }
 
-.btn {
+.login-btn {
     padding: 6px 20px;
     margin-right: 1px;
 }
 
 @media (max-width: 768px) {
-    .form-container {
+    .login-form-container {
         min-height: 430px;
         height: 55vh;
     }
 
-    .signUp-Window {
+    .login-signUp-Window {
         max-height: 400px;
     }
 

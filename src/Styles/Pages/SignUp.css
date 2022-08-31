@@ -1,17 +1,17 @@
-.background {
+.signup-background {
     min-width: 100vw;
     height: 100vh;
     position: absolute;
     z-index: -1;
 }
 
-.root-container {
+.signup-root-container {
     display: flex;
     width: 100%;
     height: 100vh;
 }
 
-.form-container {
+.signup-form-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,29 +38,29 @@
     grid-gap: 10px;
 }
 
-.header {
+.signup-header {
     font-size: 30px;
     font-family: 'Segoe UI Light', serif;
     margin: 10px;
     margin-bottom: 3vh;
 }
 
-.btn-section {
+.signup-btn-section {
     display: flex;
     margin-top: 2vh;
 }
 
-.btn {
+.signup-btn {
     width: 100px;
     height: 40px;
 }
 
-.bio-field {
+.double-span {
     grid-column: span 2;
 }
 
 @media (max-width: 768px) {
-    .form-container {
+    .signup-form-container {
         height: 80vh;
         min-height: 500px;
     }
@@ -71,7 +71,7 @@
         grid-template-columns: 1fr;
     }
 
-    .bio-field {
+    .signup-bio-field {
         grid-column: span 1;
     }
 }

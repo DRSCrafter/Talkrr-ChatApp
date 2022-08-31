@@ -3,12 +3,12 @@ import React, {Component} from "react";
 import Button from "@mui/material/Button";
 import Joi from 'joi';
 import {TextField} from "@mui/material";
+import http from '../utils/httpConnection';
 
 class SignUp extends Component {
     state = {
         data: {
-            firstName: "",
-            lastName: "",
+            name: "",
             email: "",
             password: "",
             passwordConfirm: "",
@@ -19,12 +19,11 @@ class SignUp extends Component {
     }
 
     schema = Joi.object({
-        firstName: Joi.string().required(),
-        lastName: Joi.string().min(3).max(35).required(),
-        email: Joi.required(),
+        name: Joi.string().required(),
+        email: Joi.string().email({minDomainSegments: 2, tlds: {allow: ['com', 'net']}}),
         password: Joi.string().min(5).max(100).required(),
-        passwordConfirm: Joi.string().equal(Joi.ref('password')).messages({'any.only': '{{#label}} does not match'}).required(),
-        phoneNumber: Joi.number().integer().min(7).max(24),
+        passwordConfirm: Joi.string().required(),
+        phoneNumber: Joi.string().min(7).max(24),
         bio: Joi.string().min(3).max(100),
     });
 
@@ -45,14 +44,25 @@ class SignUp extends Component {
         return error ? error.details[0].message : null;
     };
 
-    handleSubmit = e => {
+    handleSubmit = async (e) => {
+        console.log('reached');
         e.preventDefault();
 
         const errors = this.validate();
         this.setState({errors: errors || {}});
         if (errors) return;
 
-        this.doSubmit();
+        const {data} = this.state;
+        const request = await http.post('http://localhost:3001/api/users/', {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            phoneNumber: data.phoneNumber,
+            bio: data.bio
+        })
+
+        localStorage.setItem('token', request.headers['x-auth-token']);
+        window.location = '../';
     };
 
     handleChange = ({currentTarget: input}) => {
@@ -67,27 +77,19 @@ class SignUp extends Component {
         this.setState({data, errors});
     };
 
-    doSubmit = () => {
-        // Call the POST method of talkrr-backend
-    };
-
     render() {
         const {data, errors} = this.state;
         return (
             <>
-                <img className="background" src={require('../Assets/Background/login.jpg')}/>
-                <div className="root-container">
-                    <form className="form-container">
-                        <span className="header">Welcome to Talkrr</span>
+                <img className="signup-background" src={require('../Assets/Background/login.jpg')} alt="background"/>
+                <div className="signup-root-container">
+                    <form className="signup-form-container">
+                        <span className="signup-header">Welcome to Talkrr</span>
                         <div className="signUp-Window">
                             <TextField id="outlined-basic" variant="outlined" size="small"
-                                       name="firstName" value={data.firstName} onChange={this.handleChange}
-                                       label={errors.firstName ? "error" : "First Name"}
-                                       error={errors.firstName} helperText={errors.firstName}/>
-                            <TextField id="outlined-basic" variant="outlined" size="small"
-                                       name="lastName" value={data.lastName} onChange={this.handleChange}
-                                       label={errors.lastName ? "error" : "Last Name"}
-                                       error={errors.lastName} helperText={errors.lastName}/>
+                                       name="name" value={data.name} onChange={this.handleChange}
+                                       label={errors.name ? "error" : "First Name"}
+                                       error={errors.name} helperText={errors.name} className="double-span"/>
                             <TextField id="outlined-basic" variant="outlined" size="small"
                                        name="email" value={data.email} onChange={this.handleChange}
                                        label={errors.email ? "error" : "E-mail"}
@@ -107,9 +109,10 @@ class SignUp extends Component {
                             <TextField id="outlined-basic" variant="outlined" size="small"
                                        name="bio" value={data.bio} onChange={this.handleChange}
                                        label={errors.bio ? "error" : "Bio(100 Max characters)"}
-                                       error={errors.bio} helperText={errors.bio} className="bio-field"/>
+                                       error={errors.bio} helperText={errors.bio} className="double-span"/>
                             <span className="btn-section">
-                            <Button sx={{width: 100, height: 40, marginRight: 1}} variant="contained">Submit</Button>
+                            <Button sx={{width: 100, height: 40, marginRight: 1}} variant="contained"
+                                    onClick={e => this.handleSubmit(e)}>Submit</Button>
                             <Button sx={{width: 100, height: 40}} variant="text">Cancel</Button>
                         </span>
                         </div>
