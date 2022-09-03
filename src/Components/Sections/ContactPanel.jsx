@@ -16,7 +16,7 @@ function ContactPanel({info}) {
                     <span className="profile-name">{info.name}</span>
                 </div>
 
-                <div className="details-container">
+                {info.email ? <div className="details-container">
                     <div className="profile-details">
                         <AlternateEmailIcon fontSize="medium"/>
                         <span style={{marginLeft: 10,}}>{info.email}</span>
@@ -28,7 +28,7 @@ function ContactPanel({info}) {
                         </div>
                     }
                     <div className="bio">{info.bio}</div>
-                </div>
+                </div> : <div></div>}
 
                 <div className="controls-container">
                     <Button className="control-btn" style={{display: 'flex', justifyContent: 'flex-start'}}>

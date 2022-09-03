@@ -1,19 +1,25 @@
 import '../Styles/Components/UserButton.css';
-import React from "react";
+import React, {useContext} from "react";
 import Button from "@mui/material/Button";
-import {useContext} from "react";
 import TalkContext from "../Context/talkContext";
 
 function UserButton({talk}) {
+    const {setTalkID} = useContext(TalkContext);
+
+    const handleClick = () => {
+        console.log(talk.id);
+        setTalkID(talk.id);
+    }
 
     return (
-        <Button className="user-button-container" style={styles.sideUserContainer}>
+        <Button className="user-button-container" style={styles.sideUserContainer} onClick={handleClick}>
             <span className="user-button-profile-image-container">
-                <img src={require('../Assets/thumbnail (1).png')} className="user-button-profile-image"/>
+                <img src={require('../Assets/thumbnail (1).png')} className="user-button-profile-image"
+                     alt="user profile"/>
             </span>
             <span className="user-button-profile-text">
                 <div className="user-button-profile-name">{talk.name}</div>
-                <div className="user-button-profile-message">{talk.lastMessage}</div>
+                <div className="user-button-profile-message">last message here</div>
             </span>
         </Button>)
 }

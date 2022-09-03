@@ -5,14 +5,18 @@ import UserButton from "../UserButton";
 import SearchBar from "../SearchBar";
 import SideBottom from "../SideBottom";
 import Banner from "../Banner";
+import {useContext, useEffect, useState} from "react";
+import UserContext from "../../Context/userContext";
 
 function SidePanel({talks}) {
+    const {user, handleUpdateUser} = useContext(UserContext);
+
     return (<>
             <span className="side-panel-container">
                 <Banner/>
                 <SearchBar/>
                 <div className="users-container">
-                    {talks.map(talk => (<UserButton talk={talk}/>))}
+                    {talks && talks.map(talk => (<UserButton talk={talk}/>))}
                 </div>
                 <SideBottom/>
             </span>
