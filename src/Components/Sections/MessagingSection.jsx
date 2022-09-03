@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import '../../Styles/Components/Sections/MessagingSection.css';
 
 import Message from "../Message";
@@ -10,26 +10,58 @@ import httpConnection from "../../utils/httpConnection";
 
 const {apiEndpoint} = require('../../config.json');
 
-function MessagingSection({currentTalk}) {
-    const {user} = useContext(UserContext);
+function MessagingSection() {
     const [members, setMembers] = useState([]);
+    const [currentMessage, setCurrentMessage] = useState('');
+    const {currentTalk, handleUpdateTalk} = useContext(TalkContext);
+    const {user} = useContext(UserContext);
+    const messagesEnd = useRef(null);
+
+    const scrollEnd = () => messagesEnd.current.scrollIntoView({behavior: 'smooth'});
+
+    const handleChangeMessage = (event) => setCurrentMessage(event.target.value);
+
+    const handleStateMessage = (message) => {
+        const messages = [...currentTalk.messages];
+        messages.push(message);
+        handleUpdateTalk('messages', messages);
+    }
+
+    const handleSendMessage = async () => {
+        if (currentMessage === '') return;
+        const backup = [...currentTalk.messages];
+
+        const request = {
+            sender: user._id,
+            content: currentMessage,
+        };
+        try {
+            handleStateMessage({...request, date: Date.now().toLocaleString()});
+
+            await httpConnection.post(`${apiEndpoint}/api/talks/${currentTalk._id}/message`, JSON.stringify(request), {
+                headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            });
+        } catch (ex) {
+            console.log(ex.response.message);
+            handleUpdateTalk('messages', backup);
+        }
+        setCurrentMessage('');
+        scrollEnd();
+    }
 
     const getMembers = async () => {
         if (!currentTalk) return;
-        console.log('reached!');
         const membersList = [];
         for (let member of currentTalk.members) {
             const user = await httpConnection.get(`${apiEndpoint}/api/users/strict/${member.id}`);
             membersList.push(user.data);
         }
-        console.log(membersList);
         setMembers(membersList);
     }
 
     const handleGetMember = (id) => {
         if (members.length === 0) return;
-        const member = members.find(member => member._id == id);
-        return member;
+        return members.find(member => member._id == id);
     }
 
     useEffect(() => {
@@ -41,12 +73,13 @@ function MessagingSection({currentTalk}) {
             <div className="messaging-panel-container">
                 <MessagingHeader/>
                 <div className="messages-container">
-                    {currentTalk && currentTalk.messages && currentTalk.messages.map(message => (
-                        <Message message={message} isSent={message.sender == user._id} onGetMember={handleGetMember}/>
+                    {currentTalk && currentTalk.messages && currentTalk.messages.map((message, index) => (
+                        <Message message={message} key={index} isSent={message.sender == user._id} onGetMember={handleGetMember}/>
                     ))}
+                    <div ref={messagesEnd}/>
                 </div>
             </div>
-            <TypingBox/>
+            <TypingBox value={currentMessage} onChange={handleChangeMessage} onSubmit={handleSendMessage}/>
         </span>
     );
 }

@@ -4,35 +4,27 @@
     margin-block: 20px;
 }
 
-.message-body-receive {
+.message-body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     min-width: 100px;
     max-width: 40%;
-    height: 100%;
+    min-height: 80px;
     position: relative;
-    background-color: rgba(72, 72, 72, 0.6);
-    border-radius: 30px;
+    border-radius: 25px;
     border-bottom-left-radius: 0;
     box-sizing: border-box;
     padding-inline: 20px;
     color: white;
 }
 
+.message-body-receive {
+    background-color: rgba(72, 72, 72, 0.6);
+}
+
 .message-body-send {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    min-width: 100px;
-    width: 40%;
-    height: 100%;
-    position: relative;
     background-color: rgba(66, 98, 255, 0.45);
-    border-radius: 25px;
-    border-bottom-right-radius: 0;
-    padding-inline: 20px;
-    color: white;
     direction: ltr;
 }
 

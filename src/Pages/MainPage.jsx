@@ -11,11 +11,10 @@ import TalkContext from "../Context/talkContext";
 const {apiEndpoint} = require('../config.json');
 
 function MainPage() {
-    const {user, handleUpdateUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
     const [talkID, setTalkID] = useState('');
     const [currentTalk, setCurrentTalk] = useState(null);
-    const [info, setInfo] = useState([]);
 
     const [talks, setTalks] = useState([]);
 
@@ -67,11 +66,11 @@ function MainPage() {
     const handleUpdateTalk = (key, value) => setCurrentTalk({...currentTalk, [key]: value});
 
     return (
-        <TalkContext.Provider value={{handleUpdateTalk, setTalkID}}>
+        <TalkContext.Provider value={{currentTalk, handleUpdateTalk, setTalkID}}>
             <Root>
                 <SidePanel talks={talks}/>
-                <MessagingSection currentTalk={currentTalk}/>
-                <ContactPanel info={info}/>
+                <MessagingSection/>
+                <ContactPanel/>
             </Root>
         </TalkContext.Provider>
     );
