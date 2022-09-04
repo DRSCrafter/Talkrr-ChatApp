@@ -7,37 +7,17 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PhoneIcon from '@mui/icons-material/Phone';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import httpConnection from "../../utils/httpConnection";
 import TalkContext from "../../Context/talkContext";
 import UserContext from "../../Context/userContext";
-
-const {apiEndpoint} = require('../../config.json');
+import {processTalkData} from "../../utils/talkHandling";
 
 function ContactPanel() {
     const [talkInfo, setTalkInfo] = useState({});
     const {currentTalk} = useContext(TalkContext);
     const {user} = useContext(UserContext);
 
-    const getTalkData = async () => {
-        const {_id, name, about, isPrivate, members} = currentTalk;
-
-        if (isPrivate) {
-            let userID = null;
-            for (let member of members) {
-                if (member.id != user._id) {
-                    userID = member.id;
-                    break;
-                }
-            }
-            const userInfo = await httpConnection.get(`${apiEndpoint}/api/users/strict/${userID}`);
-            return setTalkInfo({id: currentTalk._id, isPrivate: isPrivate, ...userInfo.data});
-        }
-
-        return setTalkInfo({id: _id, name: name, about: about, isPrivate: isPrivate});
-    }
-
     useEffect(() => {
-        getTalkData();
+        processTalkData(user, currentTalk).then(res => setTalkInfo(res));
     }, [currentTalk]);
 
     return (

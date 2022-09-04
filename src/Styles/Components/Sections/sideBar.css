@@ -1,0 +1,30 @@
+.drawer-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    row-gap: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    direction: rtl;
+}
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    flex-basis: 0;
+    row-gap: 30px;
+    padding: 10px;
+    box-shadow: 0 5px 8px -3px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    direction: rtl;
+}
+.user-personal-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}

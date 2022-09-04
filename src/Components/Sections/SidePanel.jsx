@@ -3,18 +3,16 @@ import React from "react";
 
 import UserButton from "../UserButton";
 import SearchBar from "../SearchBar";
-import SideBottom from "../SideBottom";
 import Banner from "../Banner";
 
-function SidePanel({talks}) {
+function SidePanel({talks, onToggleDrawer}) {
     return (<>
             <span className="side-panel-container">
-                <Banner/>
+                <Banner onToggleDrawer={onToggleDrawer}/>
                 <SearchBar/>
                 <div className="users-container">
                     {talks && talks.map((talk, index) => (<UserButton key={index} talk={talk}/>))}
                 </div>
-                <SideBottom/>
             </span>
     </>);
 }
