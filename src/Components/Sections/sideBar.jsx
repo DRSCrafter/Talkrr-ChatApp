@@ -1,10 +1,44 @@
 import '../../Styles/Components/Sections/sideBar.css';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import UserContext from "../../Context/userContext";
-import {Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import PrivateDialog from "../privateDialog";
 
-function SideBar({list, open, onToggle}) {
+import {Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import PeopleIcon from "@mui/icons-material/People";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+
+function SideBar({open, onToggle}) {
     const {user} = useContext(UserContext);
+    const [privateDialog, setPrivateDialog] = useState(false);
+    const [groupDialog, setGroupDialog] = useState(false);
+
+    const handleTogglePrivateDialog = () => setPrivateDialog(!privateDialog);
+    const handleToggleGroupDialog = () => setGroupDialog(!groupDialog);
+
+    const drawerList1 = [
+        {
+            text: 'New Private Talk',
+            icon: <PersonIcon/>,
+            onClick: handleTogglePrivateDialog
+        },
+        {
+            text: 'New Group Talk',
+            icon: <PeopleIcon/>,
+            onClick: handleToggleGroupDialog
+        }
+    ];
+    const drawerList2 = [
+        {
+            text: 'Settings',
+            icon: <SettingsIcon/>
+        },
+        {
+            text: 'User Preferences',
+            icon: <ManageAccountsIcon/>
+        }
+    ]
 
     return (
         <>
@@ -30,7 +64,7 @@ function SideBar({list, open, onToggle}) {
                     </div>
                     <Divider/>
                     <List>
-                        {list[0].map((item, index) => (
+                        {drawerList1.map((item, index) => (
                             <ListItem key={index} disablePadding>
                                 <ListItemButton onClick={item.onClick}>
                                     <ListItemIcon>
@@ -43,7 +77,7 @@ function SideBar({list, open, onToggle}) {
                     </List>
                     <Divider/>
                     <List>
-                        {list[1].map((item, index) => (
+                        {drawerList2.map((item, index) => (
                             <ListItem key={index} disablePadding>
                                 <ListItemButton onClick={item.onClick}>
                                     <ListItemIcon>
@@ -56,6 +90,7 @@ function SideBar({list, open, onToggle}) {
                     </List>
                 </Box>
             </Drawer>
+            <PrivateDialog open={privateDialog} onClose={handleTogglePrivateDialog} />
         </>
     );
 }

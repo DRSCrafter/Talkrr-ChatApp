@@ -53,7 +53,8 @@ function MessagingSection() {
         if (!currentTalk) return;
         const membersList = [];
         for (let member of currentTalk.members) {
-            const user = await httpConnection.get(`${apiEndpoint}/api/users/strict/${member.id}`);
+            const user = await httpConnection.get(`${apiEndpoint}/api/users/strict/${member}`);
+            console.log(user.data);
             membersList.push(user.data);
         }
         setMembers(membersList);

@@ -7,7 +7,6 @@ function UserButton({talk}) {
     const {setTalkID} = useContext(TalkContext);
 
     const handleClick = () => {
-        console.log(talk.id);
         setTalkID(talk.id);
     }
 

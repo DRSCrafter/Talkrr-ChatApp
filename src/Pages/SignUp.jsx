@@ -38,7 +38,6 @@ class SignUp extends Component {
 
     validateProperty = ({name: key, value}) => {
         const obj = {[key]: value};
-        console.log(obj);
         const schema = Joi.object({[key]: this.schema.extract(key)});
         const {error} = schema.validate(obj);
         return error ? error.details[0].message : null;
