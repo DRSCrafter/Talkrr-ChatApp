@@ -6,6 +6,7 @@ import SearchBar from "../SearchBar";
 import Banner from "../Banner";
 import httpConnection from "../../utils/httpConnection";
 import UserContext from "../../Context/userContext";
+import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../../utils/talkHandling";
 
 const {apiEndpoint} = require('../../config.json');
 
@@ -55,34 +56,8 @@ function SidePanel({talks, onToggleDrawer}) {
         }
     }
 
-    const handleDeletePrivateTalk = async (id) => {
-        const backup = [...user.talks];
-        let talks = [...user.talks];
-        try {
-            talks = talks.filter(talk => talk.id != id);
-            handleUpdateUser('talks', talks);
-            await httpConnection.delete(`${apiEndpoint}/api/talks/${id}`);
-        } catch (ex) {
-            handleUpdateUser('talks', backup);
-            console.log(ex.response.message);
-        }
-    }
-
-    const handleLeaveGroupTalk = async (id) => {
-        const backup = [...user.talks];
-        let talks = [...user.talks];
-        const request = JSON.stringify({id: user._id});
-        try {
-            talks = talks.filter(talk => talk.id != id);
-            handleUpdateUser('talks', talks);
-            await httpConnection.put(`${apiEndpoint}/api/talks/${id}/members`, request, {
-                headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            });
-        } catch (ex) {
-            handleUpdateUser('talks', backup);
-            console.log(ex.response.message);
-        }
-    }
+    const deletePrivateTalk = (id) => handleDeletePrivateTalk(id, user, handleUpdateUser);
+    const leaveGroupTalk = (id) => handleLeaveGroupTalk(id, user, handleUpdateUser);
 
     return (
         <>
@@ -92,7 +67,7 @@ function SidePanel({talks, onToggleDrawer}) {
                 <div className="users-container">
                     {sortedTalks && sortedTalks.map((talk, index) => (
                         <UserButton key={index} talk={talk} onPin={handlePin} onUnpin={handleUnpin} Pin={talk.isPinned}
-                                    onDelete={talk.isPrivate ? handleDeletePrivateTalk : handleLeaveGroupTalk}/>))}
+                                    onDelete={talk.isPrivate ? deletePrivateTalk : leaveGroupTalk}/>))}
                 </div>
             </span>
         </>
