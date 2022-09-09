@@ -8,6 +8,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import PeopleIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import GroupDialog from "../groupDialog";
 
 function SideBar({open, onToggle}) {
     const {user} = useContext(UserContext);
@@ -90,7 +91,8 @@ function SideBar({open, onToggle}) {
                     </List>
                 </Box>
             </Drawer>
-            <PrivateDialog open={privateDialog} onClose={handleTogglePrivateDialog} />
+            <PrivateDialog open={privateDialog} onClose={handleTogglePrivateDialog}/>
+            <GroupDialog open={groupDialog} onClose={handleToggleGroupDialog}/>
         </>
     );
 }

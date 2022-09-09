@@ -30,7 +30,7 @@ function MainPage() {
 
     useEffect(() => {
         getCurrentTalk(talkID, setCurrentTalk);
-    }, [talkID])
+    }, [talkID, currentTalk])
 
     const handleUpdateTalk = (key, value) => setCurrentTalk({...currentTalk, [key]: value});
 

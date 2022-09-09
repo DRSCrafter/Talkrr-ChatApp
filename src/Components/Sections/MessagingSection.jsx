@@ -49,12 +49,27 @@ function MessagingSection() {
         scrollEnd();
     }
 
+    const handleDeleteMessage = async (id) => {
+        console.log('reached!');
+        const backup = [...currentTalk.messages];
+        const messages = [...currentTalk.messages];
+        try {
+            messages.filter(message => message._id != id);
+            handleUpdateTalk('messages', messages);
+            await httpConnection.delete(`${apiEndpoint}/api/talks/${currentTalk._id}/message/${id}`);
+        } catch (ex) {
+            console.log(ex.response.message);
+            handleUpdateTalk('messages', backup);
+        }
+    }
+
+    const handleCopyMessage = (content) => navigator.clipboard.writeText(content);
+
     const getMembers = async () => {
         if (!currentTalk) return;
         const membersList = [];
         for (let member of currentTalk.members) {
             const user = await httpConnection.get(`${apiEndpoint}/api/users/strict/${member}`);
-            console.log(user.data);
             membersList.push(user.data);
         }
         setMembers(membersList);
@@ -75,7 +90,9 @@ function MessagingSection() {
                 <MessagingHeader/>
                 <div className="messages-container">
                     {currentTalk && currentTalk.messages && currentTalk.messages.map((message, index) => (
-                        <Message message={message} key={index} isSent={message.sender == user._id} onGetMember={handleGetMember}/>
+                        <Message message={message} key={index} isSent={message.sender == user._id}
+                                 onGetMember={handleGetMember} onDelete={handleDeleteMessage}
+                                 onCopy={handleCopyMessage}/>
                     ))}
                     <div ref={messagesEnd}/>
                 </div>
