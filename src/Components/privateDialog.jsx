@@ -7,6 +7,7 @@ import {
 import Button from "@mui/material/Button";
 import UserContext from "../Context/userContext";
 import httpConnection from "../utils/httpConnection";
+import toast from "react-hot-toast";
 
 const {apiEndpoint} = require('../config.json');
 
@@ -38,10 +39,17 @@ function PrivateDialog({open, onClose}) {
     }
 
     const handleAddPrivateTalk = async () => {
+        const userIndex = userList.findIndex(target => target.name === choice);
+        if (userIndex === -1) {
+            console.log(choice);
+            return toast.error("Not a valid username");
+        }
+
+        const target = userList[userIndex];
         const request = {
             name: 'name',
             about: 'about',
-            members: [user._id, choice._id],
+            members: [user._id, target._id],
             isPrivate: true
         }
         try {
@@ -78,10 +86,9 @@ function PrivateDialog({open, onClose}) {
                         <Autocomplete
                             freeSolo
                             disableClearable
-                            value={choice.name}
-                            getOptionLabel={choice => choice.name}
-                            onChange={handleChoose}
-                            options={userList}
+                            value={choice}
+                            onInputChange={handleChoose}
+                            options={userList.map(user => user.name)}
                             renderInput={(params) => (
                                 <TextField {...params} label="Search the Username"
                                            InputProps={{...params.InputProps, type: 'search',}}

@@ -4,6 +4,9 @@ import Button from "@mui/material/Button";
 import Joi from 'joi';
 import {TextField} from "@mui/material";
 import http from '../utils/httpConnection';
+import {Toaster} from "react-hot-toast";
+import httpConnection from "../utils/httpConnection";
+import {useNavigate} from "react-router-dom";
 
 class SignUp extends Component {
     state = {
@@ -15,16 +18,27 @@ class SignUp extends Component {
             phoneNumber: "",
             bio: ""
         },
+        profileImage: null,
         errors: {}
     }
 
     schema = Joi.object({
-        name: Joi.string().required(),
-        email: Joi.string().email({minDomainSegments: 2, tlds: {allow: ['com', 'net']}}),
-        password: Joi.string().min(5).max(100).required(),
-        passwordConfirm: Joi.string().required(),
-        phoneNumber: Joi.string().min(7).max(24),
-        bio: Joi.string().min(3).max(100),
+        name: Joi.string().required().min(3).messages({
+            "string.empty": "Enter your name!",
+            "string.min": "Enter a name at least 3 characters long!",
+        }),
+        email: Joi.string().email({minDomainSegments: 2, tlds: {allow: ['com', 'net']}}).messages({
+            "string.empty": "Enter your name!",
+            "string.email": "Enter a valid e-mail!",
+        }),
+        password: Joi.string().min(5).max(100).required().messages({
+            "string.empty": "Enter a password",
+            "string.min": "Enter a name at least 5 characters long!",
+            "string.max": "Enter a name at most 100 characters long!",
+        }),
+        passwordConfirm: Joi.string().required().messages({
+            "string.empty": "Repeat the password",
+        }),
     });
 
     validate = () => {
@@ -43,6 +57,8 @@ class SignUp extends Component {
         return error ? error.details[0].message : null;
     };
 
+    handleFileChange = event => this.setState({profileImage: event.target.files[0]});
+
     handleSubmit = async (e) => {
         console.log('reached');
         e.preventDefault();
@@ -52,7 +68,15 @@ class SignUp extends Component {
         if (errors) return;
 
         const {data} = this.state;
-        const request = await http.post('http://localhost:3001/api/users/', {
+        const request = JSON.stringify({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            phoneNumber: data.phoneNumber,
+            bio: data.bio
+        });
+
+        const response = await httpConnection.post('http://localhost:3001/api/users/', {
             name: data.name,
             email: data.email,
             password: data.password,
@@ -60,7 +84,7 @@ class SignUp extends Component {
             bio: data.bio
         })
 
-        localStorage.setItem('token', request.headers['x-auth-token']);
+        localStorage.setItem('token', response.headers['x-auth-token']);
         window.location = '../';
     };
 
@@ -76,8 +100,11 @@ class SignUp extends Component {
         this.setState({data, errors});
     };
 
+
     render() {
+        const handleNavigate = () => window.location = '/login';
         const {data, errors} = this.state;
+
         return (
             <>
                 <img className="signup-background" src={require('../Assets/Background/login.jpg')} alt="background"/>
@@ -111,11 +138,14 @@ class SignUp extends Component {
                                        error={errors.bio} helperText={errors.bio} className="double-span"/>
                             <span className="btn-section">
                             <Button sx={{width: 100, height: 40, marginRight: 1}} variant="contained"
-                                    onClick={e => this.handleSubmit(e)}>Submit</Button>
-                            <Button sx={{width: 100, height: 40}} variant="text">Cancel</Button>
+                                    onClick={this.handleSubmit}>Submit</Button>
+                            <Button sx={{width: 100, height: 40}} variant="text"
+                                    onClick={handleNavigate}>Cancel</Button>
                         </span>
                         </div>
                     </form>
+                    <Toaster position={"bottom-right"}
+                             toastOptions={{style: {backgroundColor: 'rgba(255,255,255,0.6)'}}}/>
                 </div>
             </>
         );

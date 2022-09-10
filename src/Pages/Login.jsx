@@ -1,9 +1,36 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import '../Styles/Pages/Login.css';
 import {TextField} from "@mui/material";
 import Button from '@mui/material/Button';
+import http from "../utils/httpConnection";
+import {useNavigate} from "react-router-dom";
+import {Toaster} from "react-hot-toast";
+import httpConnection from "../utils/httpConnection";
 
 function Login() {
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const request = JSON.stringify({
+            email: emailRef.current.value,
+            password: passwordRef.current.value
+        })
+
+        const response = await httpConnection.put('http://localhost:3001/api/users/login', request, {
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+        });
+
+        localStorage.setItem('token', response.headers['x-auth-token']);
+        window.location = '../';
+    };
+
+    const handleNavigate = () => navigate('../signup');
+
     return (
         <>
             <img className="login-background" src={require('../Assets/Background/login.jpg')} alt="Background"/>
@@ -12,15 +39,16 @@ function Login() {
                     <span className="login-title">Talkrr</span>
                     <span style={{display: 'flex', marginInline: 'auto', flexDirection: 'column', width: '100%'}}>
                         <TextField style={{display: 'block', marginBottom: '1.25vh'}} id="outlined-basic"
-                                   variant="outlined" size="medium" label="E-mail"/>
+                                   variant="outlined" size="medium" label="E-mail" inputRef={emailRef}/>
                         <TextField style={{display: 'block', marginBottom: '2vh'}} id="outlined-basic"
-                                   variant="outlined" size="medium" label="Password"/>
+                                   variant="outlined" size="medium" label="Password" inputRef={passwordRef}/>
                         <span className="login-btn-section">
-                            <Button className="login-btn" variant="contained">Login</Button>
-                            <Button className="login-btn" variant="text">SignUp</Button>
+                            <Button className="login-btn" variant="contained" onClick={handleSubmit}>Login</Button>
+                            <Button className="login-btn" variant="text" onClick={handleNavigate}>SignUp</Button>
                         </span>
                     </span>
                 </form>
+                <Toaster position={"bottom-right"} toastOptions={{style: {backgroundColor: 'rgba(255,255,255,0.6)'}}}/>
             </div>
         </>
     );
