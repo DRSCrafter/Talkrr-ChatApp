@@ -13,10 +13,10 @@ export const processTalkData = async (user, talk) => {
         let userID;
         userID = members.find(member => member != user._id);
         const userInfo = await httpConnection.get(`${apiEndpoint}/api/users/strict/${userID}`);
-        return {id: talk._id, isPrivate: isPrivate, ...userInfo.data};
+        return {id: talk._id, isPrivate: true, members: [user._id, userID], ...userInfo.data};
     }
 
-    return {id: _id, name: name, about: about, isPrivate: isPrivate};
+    return {id: _id, name: name, about: about, members: members, isPrivate: isPrivate};
 }
 
 export const getTalks = async (user, setTalks) => {

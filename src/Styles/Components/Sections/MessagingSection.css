@@ -1,9 +1,9 @@
 .messaging-panel-root {
-    display: grid;
-    grid-template-rows: 9fr 1fr;
-    grid-template-columns: 100%;
-    grid-gap: 15px;
+    flex-basis: 65%;
+    display: flex;
+    row-gap: 15px;
     padding-block: 15px;
+    padding-right: 30px;
     flex-direction: column;
     min-width: 450px;
     justify-content: center;
@@ -16,6 +16,7 @@
     overflow: hidden;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 10px #333333;
+    flex-basis: 90%;
 }
 
 .messages-container {
@@ -24,8 +25,9 @@
     overflow-y: scroll;
 }
 
-@media (max-width: 920px) {
+@media (min-width: 960px) {
     .messaging-panel-root {
-        padding-right: 30px;
+        padding-right: 0;
+        flex-basis: 50%;
     }
 }

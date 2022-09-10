@@ -9,6 +9,8 @@ import MessagingSection from "../Components/Sections/MessagingSection";
 import ContactPanel from "../Components/Sections/ContactPanel";
 import SideBar from "../Components/Sections/sideBar";
 import {getCurrentTalk, getTalks} from "../utils/talkHandling";
+import NotFound from "../Components/Sections/notFound";
+import {Toaster} from "react-hot-toast";
 
 function MainPage() {
     const {user} = useContext(UserContext);
@@ -38,14 +40,18 @@ function MainPage() {
         <TalkContext.Provider value={{currentTalk, handleUpdateTalk, setTalkID}}>
             <Root>
                 <SidePanel talks={talks} onToggleDrawer={toggleDrawer}/>
-                {currentTalk &&
+                {currentTalk ?
                     <>
                         <MessagingSection/>
                         <ContactPanel/>
-                    </>
+                    </> :
+                    <NotFound/>
                 }
             </Root>
             <SideBar open={drawer} onToggle={toggleDrawer}/>
+            <Toaster position={"bottom-right"} toastOptions={{
+                style: {backgroundColor: 'rgba(255,255,255,0.6)'}
+            }}/>
         </TalkContext.Provider>
     );
 }

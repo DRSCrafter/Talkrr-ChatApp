@@ -4,6 +4,7 @@
     align-items: center;
     width: 80%;
     height: 100%;
+    flex-basis: 7.5%;
     border-radius: 15px;
     margin-block: 10px;
     padding-right: 20px;

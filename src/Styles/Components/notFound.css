@@ -1,0 +1,24 @@
+.not-found-root {
+    flex-basis: 75%;
+    display: flex;
+    box-sizing: border-box;
+    border: 2px dashed white;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    font-family: "Segoe UI Light", sans-serif;
+    font-size: 35px;
+    color: white;
+}
+
+@media (min-width: 1024px) {
+    .not-found {
+        flex-basis: 75%;
+    }
+}

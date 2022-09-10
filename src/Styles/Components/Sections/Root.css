@@ -1,10 +1,9 @@
 .root-container {
-    display: grid;
-    grid-template-columns: 22fr 50fr 25fr;
-    grid-template-rows: calc(100vh - 30px);
-    grid-gap: 5px;
+    display: flex;
+    column-gap: 0;
     width: 100vw;
     height: calc(100vh - 30px);
+    padding-inline: 15px;
 }
 
 .root-background {
@@ -17,10 +16,9 @@
     border-bottom-left-radius: 15px;
 }
 
-@media (max-width: 920px) {
+@media (min-width: 960px) {
     .root-container {
-        grid-template-columns: 35fr 65fr;
-        grid-gap: 0;
-        padding-inline: 15px;
+        column-gap: 5px;
+        padding-inline: 0;
     }
 }

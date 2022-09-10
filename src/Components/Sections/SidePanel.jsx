@@ -13,7 +13,8 @@ const {apiEndpoint} = require('../../config.json');
 function SidePanel({talks, onToggleDrawer}) {
     const {user, handleUpdateUser} = useContext(UserContext);
 
-    const [sortedTalks, setSortedTalks] = useState([]);
+    const [filteredTalks, setFilteredTalks] = useState([]);
+    const [filter, setFilter] = useState("");
 
     useEffect(() => {
         const pinned = talks.filter(talk => user.pins.includes(talk.id));
@@ -21,8 +22,12 @@ function SidePanel({talks, onToggleDrawer}) {
             talk.isPinned = true;
         })
         const notPinned = talks.filter(talk => !user.pins.includes(talk.id));
-        setSortedTalks(pinned.concat(notPinned));
-    }, [talks, user]);
+        let sorted = pinned.concat(notPinned);
+        if (filter !== "")
+            sorted = sorted.filter(talk => talk.name.match(new RegExp(filter)));
+
+        setFilteredTalks(sorted);
+    }, [talks, filter, user]);
 
     const handlePin = async (id) => {
         const pins = [...user.pins];
@@ -56,6 +61,8 @@ function SidePanel({talks, onToggleDrawer}) {
         }
     }
 
+    const handleFilter = (event) => setFilter(event.target.value);
+
     const deletePrivateTalk = (id) => handleDeletePrivateTalk(id, user, handleUpdateUser);
     const leaveGroupTalk = (id) => handleLeaveGroupTalk(id, user, handleUpdateUser);
 
@@ -63,9 +70,9 @@ function SidePanel({talks, onToggleDrawer}) {
         <>
             <span className="side-panel-container">
                 <Banner onToggleDrawer={onToggleDrawer}/>
-                <SearchBar/>
+                <SearchBar value={filter} onChange={handleFilter}/>
                 <div className="users-container">
-                    {sortedTalks && sortedTalks.map((talk, index) => (
+                    {filteredTalks && filteredTalks.map((talk, index) => (
                         <UserButton key={index} talk={talk} onPin={handlePin} onUnpin={handleUnpin} Pin={talk.isPinned}
                                     onDelete={talk.isPrivate ? deletePrivateTalk : leaveGroupTalk}/>))}
                 </div>

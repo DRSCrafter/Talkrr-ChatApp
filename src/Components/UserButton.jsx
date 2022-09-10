@@ -75,6 +75,7 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete}) {
                     <div className="user-button-profile-name">{talk.name}</div>
                     <div className="user-button-profile-message">last message here</div>
                 </span>
+                {Pin && <PushPinIcon fontSize={"small"} style={styles.pin}/>}
             </Button>
             <ContextMenu list={contextList} onClose={handleClose} onContext={contextMenu}/>
         </>
@@ -87,7 +88,14 @@ const styles = {
         color: '#ffffff',
         margin: '10px auto auto',
         borderRadius: 10,
-        padding: 0,
+        paddingLeft: 15,
+        position: 'relative'
+    },
+    pin: {
+        position: "absolute",
+        top: 10,
+        right: 10,
+        color: 'rgba(255,255,255,0.4)'
     },
     menuItem: {marginRight: 15, padding: 5}
 };

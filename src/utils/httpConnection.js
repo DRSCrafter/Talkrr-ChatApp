@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 axios.interceptors.response.use(null, error => {
     const expectedError =
@@ -8,6 +9,7 @@ axios.interceptors.response.use(null, error => {
 
     if (!expectedError) {
         console.log(error);
+        toast.error(error.message);
     }
 
     return Promise.reject(error);
