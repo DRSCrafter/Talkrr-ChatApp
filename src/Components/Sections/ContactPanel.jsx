@@ -14,6 +14,8 @@ import UserContext from "../../Context/userContext";
 import {handleAddContact, handleDeletePrivateTalk, handleLeaveGroupTalk, handleRemoveContact, processTalkData}
     from "../../utils/talkHandling";
 
+const {apiEndpoint} = require("../../config.json");
+
 function ContactPanel() {
     const [talkInfo, setTalkInfo] = useState({});
     const {setTalkID, currentTalk} = useContext(TalkContext);
@@ -36,7 +38,7 @@ function ContactPanel() {
         <div className="contact-panel-root">
             <div className="contact-panel-container">
                 <div className="identity-container">
-                    <img src={require('../../Assets/thumbnail (1).png')} className="profile-image"/>
+                    <img src={`${apiEndpoint}/${talkInfo?.talkImage}`} className="profile-image"/>
                     <span className="profile-name">{talkInfo && talkInfo.name}</span>
                 </div>
 
@@ -51,7 +53,7 @@ function ContactPanel() {
                             <span style={{marginLeft: 10,}}>{talkInfo && talkInfo.phoneNumber}</span>
                         </div>
                     }
-                    <div className="bio">{talkInfo && talkInfo.bio}</div>
+                    <div className="bio">{talkInfo && talkInfo.about}</div>
                 </div> : <div></div>}
 
                 <div className="controls-container">

@@ -9,6 +9,8 @@ import WrongLocationIcon from '@mui/icons-material/WrongLocation';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+const {apiEndpoint} = require("../config.json");
+
 function UserButton({talk, Pin, onPin, onUnpin, onDelete}) {
     const [contextMenu, setContextMenu] = React.useState(null);
 
@@ -68,7 +70,7 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete}) {
             <Button className="user-button-container" style={styles.sideUserContainer} onClick={handleClick}
                     onContextMenu={handleContextMenu}>
                 <span className="user-button-profile-image-container">
-                    <img src={require('../Assets/thumbnail (1).png')} className="user-button-profile-image"
+                    <img src={`${apiEndpoint}/${talk?.talkImage}`} className="user-button-profile-image"
                          alt="user profile"/>
                 </span>
                 <span className="user-button-profile-text">

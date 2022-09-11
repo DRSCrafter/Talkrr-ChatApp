@@ -19,6 +19,7 @@ function GroupDialog({open, onClose}) {
 
     const nameRef = useRef('');
     const aboutRef = useRef('');
+    const [talkImage, setTalkImage] = useState(null);
 
     const handleChoose = (event, value) => setChoice(value);
 
@@ -41,18 +42,21 @@ function GroupDialog({open, onClose}) {
         return result;
     }
 
-    const handleAddGroupTalk = async () => {
-        const idList = choice.map(choice => choice._id);
-        const request = {
-            name: nameRef.current.value,
-            about: aboutRef.current.value,
-            members: [user._id, ...idList],
-            isPrivate: false
-        }
+    const handleFileChange = event => setTalkImage(event.target.files[0]);
+
+    const handleAddGroupTalk = async (e) => {
+        e.preventDefault();
+
+        let idList = choice.map(choice => choice._id);
+        idList = JSON.stringify([user._id, ...idList]);
+        const formDataTalk = new FormData();
+        formDataTalk.append('name', nameRef.current.value);
+        formDataTalk.append('about', aboutRef.current.value);
+        formDataTalk.append('members', idList);
+        formDataTalk.append('isPrivate', false);
+        formDataTalk.append('talkImage', talkImage);
         try {
-            const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, JSON.stringify(request), {
-                headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            });
+            const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
 
             const id = {id: data._id};
             const talks = [...user.talks, id];
@@ -83,7 +87,7 @@ function GroupDialog({open, onClose}) {
                             <div style={{display: 'flex', flexDirection: 'row', columnGap: '10px'}}>
                                 <IconButton color="primary" aria-label="upload picture" component="label"
                                             size={"large"}>
-                                    <input hidden accept="image/*" type="file"/>
+                                    <input hidden accept="image/*" type="file" onChange={handleFileChange}/>
                                     <PhotoCamera/>
                                 </IconButton>
                                 <TextField fullWidth inputRef={nameRef} variant={"outlined"} label={"Group Name"}/>

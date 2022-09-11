@@ -29,7 +29,8 @@
 }
 
 .profile-image {
-    width: 60%;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     box-shadow: 0 0 7px #333333;
     margin-inline: auto;

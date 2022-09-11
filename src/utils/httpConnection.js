@@ -9,7 +9,10 @@ axios.interceptors.response.use(null, error => {
 
     if (!expectedError) {
         console.log(error);
-        toast.error(error.response.data);
+        if (error.response.data && error.response.data != '')
+            toast.error(error.response.data);
+        else
+            toast.error('An unexpected error occured!');
     }
 
     return Promise.reject(error);

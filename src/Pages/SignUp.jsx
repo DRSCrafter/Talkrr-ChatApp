@@ -1,12 +1,12 @@
 import '../Styles/Pages/SignUp.css';
 import React, {Component} from "react";
-import Button from "@mui/material/Button";
-import Joi from 'joi';
-import {TextField} from "@mui/material";
-import http from '../utils/httpConnection';
 import {Toaster} from "react-hot-toast";
+import Joi from 'joi';
+
 import httpConnection from "../utils/httpConnection";
-import {useNavigate} from "react-router-dom";
+
+import {IconButton, TextField, Button} from "@mui/material";
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 class SignUp extends Component {
     state = {
@@ -39,6 +39,8 @@ class SignUp extends Component {
         passwordConfirm: Joi.string().required().messages({
             "string.empty": "Repeat the password",
         }),
+        phoneNumber: Joi.string(),
+        bio: Joi.string()
     });
 
     validate = () => {
@@ -60,30 +62,20 @@ class SignUp extends Component {
     handleFileChange = event => this.setState({profileImage: event.target.files[0]});
 
     handleSubmit = async (e) => {
-        console.log('reached');
         e.preventDefault();
 
         const errors = this.validate();
         this.setState({errors: errors || {}});
         if (errors) return;
 
-        const {data} = this.state;
-        const request = JSON.stringify({
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            phoneNumber: data.phoneNumber,
-            bio: data.bio
-        });
+        const {data, profileImage} = this.state;
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('profileImage', profileImage);
 
-        const response = await httpConnection.post('http://localhost:3001/api/users/', {
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            phoneNumber: data.phoneNumber,
-            bio: data.bio
-        })
-
+        const response = await httpConnection.post('http://localhost:3001/api/users/', formData);
         localStorage.setItem('token', response.headers['x-auth-token']);
         window.location = '../';
     };
@@ -112,10 +104,16 @@ class SignUp extends Component {
                     <form className="signup-form-container">
                         <span className="signup-header">Welcome to Talkrr</span>
                         <div className="signUp-Window">
-                            <TextField id="outlined-basic" variant="outlined" size="small"
-                                       name="name" value={data.name} onChange={this.handleChange}
-                                       label={errors.name ? "error" : "First Name"}
-                                       error={errors.name} helperText={errors.name} className="double-span"/>
+                            <div className="double-span">
+                                <TextField id="outlined-basic" variant="outlined" size="small"
+                                           name="name" value={data.name} onChange={this.handleChange}
+                                           label={errors.name ? "error" : "Username"}
+                                           error={errors.name} helperText={errors.name} style={{width: '94%'}}/>
+                                <IconButton color="primary" aria-label="upload picture" component="label">
+                                    <input hidden accept="image/*" type="file" onChange={this.handleFileChange}/>
+                                    <PhotoCameraIcon/>
+                                </IconButton>
+                            </div>
                             <TextField id="outlined-basic" variant="outlined" size="small"
                                        name="email" value={data.email} onChange={this.handleChange}
                                        label={errors.email ? "error" : "E-mail"}
