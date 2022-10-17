@@ -1,7 +1,8 @@
 import './App.css';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';
 import jwtDecode from "jwt-decode";
+import {io} from "socket.io-client";
 
 import MainPage from "./Pages/MainPage";
 import WindowBar from "./Components/WindowBar";
@@ -10,8 +11,12 @@ import SignUp from "./Pages/SignUp";
 import httpConnection from "./utils/httpConnection";
 import UserContext from "./Context/userContext";
 
+const {apiEndpoint} = require('./config.json');
+
 function App() {
     const [user, setUser] = useState();
+
+    const socketRef = useRef();
 
     const loginUser = async () => {
         const jwtToken = localStorage.getItem('token');
@@ -25,11 +30,16 @@ function App() {
         loginUser();
     }, []);
 
+    useEffect(() => {
+        socketRef.current = io(apiEndpoint);
+        socketRef.current.on('log', data => console.log(data));
+    }, [user])
+
     const handleUpdateUser = (key, value) => setUser({...user, [key]: value});
 
     return (
         <>
-            <UserContext.Provider value={{user, handleUpdateUser}}>
+            <UserContext.Provider value={{user, handleUpdateUser, socketRef}}>
                 <WindowBar/>
                 <Routes>
                     <Route path="/" element={<MainPage/>}/>

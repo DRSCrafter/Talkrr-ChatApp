@@ -16,6 +16,19 @@ function SidePanel({talks, onToggleDrawer}) {
     const [filteredTalks, setFilteredTalks] = useState([]);
     const [filter, setFilter] = useState("");
 
+    const {socketRef} = useContext(UserContext);
+
+    const talksGet = async () => {
+        if (user) {
+            const talkIDs = talks.map(talk => talk.id);
+            await socketRef.current.emit('watchRooms', talkIDs);
+        }
+    }
+
+    useEffect(() => {
+        talksGet();
+    }, [talks, user]);
+
     useEffect(() => {
         const pinned = talks.filter(talk => user.pins.includes(talk.id));
         pinned.forEach(talk => {

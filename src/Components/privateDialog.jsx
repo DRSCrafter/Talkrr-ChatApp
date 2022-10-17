@@ -32,7 +32,7 @@ function PrivateDialog({open, onClose}) {
     const handleFilterFriends = (list) => {
         const result = [];
         for (let contact of list) {
-            if (user.contacts.includes(contact._id))
+            if (user && user.contacts.includes(contact._id))
                 result.push(contact);
         }
         return result;
@@ -46,16 +46,15 @@ function PrivateDialog({open, onClose}) {
         }
 
         const target = userList[userIndex];
-        const request = {
-            name: 'name',
-            about: 'about',
-            members: [user._id, target._id],
-            isPrivate: true
-        }
+
+        const formDataTalk = new FormData();
+        formDataTalk.append('name', 'name');
+        formDataTalk.append('about', 'about');
+        formDataTalk.append('members', JSON.stringify([user._id, target._id]));
+        formDataTalk.append('isPrivate', false);
+
         try {
-            const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, JSON.stringify(request), {
-                headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            });
+            const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
 
             const id = {id: data._id};
             const talks = [...user.talks, id];

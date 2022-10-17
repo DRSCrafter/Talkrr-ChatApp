@@ -36,7 +36,7 @@ function GroupDialog({open, onClose}) {
     const handleFilterFriends = (list) => {
         const result = [];
         for (let contact of list) {
-            if (user.contacts.includes(contact._id))
+            if (user && user.contacts.includes(contact._id))
                 result.push(contact);
         }
         return result;

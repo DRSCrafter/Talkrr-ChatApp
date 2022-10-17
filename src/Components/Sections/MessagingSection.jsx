@@ -14,7 +14,7 @@ function MessagingSection() {
     const [members, setMembers] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
     const {currentTalk, handleUpdateTalk} = useContext(TalkContext);
-    const {user} = useContext(UserContext);
+    const {user, socketRef} = useContext(UserContext);
     const messagesEnd = useRef(null);
 
     const scrollEnd = () => messagesEnd.current.scrollIntoView({behavior: 'smooth'});
@@ -32,22 +32,28 @@ function MessagingSection() {
         const backup = [...currentTalk.messages];
 
         const request = {
+            talkID: currentTalk._id,
             sender: user._id,
             content: currentMessage,
         };
         try {
             handleStateMessage({...request, date: Date.now().toLocaleString()});
 
-            await httpConnection.post(`${apiEndpoint}/api/talks/${currentTalk._id}/message`, JSON.stringify(request), {
-                headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            });
+            // await httpConnection.post(`${apiEndpoint}/api/talks/${currentTalk._id}/message`, JSON.stringify(request), {
+            //     headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            // });
+
+            await socketRef.current.emit('sendMessage', request);
         } catch (ex) {
             console.log(ex.response.message);
             handleUpdateTalk('messages', backup);
         }
         setCurrentMessage('');
-        scrollEnd();
     }
+
+    useEffect(() => {
+        scrollEnd();
+    }, [currentTalk])
 
     const handleDeleteMessage = async (id) => {
         console.log('reached!');

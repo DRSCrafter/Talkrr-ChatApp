@@ -14,7 +14,7 @@ import {Toaster} from "react-hot-toast";
 import {useNavigate} from "react-router-dom";
 
 function MainPage() {
-    const {user} = useContext(UserContext);
+    const {user, socketRef} = useContext(UserContext);
     const navigate = useNavigate();
 
     const [talkID, setTalkID] = useState('');
@@ -35,8 +35,19 @@ function MainPage() {
     }, [user]);
 
     useEffect(() => {
+        if (currentTalk && socketRef.current)
+            socketRef.current.on('message', (data) => {
+                console.log('reached');
+
+                const messages = [...currentTalk.messages];
+                messages.push(data._doc);
+                handleUpdateTalk('messages', messages);
+            })
+    }, [user, currentTalk])
+
+    useEffect(() => {
         getCurrentTalk(talkID, setCurrentTalk);
-    }, [talkID, currentTalk])
+    }, [talkID])
 
     const handleUpdateTalk = (key, value) => setCurrentTalk({...currentTalk, [key]: value});
 
