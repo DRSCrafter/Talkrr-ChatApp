@@ -30,19 +30,19 @@ function Message({isSent, message, onGetMember, onDelete, onCopy}) {
     const member = onGetMember(sender);
 
     const contextUserList = [
-        {
-            text: "Reply",
-            icon: <ReplyIcon style={styles.menuItem}/>,
-        },
+        // {
+        //     text: "Reply",
+        //     icon: <ReplyIcon style={styles.menuItem}/>,
+        // },
         {
             text: "Copy",
             icon: <ContentCopyIcon style={styles.menuItem}/>,
             onClick: () => onCopy(message.content)
         },
-        {
-            text: "Edit",
-            icon: <EditIcon style={styles.menuItem}/>
-        },
+        // {
+        //     text: "Edit",
+        //     icon: <EditIcon style={styles.menuItem}/>
+        // },
         {
             text: "Delete",
             icon: <DeleteIcon style={styles.menuItem}/>,
@@ -51,18 +51,14 @@ function Message({isSent, message, onGetMember, onDelete, onCopy}) {
     ]
 
     const contextAdminList = [
-        {
-            text: "Reply",
-            icon: <ReplyIcon style={styles.menuItem}/>,
-        },
+        // {
+        //     text: "Reply",
+        //     icon: <ReplyIcon style={styles.menuItem}/>,
+        // },
         {
             text: "Copy",
             icon: <ContentCopyIcon style={styles.menuItem}/>,
             onClick: () => onCopy(message.content)
-        },
-        {
-            text: "Edit",
-            icon: <EditIcon style={styles.menuItem}/>
         },
         {
             text: "Delete",
@@ -72,10 +68,10 @@ function Message({isSent, message, onGetMember, onDelete, onCopy}) {
     ]
 
     const contextOthersList = [
-        {
-            text: "Reply",
-            icon: <ReplyIcon style={styles.menuItem}/>,
-        },
+        // {
+        //     text: "Reply",
+        //     icon: <ReplyIcon style={styles.menuItem}/>,
+        // },
         {
             text: "Copy",
             icon: <ContentCopyIcon style={styles.menuItem}/>,

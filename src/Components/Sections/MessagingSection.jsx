@@ -56,15 +56,14 @@ function MessagingSection() {
     }, [currentTalk])
 
     const handleDeleteMessage = async (id) => {
-        console.log('reached!');
         const backup = [...currentTalk.messages];
         const messages = [...currentTalk.messages];
         try {
-            messages.filter(message => message._id != id);
-            handleUpdateTalk('messages', messages);
-            await httpConnection.delete(`${apiEndpoint}/api/talks/${currentTalk._id}/message/${id}`);
+            const filteredMessages = messages.filter(message => message._id != id);
+            handleUpdateTalk('messages', filteredMessages);
+            // await httpConnection.delete(`${apiEndpoint}/api/talks/${currentTalk._id}/message/${id}`);
+            await socketRef.current.emit('deleteMessage', {talkID: currentTalk._id, messageID: id});
         } catch (ex) {
-            console.log(ex.response.message);
             handleUpdateTalk('messages', backup);
         }
     }

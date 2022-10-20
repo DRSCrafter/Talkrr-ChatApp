@@ -14,7 +14,7 @@ import UserContext from "./Context/userContext";
 const {apiEndpoint} = require('./config.json');
 
 function App() {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
 
     const socketRef = useRef();
 
@@ -30,12 +30,19 @@ function App() {
         loginUser();
     }, []);
 
-    useEffect(() => {
-        socketRef.current = io(apiEndpoint);
-        socketRef.current.on('log', data => console.log(data));
-    }, [user])
-
     const handleUpdateUser = (key, value) => setUser({...user, [key]: value});
+
+    useEffect(() => {
+        if (user) {
+            socketRef.current = io.connect(apiEndpoint)
+            socketRef.current.on('log', data => console.log(data));
+            socketRef.current.on('getRoom', (data) => {
+                handleUpdateUser('talks', [...user.talks, {id: data}]);
+                console.log(data);
+            });
+            socketRef.current.emit('login', user._id);
+        }
+    }, [user])
 
     return (
         <>

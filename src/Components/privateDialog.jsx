@@ -12,7 +12,8 @@ import toast from "react-hot-toast";
 const {apiEndpoint} = require('../config.json');
 
 function PrivateDialog({open, onClose}) {
-    const {user, handleUpdateUser} = useContext(UserContext);
+    const {user, handleUpdateUser, socketRef} = useContext(UserContext);
+
     const [userList, setUserList] = useState([]);
     const [choice, setChoice] = useState('');
     const [onlyContacts, showOnlyContacts] = useState(true);
@@ -59,6 +60,7 @@ function PrivateDialog({open, onClose}) {
             const id = {id: data._id};
             const talks = [...user.talks, id];
             handleUpdateUser('talks', talks);
+            socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [target._id]});
             onClose();
         } catch (ex) {
             console.log(ex.response.message);

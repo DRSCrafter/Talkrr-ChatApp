@@ -19,7 +19,7 @@ function SidePanel({talks, onToggleDrawer}) {
     const {socketRef} = useContext(UserContext);
 
     const talksGet = async () => {
-        if (user) {
+        if (socketRef.current) {
             const talkIDs = talks.map(talk => talk.id);
             await socketRef.current.emit('watchRooms', talkIDs);
         }

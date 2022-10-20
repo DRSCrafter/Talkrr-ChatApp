@@ -35,14 +35,21 @@ function MainPage() {
     }, [user]);
 
     useEffect(() => {
-        if (currentTalk && socketRef.current)
+        if (currentTalk) {
             socketRef.current.on('message', (data) => {
-                console.log('reached');
-
                 const messages = [...currentTalk.messages];
                 messages.push(data._doc);
                 handleUpdateTalk('messages', messages);
+            });
+
+            socketRef.current.on('removeMessage', (data) => {
+                if (currentTalk._id == data.talkID) {
+                    let messages = [...currentTalk.messages];
+                    const filteredMessages = messages.filter(message => message._id != data.messageID);
+                    handleUpdateTalk('messages', filteredMessages);
+                }
             })
+        }
     }, [user, currentTalk])
 
     useEffect(() => {
