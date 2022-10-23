@@ -1,6 +1,5 @@
 import '../Styles/Pages/SignUp.css';
 import React, {Component} from "react";
-import {Toaster} from "react-hot-toast";
 import Joi from 'joi';
 
 import httpConnection from "../utils/httpConnection";
@@ -142,8 +141,6 @@ class SignUp extends Component {
                         </span>
                         </div>
                     </form>
-                    <Toaster position={"bottom-right"}
-                             toastOptions={{style: {backgroundColor: 'rgba(255,255,255,0.6)'}}}/>
                 </div>
             </>
         );

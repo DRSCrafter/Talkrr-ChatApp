@@ -10,7 +10,6 @@ import ContactPanel from "../Components/Sections/ContactPanel";
 import SideBar from "../Components/Sections/sideBar";
 import {getCurrentTalk, getTalks} from "../utils/talkHandling";
 import NotFound from "../Components/Sections/notFound";
-import {Toaster} from "react-hot-toast";
 import {useNavigate} from "react-router-dom";
 
 function MainPage() {
@@ -28,6 +27,14 @@ function MainPage() {
         setDrawer(open);
     };
 
+    const disconnectLastRoom = async () => {
+        await socketRef.current.emit('leaveRoom', currentTalk._id);
+    }
+
+    const handleRoomConnection = async (id) => {
+        await socketRef.current.emit('joinRoom', id);
+    }
+
     useEffect(() => {
         const jwtToken = localStorage.getItem('token');
         if (!jwtToken) navigate('/login');
@@ -37,9 +44,14 @@ function MainPage() {
     useEffect(() => {
         if (currentTalk) {
             socketRef.current.on('message', (data) => {
-                const messages = [...currentTalk.messages];
-                messages.push(data._doc);
-                handleUpdateTalk('messages', messages);
+                console.log(currentTalk._id);
+                console.log(data.talkID);
+                console.log(data.talkID == currentTalk._id);
+                if (data.talkID == currentTalk._id) {
+                    const messages = [...currentTalk.messages];
+                    messages.push(data._doc);
+                    handleUpdateTalk('messages', messages);
+                }
             });
 
             socketRef.current.on('removeMessage', (data) => {
@@ -48,18 +60,42 @@ function MainPage() {
                     const filteredMessages = messages.filter(message => message._id != data.messageID);
                     handleUpdateTalk('messages', filteredMessages);
                 }
+            });
+
+        }
+        if (socketRef.current) {
+            socketRef.current.on('notify', (data) => {
+                if (talkID == data.talkID) {
+                    let Talks = [...talks];
+                    const target = Talks.findIndex(talk => talk.id == data.talkID);
+                    Talks[target].triggered = false;
+                    setTalks(Talks);
+                } else {
+                    let Talks = [...talks];
+                    const target = Talks.findIndex(talk => talk.id == data.talkID);
+                    Talks[target].triggered = true;
+                    setTalks(Talks);
+                }
             })
         }
-    }, [user, currentTalk])
+    }, [user, currentTalk, socketRef.current])
 
     useEffect(() => {
+        handleRoomConnection(talkID);
         getCurrentTalk(talkID, setCurrentTalk);
     }, [talkID])
 
     const handleUpdateTalk = (key, value) => setCurrentTalk({...currentTalk, [key]: value});
 
+    const confirmRead = (id) => {
+        let Talks = [...talks];
+        const target = Talks.findIndex(talk => talk.id == id);
+        Talks[target].triggered = false;
+        setTalks(Talks);
+    }
+
     return (
-        <TalkContext.Provider value={{currentTalk, handleUpdateTalk, setTalkID}}>
+        <TalkContext.Provider value={{currentTalk, handleUpdateTalk, setTalkID, confirmRead, disconnectLastRoom}}>
             <Root>
                 <SidePanel talks={talks} onToggleDrawer={toggleDrawer}/>
                 {currentTalk ?
@@ -71,7 +107,6 @@ function MainPage() {
                 }
             </Root>
             <SideBar open={drawer} onToggle={toggleDrawer}/>
-            <Toaster position={"bottom-right"} toastOptions={{style: {backgroundColor: 'rgba(255,255,255,0.6)'}}}/>
         </TalkContext.Provider>
     );
 }

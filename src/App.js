@@ -1,4 +1,5 @@
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';
 import jwtDecode from "jwt-decode";
@@ -10,6 +11,7 @@ import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import httpConnection from "./utils/httpConnection";
 import UserContext from "./Context/userContext";
+import {ToastContainer} from "react-toastify";
 
 const {apiEndpoint} = require('./config.json');
 
@@ -38,7 +40,6 @@ function App() {
             socketRef.current.on('log', data => console.log(data));
             socketRef.current.on('getRoom', (data) => {
                 handleUpdateUser('talks', [...user.talks, {id: data}]);
-                console.log(data);
             });
             socketRef.current.emit('login', user._id);
         }
@@ -53,6 +54,7 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                 </Routes>
+                <ToastContainer toastClassName="toast-style"/>
             </UserContext.Provider>
         </>
     );

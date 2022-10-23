@@ -7,7 +7,7 @@ import {
 import Button from "@mui/material/Button";
 import UserContext from "../Context/userContext";
 import httpConnection from "../utils/httpConnection";
-import toast from "react-hot-toast";
+import {toast} from "react-toastify";
 
 const {apiEndpoint} = require('../config.json');
 
@@ -42,8 +42,7 @@ function PrivateDialog({open, onClose}) {
     const handleAddPrivateTalk = async () => {
         const userIndex = userList.findIndex(target => target.name === choice);
         if (userIndex === -1) {
-            console.log(choice);
-            return toast.error("Not a valid username");
+            toast.error('Not a valid Username');
         }
 
         const target = userList[userIndex];
@@ -52,7 +51,7 @@ function PrivateDialog({open, onClose}) {
         formDataTalk.append('name', 'name');
         formDataTalk.append('about', 'about');
         formDataTalk.append('members', JSON.stringify([user._id, target._id]));
-        formDataTalk.append('isPrivate', false);
+        formDataTalk.append('isPrivate', true);
 
         try {
             const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
@@ -63,7 +62,6 @@ function PrivateDialog({open, onClose}) {
             socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [target._id]});
             onClose();
         } catch (ex) {
-            console.log(ex.response.message);
         }
     }
 

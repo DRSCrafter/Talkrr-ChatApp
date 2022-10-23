@@ -1,5 +1,5 @@
 import '../Styles/Components/UserButton.css';
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import TalkContext from "../Context/talkContext";
 import ContextMenu from "./contextMenu";
 
@@ -8,11 +8,15 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import WrongLocationIcon from '@mui/icons-material/WrongLocation';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AnnouncementIcon from '@mui/icons-material/Announcement';
 
 const {apiEndpoint} = require("../config.json");
 
-function UserButton({talk, Pin, onPin, onUnpin, onDelete}) {
+function UserButton({talk, Pin, onPin, onUnpin, onDelete, triggered}) {
+    const {confirmRead, disconnectLastRoom} = useContext(TalkContext);
+
     const [contextMenu, setContextMenu] = React.useState(null);
+    const [newMessage, setNewMessage] = useState(false);
 
     const handleContextMenu = (event) => {
         event.preventDefault();
@@ -62,8 +66,14 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete}) {
     const {setTalkID} = useContext(TalkContext);
 
     const handleClick = () => {
+        disconnectLastRoom();
+        confirmRead(talk.id);
         setTalkID(talk.id);
     }
+
+    useEffect(() => {
+        setNewMessage(triggered);
+    }, [triggered]);
 
     return (
         <>
@@ -75,9 +85,10 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete}) {
                 </span>
                 <span className="user-button-profile-text">
                     <div className="user-button-profile-name">{talk.name}</div>
-                    <div className="user-button-profile-message">last message here</div>
+                    <div className="user-button-profile-message">{`${talk.members.length} members`}</div>
                 </span>
                 {Pin && <PushPinIcon fontSize={"small"} style={styles.pin}/>}
+                {newMessage && <AnnouncementIcon fontSize={"small"} style={{...styles.pin, ...styles.trigger}}/>}
             </Button>
             <ContextMenu list={contextList} onClose={handleClose} onContext={contextMenu}/>
         </>
@@ -95,9 +106,12 @@ const styles = {
     },
     pin: {
         position: "absolute",
-        top: 10,
+        bottom: 10,
         right: 10,
         color: 'rgba(255,255,255,0.4)'
+    },
+    trigger: {
+        top: 10,
     },
     menuItem: {marginRight: 15, padding: 5}
 };

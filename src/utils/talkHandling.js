@@ -20,11 +20,20 @@ export const processTalkData = async (user, talk) => {
             members: [user._id, userID],
             talkImage: userInfo.data.profileImage,
             about: userInfo.data.bio,
+            triggered: false,
             ...userInfo.data
         };
     }
 
-    return {id: _id, name: name, about: about, members: members, isPrivate: isPrivate, talkImage: talkImage};
+    return {
+        id: _id,
+        name: name,
+        about: about,
+        members: members,
+        isPrivate: isPrivate,
+        talkImage: talkImage,
+        triggered: false,
+    };
 }
 
 export const getTalks = async (user, setTalks) => {
@@ -55,7 +64,6 @@ export const handleDeletePrivateTalk = async (id, user, handleUpdateUser) => {
         await httpConnection.delete(`${apiEndpoint}/api/talks/${id}`);
     } catch (ex) {
         handleUpdateUser('talks', backup);
-        console.log(ex.response.message);
     }
 }
 

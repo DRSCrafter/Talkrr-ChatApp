@@ -2,9 +2,7 @@ import React, {useRef} from 'react';
 import '../Styles/Pages/Login.css';
 import {TextField} from "@mui/material";
 import Button from '@mui/material/Button';
-import http from "../utils/httpConnection";
 import {useNavigate} from "react-router-dom";
-import {Toaster} from "react-hot-toast";
 import httpConnection from "../utils/httpConnection";
 
 function Login() {
@@ -48,7 +46,6 @@ function Login() {
                         </span>
                     </span>
                 </form>
-                <Toaster position={"bottom-right"} toastOptions={{style: {backgroundColor: 'rgba(255,255,255,0.6)'}}}/>
             </div>
         </>
     );

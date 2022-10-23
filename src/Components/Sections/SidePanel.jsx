@@ -54,7 +54,6 @@ function SidePanel({talks, onToggleDrawer}) {
         } catch (ex) {
             pins.pop();
             handleUpdateUser('pins', pins);
-            console.log(ex.response.message);
         }
     }
 
@@ -70,7 +69,6 @@ function SidePanel({talks, onToggleDrawer}) {
         } catch (ex) {
             pins.push(id);
             handleUpdateUser('pins', pins);
-            console.log(ex.response.message);
         }
     }
 
@@ -86,8 +84,15 @@ function SidePanel({talks, onToggleDrawer}) {
                 <SearchBar value={filter} onChange={handleFilter}/>
                 <div className="users-container">
                     {filteredTalks && filteredTalks.map((talk, index) => (
-                        <UserButton key={index} talk={talk} onPin={handlePin} onUnpin={handleUnpin} Pin={talk.isPinned}
-                                    onDelete={talk.isPrivate ? deletePrivateTalk : leaveGroupTalk}/>))}
+                        <UserButton
+                            key={index}
+                            talk={talk}
+                            onPin={handlePin}
+                            onUnpin={handleUnpin}
+                            Pin={talk.isPinned}
+                            onDelete={talk.isPrivate ? deletePrivateTalk : leaveGroupTalk}
+                            triggered={talk.triggered}
+                        />))}
                 </div>
             </span>
         </>

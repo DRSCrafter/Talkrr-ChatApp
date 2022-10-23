@@ -27,7 +27,8 @@ function MessagingSection() {
         handleUpdateTalk('messages', messages);
     }
 
-    const handleSendMessage = async () => {
+    const handleSendMessage = async (e) => {
+        e.preventDefault();
         if (currentMessage === '') return;
         const backup = [...currentTalk.messages];
 
@@ -45,7 +46,6 @@ function MessagingSection() {
 
             await socketRef.current.emit('sendMessage', request);
         } catch (ex) {
-            console.log(ex.response.message);
             handleUpdateTalk('messages', backup);
         }
         setCurrentMessage('');
@@ -102,7 +102,7 @@ function MessagingSection() {
                     <div ref={messagesEnd}/>
                 </div>
             </div>
-            <TypingBox value={currentMessage} onChange={handleChangeMessage} onSubmit={handleSendMessage}/>
+            <TypingBox value={currentMessage} onChange={handleChangeMessage} onSend={handleSendMessage}/>
         </span>
     );
 }

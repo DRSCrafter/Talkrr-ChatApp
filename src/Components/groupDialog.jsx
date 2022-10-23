@@ -65,7 +65,6 @@ function GroupDialog({open, onClose}) {
             socketRef.current.emit('createRoom', {talkID: id, userIDs: [idList]});
             onClose();
         } catch (ex) {
-            console.log(ex.response.message);
         }
     }
 
