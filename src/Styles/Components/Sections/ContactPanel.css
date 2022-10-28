@@ -11,6 +11,9 @@
     width: 95%;
     height: 95%;
     margin: auto;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    padding-inline: 10px;
     border-radius: 30px;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 10px #333333;
@@ -61,25 +64,6 @@
 .bio {
     margin-top: 20px;
     font-size: 13px;
-}
-
-.controls-container {
-    width: 90%;
-    height: 15%;
-    display: flex;
-    flex-direction: column;
-    margin-inline: auto;
-    margin-bottom: 10px;
-}
-
-.control-btn {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    margin-block: 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    font-size: 15px;
 }
 
 @media (min-width: 960px) {

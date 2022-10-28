@@ -32,6 +32,7 @@ function MainPage() {
     }
 
     const handleRoomConnection = async (id) => {
+        console.log(id);
         await socketRef.current.emit('joinRoom', id);
     }
 
@@ -98,7 +99,7 @@ function MainPage() {
         <TalkContext.Provider value={{currentTalk, handleUpdateTalk, setTalkID, confirmRead, disconnectLastRoom}}>
             <Root>
                 <SidePanel talks={talks} onToggleDrawer={toggleDrawer}/>
-                {currentTalk ?
+                {talkID !== '' ?
                     <>
                         <MessagingSection/>
                         <ContactPanel/>

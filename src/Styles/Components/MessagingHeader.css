@@ -5,6 +5,7 @@
     background-color: rgba(46, 47, 50, 0.59);
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .messaging-header-profile-image {

@@ -1,18 +1,14 @@
 import '../../Styles/Components/Sections/ContactPanel.css';
 import React, {useContext, useEffect, useState} from "react";
 
-import Button from "@mui/material/Button";
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PhoneIcon from '@mui/icons-material/Phone';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
-import LogoutIcon from '@mui/icons-material/Logout';
 
 import TalkContext from "../../Context/talkContext";
 import UserContext from "../../Context/userContext";
-import {handleAddContact, handleDeletePrivateTalk, handleLeaveGroupTalk, handleRemoveContact, processTalkData}
+import {handleDeletePrivateTalk, handleLeaveGroupTalk, processTalkData}
     from "../../utils/talkHandling";
+import ControlSection from "../controlSection";
 
 const {apiEndpoint} = require("../../config.json");
 
@@ -56,45 +52,14 @@ function ContactPanel() {
                     <div className="bio">{talkInfo && talkInfo.about}</div>
                 </div> : <div></div>}
 
-                <div className="controls-container">
-                    {talkInfo.isPrivate ?
-                        <Button className="control-btn" style={styles.button} onClick={deletePrivateTalk}>
-                            <DeleteIcon fontSize="medium"/>
-                            <span style={{marginLeft: 10}}>Delete Talk</span>
-                        </Button> :
-                        <Button className="control-btn" style={styles.button} onClick={leaveGroupTalk}>
-                            <LogoutIcon fontSize="medium"/>
-                            <span style={{marginLeft: 10}}>Leave Talk</span>
-                        </Button>
-                    }
-                    {talkInfo && talkInfo.isPrivate &&
-                        <>
-                            {user.contacts.includes(talkInfo._id) ?
-                                <Button className="control-btn"
-                                        onClick={() => handleRemoveContact(talkInfo._id, user, handleUpdateUser)}
-                                        style={{...styles.button, color: 'red'}}>
-                                    <PersonRemoveAlt1Icon fontSize="medium"/>
-                                    <span style={{marginLeft: 10,}}>Remove Contact</span>
-                                </Button> :
-                                <Button className="control-btn"
-                                        onClick={() => handleAddContact(talkInfo._id, user, handleUpdateUser)}
-                                        style={{...styles.button, color: 'dodgerblue',}}>
-                                    <PersonAddAlt1Icon fontSize="medium"/>
-                                    <span style={{marginLeft: 10,}}>Add Contact</span>
-                                </Button>
-                            }
-                        </>
-                    }
-                </div>
+                <ControlSection
+                    talkInfo={talkInfo}
+                    onDeletePrivate={deletePrivateTalk}
+                    onLeaveGroup={leaveGroupTalk}
+                />
             </div>
         </div>
     );
-}
-
-const styles = {
-    button: {
-        display: 'flex', justifyContent: 'flex-start', padding: '10px'
-    }
 }
 
 export default ContactPanel;

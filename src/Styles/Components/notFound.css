@@ -1,5 +1,5 @@
 .not-found-root {
-    flex-basis: 75%;
+    flex-basis: 65%;
     display: flex;
     box-sizing: border-box;
     border: 2px dashed white;
@@ -17,8 +17,8 @@
     color: white;
 }
 
-@media (min-width: 1024px) {
-    .not-found {
+@media (min-width: 960px) {
+    .not-found-root {
         flex-basis: 75%;
     }
 }

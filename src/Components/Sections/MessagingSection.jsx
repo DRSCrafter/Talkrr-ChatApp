@@ -92,7 +92,7 @@ function MessagingSection() {
     return (
         <span className="messaging-panel-root">
             <div className="messaging-panel-container">
-                <MessagingHeader/>
+                <MessagingHeader members={members}/>
                 <div className="messages-container">
                     {currentTalk && currentTalk.messages && currentTalk.messages.map((message, index) => (
                         <Message message={message} key={index} isSent={message.sender == user._id}
