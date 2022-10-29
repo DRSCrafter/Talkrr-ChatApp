@@ -7,15 +7,22 @@ import MessagingHeader from "../MessagingHeader";
 import UserContext from "../../Context/userContext";
 import TalkContext from "../../Context/talkContext";
 import httpConnection from "../../utils/httpConnection";
+import {useParams} from "react-router-dom";
 
 const {apiEndpoint} = require('../../config.json');
 
 function MessagingSection() {
     const [members, setMembers] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
-    const {currentTalk, handleUpdateTalk} = useContext(TalkContext);
+    const {currentTalk, setCurrentTalk, handleUpdateTalk} = useContext(TalkContext);
     const {user, socketRef} = useContext(UserContext);
     const messagesEnd = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            setCurrentTalk(undefined);
+        }
+    }, []);
 
     const scrollEnd = () => messagesEnd.current.scrollIntoView({behavior: 'smooth'});
 
@@ -40,16 +47,18 @@ function MessagingSection() {
         try {
             handleStateMessage({...request, date: Date.now().toLocaleString()});
 
-            // await httpConnection.post(`${apiEndpoint}/api/talks/${currentTalk._id}/message`, JSON.stringify(request), {
-            //     headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-            // });
-
             await socketRef.current.emit('sendMessage', request);
         } catch (ex) {
             handleUpdateTalk('messages', backup);
         }
         setCurrentMessage('');
     }
+
+    const {talkID} = useParams();
+
+    useEffect(() => {
+        console.log(talkID);
+    }, [talkID]);
 
     useEffect(() => {
         scrollEnd();
@@ -61,7 +70,6 @@ function MessagingSection() {
         try {
             const filteredMessages = messages.filter(message => message._id != id);
             handleUpdateTalk('messages', filteredMessages);
-            // await httpConnection.delete(`${apiEndpoint}/api/talks/${currentTalk._id}/message/${id}`);
             await socketRef.current.emit('deleteMessage', {talkID: currentTalk._id, messageID: id});
         } catch (ex) {
             handleUpdateTalk('messages', backup);

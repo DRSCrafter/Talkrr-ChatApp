@@ -8,12 +8,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    min-width: 100px;
-    max-width: 40%;
+    max-width: 250px;
     min-height: 80px;
     position: relative;
-    border-radius: 25px;
-    border-bottom-left-radius: 0;
+    border-radius: 25px 25px 25px 0;
     box-sizing: border-box;
     padding-inline: 20px;
     color: white;
@@ -33,4 +31,11 @@
     bottom: -15px;
     right: 20px;
     font-size: 10px;
+    white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+    .message-body {
+        max-width: 50%;
+    }
 }

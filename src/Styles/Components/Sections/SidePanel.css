@@ -17,8 +17,14 @@
     overflow-x: hidden;
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1024px) {
     .side-panel-container {
         flex-basis: 22%;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-panel-container {
+        flex-basis: 100%;
     }
 }

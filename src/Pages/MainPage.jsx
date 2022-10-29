@@ -5,22 +5,23 @@ import TalkContext from "../Context/talkContext";
 
 import SidePanel from "../Components/Sections/SidePanel";
 import Root from "../Components/Sections/Root";
-import MessagingSection from "../Components/Sections/MessagingSection";
-import ContactPanel from "../Components/Sections/ContactPanel";
 import SideBar from "../Components/Sections/sideBar";
-import {getCurrentTalk, getTalks} from "../utils/talkHandling";
+import {getTalks} from "../utils/talkHandling";
 import NotFound from "../Components/Sections/notFound";
-import {useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
+import {useMediaQuery} from "@mui/material";
+import TalkSection from "../Components/Sections/talkSection";
 
 function MainPage() {
     const {user, socketRef} = useContext(UserContext);
     const navigate = useNavigate();
 
-    const [talkID, setTalkID] = useState('');
     const [talks, setTalks] = useState([]);
     const [currentTalk, setCurrentTalk] = useState(null);
 
     const [drawer, setDrawer] = useState(false);
+
+    const isPhone = useMediaQuery('(max-width: 768px)');
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
@@ -31,9 +32,15 @@ function MainPage() {
         await socketRef.current.emit('leaveRoom', currentTalk._id);
     }
 
-    const handleRoomConnection = async (id) => {
-        console.log(id);
-        await socketRef.current.emit('joinRoom', id);
+    const setTalkID = (id) => navigate(`../talk/${id}`);
+
+    useEffect(() => {
+        document.addEventListener('keydown', detectKeyDown, true)
+    }, []);
+
+    const detectKeyDown = (e) => {
+        if (e.key === "Escape")
+            navigate('../../');
     }
 
     useEffect(() => {
@@ -66,7 +73,7 @@ function MainPage() {
         }
         if (socketRef.current) {
             socketRef.current.on('notify', (data) => {
-                if (talkID == data.talkID) {
+                if (currentTalk._id == data.talkID) {
                     let Talks = [...talks];
                     const target = Talks.findIndex(talk => talk.id == data.talkID);
                     Talks[target].triggered = false;
@@ -81,11 +88,6 @@ function MainPage() {
         }
     }, [user, currentTalk, socketRef.current])
 
-    useEffect(() => {
-        handleRoomConnection(talkID);
-        getCurrentTalk(talkID, setCurrentTalk);
-    }, [talkID])
-
     const handleUpdateTalk = (key, value) => setCurrentTalk({...currentTalk, [key]: value});
 
     const confirmRead = (id) => {
@@ -96,19 +98,21 @@ function MainPage() {
     }
 
     return (
-        <TalkContext.Provider value={{currentTalk, handleUpdateTalk, setTalkID, confirmRead, disconnectLastRoom}}>
-            <Root>
-                <SidePanel talks={talks} onToggleDrawer={toggleDrawer}/>
-                {talkID !== '' ?
-                    <>
-                        <MessagingSection/>
-                        <ContactPanel/>
-                    </> :
-                    <NotFound/>
-                }
-            </Root>
-            <SideBar open={drawer} onToggle={toggleDrawer}/>
-        </TalkContext.Provider>
+        <>
+            <TalkContext.Provider
+                value={{currentTalk, setCurrentTalk, handleUpdateTalk, setTalkID, confirmRead, disconnectLastRoom}}
+            >
+                <Root>
+                    {((isPhone && !currentTalk) || (!isPhone)) &&
+                        <SidePanel talks={talks} onToggleDrawer={toggleDrawer}/>}
+                    <Routes>
+                        <Route path="" element={<NotFound/>}/>
+                        <Route path="talk/:talkID" element={<TalkSection/>}/>
+                    </Routes>
+                </Root>
+                <SideBar open={drawer} onToggle={toggleDrawer}/>
+            </TalkContext.Provider>
+        </>
     );
 }
 

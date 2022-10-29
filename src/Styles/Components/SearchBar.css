@@ -27,3 +27,9 @@
     color: white;
     margin-inline: 5px;
 }
+
+@media (max-width: 768px) {
+    .search-bar-container {
+        width: 85%;
+    }
+}

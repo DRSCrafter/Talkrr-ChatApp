@@ -3,7 +3,7 @@
     column-gap: 0;
     width: 100vw;
     height: calc(100vh - 30px);
-    padding-inline: 15px;
+    padding-inline: 5px;
 }
 
 .root-background {
@@ -16,9 +16,15 @@
     border-bottom-left-radius: 15px;
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1024px) {
     .root-container {
         column-gap: 5px;
         padding-inline: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .root-container {
+        padding-inline: 15px;
     }
 }

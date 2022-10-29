@@ -50,7 +50,7 @@ function App() {
             <UserContext.Provider value={{user, handleUpdateUser, socketRef}}>
                 <WindowBar/>
                 <Routes>
-                    <Route path="/" element={<MainPage/>}/>
+                    <Route path="/*" element={<MainPage/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                 </Routes>

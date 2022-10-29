@@ -2,10 +2,9 @@
     flex-basis: 65%;
     display: flex;
     row-gap: 15px;
-    padding-block: 15px;
-    padding-right: 30px;
+    box-sizing: border-box;
+    padding-block: 5px;
     flex-direction: column;
-    min-width: 450px;
     justify-content: center;
 }
 
@@ -25,9 +24,15 @@
     overflow-y: scroll;
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1024px) {
     .messaging-panel-root {
-        padding-right: 0;
         flex-basis: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .messaging-panel-root {
+        flex-basis: 100%;
+        padding-right: 10px;
     }
 }
