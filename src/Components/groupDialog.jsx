@@ -32,12 +32,13 @@ function GroupDialog({open, onClose}) {
             list = handleFilterFriends(list.data);
         else
             list = list.data;
+        list = list.filter(member => member._id !== user._id);
         setUserList(list);
     }
     const handleFilterFriends = (list) => {
         const result = [];
         for (let contact of list) {
-            if (user && user.contacts.includes(contact._id))
+            if (user?.contacts.includes(contact._id))
                 result.push(contact);
         }
         return result;
@@ -62,7 +63,7 @@ function GroupDialog({open, onClose}) {
             const id = {id: data._id};
             const talks = [...user.talks, id];
             handleUpdateUser('talks', talks);
-            socketRef.current.emit('createRoom', {talkID: id, userIDs: [idList]});
+            socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [idList]});
             onClose();
         } catch (ex) {
         }

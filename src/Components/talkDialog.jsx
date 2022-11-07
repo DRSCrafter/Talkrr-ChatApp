@@ -11,6 +11,7 @@ import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../utils/talkHandli
 import TalkContext from "../Context/talkContext";
 import ControlSection from "./controlSection";
 import UserContext from "../Context/userContext";
+import InfoIcon from "@mui/icons-material/Info";
 
 const {apiEndpoint} = require('../config.json');
 
@@ -61,56 +62,54 @@ function TalkDialog({open, onClose, talkInfo, members}) {
                     </IconButton>
                 </div>
                 <div className="dialog-header-container">
-                    <span style={{
-                        display: 'flex',
-                        width: '80px',
-                        height: '80px',
-                        borderRadius: '50%',
-                        overflowX: 'hidden',
-                        backgroundColor: 'gray'
-                    }}>
+                    <span className="dialog-header-image-container">
                         <img
                             src={talkInfo && `${apiEndpoint}/${talkInfo?.talkImage}`}
                             className="dialog-header-profile-image"
                         />
                     </span>
                     <div className="dialog-header-profile-info">
-                        <div style={{fontSize: 22}}>{talkInfo && talkInfo.name}</div>
-                        <div style={{fontSize: 13}}>{talkInfo && talkInfo.members?.length} members</div>
+                        <div style={{fontSize: 22}}>{talkInfo?.name}</div>
+                        <div style={{fontSize: 13}}>{talkInfo?.members?.length} members</div>
                     </div>
                 </div>
                 <span style={{display: "flex", flexDirection: 'column', rowGap: '5px'}} className="dialog-sections">
-                    <div className="dialog-details">
-                        <AlternateEmailIcon fontSize="medium"/>
-                        <span style={{marginLeft: '10px'}}>{talkInfo && talkInfo?.email}</span>
-                    </div>
-                    {talkInfo?.phoneNumber && <div className="profile-details">
-                        <PhoneIcon fontSize="medium"/>
-                        <span style={{marginLeft: 10,}}>{talkInfo.phoneNumber}</span>
-                    </div>}
-                </span>
-                <span className="dialog-sections">
-                    <div style={{margin: '10px', display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
-                        <PeopleIcon style={{marginRight: '15px'}}/>
-                        <span>Members</span>
-                    </div>
-                    {members.map(member => (
+                    {talkInfo?.isPrivate &&
                         <>
-                            <div style={{width: '100%', height: '70px', display: "flex", alignItems: "center"}}>
-                                <img src={`${apiEndpoint}/${member?.profileImage}`}
-                                     style={{width: '50px', height: '50px', borderRadius: '50%'}}/>
-                                <span style={{
-                                    fontSize: '15px',
-                                    fontFamily: 'Segoe UI Light',
-                                    marginLeft: '10px',
-                                    color: 'white'
-                                }}>
-                                {member?.name}
-                            </span>
+                            <div className="dialog-details">
+                                <AlternateEmailIcon fontSize="medium"/>
+                                <span style={{marginLeft: 10,}}>{talkInfo?.email}</span>
                             </div>
+                            {talkInfo?.phoneNumber &&
+                                <div className="dialog-details">
+                                    <PhoneIcon fontSize="medium"/>
+                                    <span style={{marginLeft: 10,}}>{talkInfo?.phoneNumber}</span>
+                                </div>
+                            }
                         </>
-                    ))}
+                    }
+                    <div className="dialog-details">
+                        <InfoIcon fontSize="medium"/>
+                        <span style={{marginLeft: 10,}}>{talkInfo?.about}</span>
+                    </div>
                 </span>
+                {!talkInfo?.isPrivate &&
+                    <span className="dialog-sections">
+                        <div style={{margin: '10px', display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
+                            <PeopleIcon style={{marginRight: '15px'}}/>
+                            <span>Members</span>
+                        </div>
+                        {members.map(member => (
+                            <div style={{width: '100%', height: '70px', display: "flex", alignItems: "center"}}
+                                 key={member._id}>
+                                <img src={`${apiEndpoint}/${member?.profileImage}`} className="dialog-member-image"/>
+                                <span className="dialog-member-text">
+                                    {member?.name}
+                                </span>
+                            </div>
+                        ))}
+                    </span>
+                }
                 <ControlSection
                     talkInfo={talkInfo}
                     onLeaveGroup={leaveGroupTalk}

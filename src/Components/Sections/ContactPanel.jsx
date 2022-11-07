@@ -3,6 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PhoneIcon from '@mui/icons-material/Phone';
+import InfoIcon from '@mui/icons-material/Info';
 
 import TalkContext from "../../Context/talkContext";
 import UserContext from "../../Context/userContext";
@@ -35,22 +36,29 @@ function ContactPanel() {
             <div className="contact-panel-container">
                 <div className="identity-container">
                     <img src={`${apiEndpoint}/${talkInfo?.talkImage}`} className="profile-image"/>
-                    <span className="profile-name">{talkInfo && talkInfo.name}</span>
+                    <span className="profile-name">{talkInfo?.name}</span>
                 </div>
 
-                {talkInfo && talkInfo.email ? <div className="details-container">
-                    <div className="profile-details">
-                        <AlternateEmailIcon fontSize="medium"/>
-                        <span style={{marginLeft: 10,}}>{talkInfo && talkInfo.email}</span>
-                    </div>
-                    {talkInfo && talkInfo.phoneNumber &&
-                        <div className="profile-details">
-                            <PhoneIcon fontSize="medium"/>
-                            <span style={{marginLeft: 10,}}>{talkInfo && talkInfo.phoneNumber}</span>
-                        </div>
+                <div className="details-container">
+                    {talkInfo?.isPrivate &&
+                        <>
+                            <div className="profile-details">
+                                <AlternateEmailIcon fontSize="medium"/>
+                                <span style={{marginLeft: 10,}}>{talkInfo?.email}</span>
+                            </div>
+                            {talkInfo?.phoneNumber &&
+                                <div className="profile-details">
+                                    <PhoneIcon fontSize="medium"/>
+                                    <span style={{marginLeft: 10,}}>{talkInfo?.phoneNumber}</span>
+                                </div>
+                            }
+                        </>
                     }
-                    <div className="bio">{talkInfo && talkInfo.about}</div>
-                </div> : <div></div>}
+                    <div className="profile-details">
+                        <InfoIcon fontSize="medium"/>
+                        <span style={{marginLeft: 10,}}>{talkInfo?.about}</span>
+                    </div>
+                </div>
 
                 <ControlSection
                     talkInfo={talkInfo}

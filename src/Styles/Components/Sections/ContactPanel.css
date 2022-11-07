@@ -56,14 +56,8 @@
 
 .profile-details {
     display: flex;
-    flex-wrap: nowrap;
     margin-block: 10px;
     font-size: 15px;
-}
-
-.bio {
-    margin-top: 20px;
-    font-size: 13px;
 }
 
 @media (min-width: 1024px) {

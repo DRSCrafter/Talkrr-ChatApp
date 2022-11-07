@@ -83,7 +83,7 @@ function SidePanel({talks, onToggleDrawer}) {
                 <Banner onToggleDrawer={onToggleDrawer}/>
                 <SearchBar value={filter} onChange={handleFilter}/>
                 <div className="users-container">
-                    {filteredTalks && filteredTalks.map((talk, index) => (
+                    {filteredTalks?.map((talk, index) => (
                         <UserButton
                             key={index}
                             talk={talk}

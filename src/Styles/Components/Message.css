@@ -1,17 +1,18 @@
 .message-container {
-    width: 95%;
-    margin: auto;
     margin-block: 20px;
 }
 
 .message-body {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: space-around;
-    max-width: 250px;
+    min-width: 150px;
+    max-width: 90%;
     min-height: 80px;
     position: relative;
     border-radius: 25px 25px 25px 0;
+    padding: 10px;
+    line-break: anywhere;
     box-sizing: border-box;
     padding-inline: 20px;
     color: white;
@@ -19,11 +20,13 @@
 
 .message-body-receive {
     background-color: rgba(72, 72, 72, 0.6);
+    margin-left: 10px;
 }
 
 .message-body-send {
     background-color: rgba(66, 98, 255, 0.45);
     direction: ltr;
+    margin-right: 10px;
 }
 
 .message-data {
@@ -36,6 +39,6 @@
 
 @media (min-width: 768px) {
     .message-body {
-        max-width: 50%;
+        max-width: 70%;
     }
 }

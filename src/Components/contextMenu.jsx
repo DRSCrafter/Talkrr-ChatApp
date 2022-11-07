@@ -19,7 +19,7 @@ function ContextMenu({list, onContext, onClose}) {
                         : undefined
                 }
             >
-                {list && list.map((item, index) => (
+                {list?.map((item, index) => (
                     <MenuItem key={index} onClick={() => onClick(item.onClick)}
                               style={styles.menuItem}>{item.icon}{item.text}
                     </MenuItem>

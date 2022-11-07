@@ -5,6 +5,15 @@
     align-items: center;
 }
 
+.dialog-header-image-container {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow-x: hidden;
+    background-color: gray;
+}
+
 .dialog-header-profile-image {
     width: 80px;
     height: 80px;
@@ -30,4 +39,17 @@
     flex-wrap: nowrap;
     margin-block: 10px;
     font-size: 15px;
+}
+
+.dialog-member-text {
+    font-size: 15px;
+    font-family: Segoe UI Light, sans-serif;
+    margin-left: 10px;
+    color: white;
+}
+
+.dialog-member-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }

@@ -68,7 +68,7 @@ function MessagingSection() {
         const backup = [...currentTalk.messages];
         const messages = [...currentTalk.messages];
         try {
-            const filteredMessages = messages.filter(message => message._id != id);
+            const filteredMessages = messages.filter(message => message._id !== id);
             handleUpdateTalk('messages', filteredMessages);
             await socketRef.current.emit('deleteMessage', {talkID: currentTalk._id, messageID: id});
         } catch (ex) {
@@ -90,7 +90,7 @@ function MessagingSection() {
 
     const handleGetMember = (id) => {
         if (members.length === 0) return;
-        return members.find(member => member._id == id);
+        return members.find(member => member._id === id);
     }
 
     useEffect(() => {
@@ -102,8 +102,8 @@ function MessagingSection() {
             <div className="messaging-panel-container">
                 <MessagingHeader members={members}/>
                 <div className="messages-container">
-                    {currentTalk && currentTalk.messages && currentTalk.messages.map((message, index) => (
-                        <Message message={message} key={index} isSent={message.sender == user._id}
+                    {currentTalk?.messages && currentTalk?.messages.map((message, index) => (
+                        <Message message={message} key={index} isSent={message.sender === user._id}
                                  onGetMember={handleGetMember} onDelete={handleDeleteMessage}
                                  onCopy={handleCopyMessage}/>
                     ))}

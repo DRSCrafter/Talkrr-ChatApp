@@ -62,14 +62,21 @@ function Message({isSent, message, onGetMember, onDelete, onCopy}) {
 
     return (
         <div style={styles.container(isSent)} className="message-container">
-            <div className={`message-body ${isSent ? "message-body-send" : "message-body-receive"}`}
-                 onContextMenu={handleContextMenu}>
-                {isSent ? null : <div style={{fontWeight: 'bold'}}>{member && member.name}</div>}
-                <div style={{fontSize: 14, width: '100%'}}>{content}</div>
+            <div
+                className={`message-body ${isSent ? "message-body-send" : "message-body-receive"}`}
+                onContextMenu={handleContextMenu}
+            >
+                {isSent ? null : <div style={{fontWeight: 'bold', marginBottom: 10}}>{member?.name}</div>}
+                <span>
+                {content}
+                    </span>
                 <div className="message-data">{date}</div>
             </div>
-            <ContextMenu list={isSent ? contextUserList : contextOthersList} onContext={contextMenu}
-                         onClose={handleClose}/>
+            <ContextMenu
+                list={isSent ? contextUserList : contextOthersList}
+                onContext={contextMenu}
+                onClose={handleClose}
+            />
         </div>
     );
 }

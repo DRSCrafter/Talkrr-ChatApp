@@ -38,7 +38,7 @@ function ControlSection({talkInfo, onDeletePrivate, onLeaveGroup, middleware}) {
                         <span style={{marginLeft: 10}}>Leave Talk</span>
                     </Button>
                 }
-                {talkInfo && talkInfo.isPrivate &&
+                {talkInfo?.isPrivate &&
                     <>
                         {user.contacts.includes(talkInfo._id) ?
                             <Button

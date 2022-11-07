@@ -12,7 +12,7 @@ export const processTalkData = async (user, talk) => {
 
     if (isPrivate) {
         let userID;
-        userID = members.find(member => member != user._id);
+        userID = members.find(member => member !== user._id);
         const userInfo = await httpConnection.get(`${apiEndpoint}/api/users/strict/${userID}`);
         return {
             id: talk._id,
@@ -30,7 +30,7 @@ export const processTalkData = async (user, talk) => {
         name: name,
         about: about,
         members: members,
-        isPrivate: isPrivate,
+        isPrivate: false,
         talkImage: talkImage,
         triggered: false,
     };
@@ -59,7 +59,7 @@ export const handleDeletePrivateTalk = async (id, user, handleUpdateUser) => {
     const backup = [...user.talks];
     let talks = [...user.talks];
     try {
-        talks = talks.filter(talk => talk.id != id);
+        talks = talks.filter(talk => talk.id !== id);
         handleUpdateUser('talks', talks);
         await httpConnection.delete(`${apiEndpoint}/api/talks/${id}`);
     } catch (ex) {
@@ -72,7 +72,7 @@ export const handleLeaveGroupTalk = async (id, user, handleUpdateUser) => {
     let talks = [...user.talks];
     const request = JSON.stringify({id: user._id});
     try {
-        talks = talks.filter(talk => talk.id != id);
+        talks = talks.filter(talk => talk.id !== id);
         handleUpdateUser('talks', talks);
         await httpConnection.put(`${apiEndpoint}/api/talks/${id}/members`, request, {
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
@@ -105,7 +105,7 @@ export const handleRemoveContact = async (id, user, handleUpdateUser) => {
 
     const request = JSON.stringify({id: id})
     try {
-        contacts = contacts.filter(contact => contact != id);
+        contacts = contacts.filter(contact => contact !== id);
         handleUpdateUser('contacts', contacts);
         await httpConnection.put(`${apiEndpoint}/api/users/${user._id}/contacts`, request, {
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}

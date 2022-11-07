@@ -29,7 +29,8 @@ function MainPage() {
     };
 
     const disconnectLastRoom = async () => {
-        await socketRef.current.emit('leaveRoom', currentTalk._id);
+        if (currentTalk)
+            await socketRef.current.emit('leaveRoom', currentTalk._id);
     }
 
     const setTalkID = (id) => navigate(`../talk/${id}`);
@@ -54,8 +55,8 @@ function MainPage() {
             socketRef.current.on('message', (data) => {
                 console.log(currentTalk._id);
                 console.log(data.talkID);
-                console.log(data.talkID == currentTalk._id);
-                if (data.talkID == currentTalk._id) {
+                console.log(data.talkID === currentTalk._id);
+                if (data.talkID === currentTalk._id) {
                     const messages = [...currentTalk.messages];
                     messages.push(data._doc);
                     handleUpdateTalk('messages', messages);
@@ -63,9 +64,9 @@ function MainPage() {
             });
 
             socketRef.current.on('removeMessage', (data) => {
-                if (currentTalk._id == data.talkID) {
+                if (currentTalk._id === data.talkID) {
                     let messages = [...currentTalk.messages];
-                    const filteredMessages = messages.filter(message => message._id != data.messageID);
+                    const filteredMessages = messages.filter(message => message._id !== data.messageID);
                     handleUpdateTalk('messages', filteredMessages);
                 }
             });
@@ -73,14 +74,14 @@ function MainPage() {
         }
         if (socketRef.current) {
             socketRef.current.on('notify', (data) => {
-                if (currentTalk._id == data.talkID) {
+                if (currentTalk._id === data.talkID) {
                     let Talks = [...talks];
-                    const target = Talks.findIndex(talk => talk.id == data.talkID);
+                    const target = Talks.findIndex(talk => talk.id === data.talkID);
                     Talks[target].triggered = false;
                     setTalks(Talks);
                 } else {
                     let Talks = [...talks];
-                    const target = Talks.findIndex(talk => talk.id == data.talkID);
+                    const target = Talks.findIndex(talk => talk.id === data.talkID);
                     Talks[target].triggered = true;
                     setTalks(Talks);
                 }
@@ -92,7 +93,7 @@ function MainPage() {
 
     const confirmRead = (id) => {
         let Talks = [...talks];
-        const target = Talks.findIndex(talk => talk.id == id);
+        const target = Talks.findIndex(talk => talk.id === id);
         Talks[target].triggered = false;
         setTalks(Talks);
     }
