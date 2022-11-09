@@ -9,6 +9,8 @@ import TalkContext from "../../Context/talkContext";
 import httpConnection from "../../utils/httpConnection";
 import {useParams} from "react-router-dom";
 
+import moment from 'moment';
+
 const {apiEndpoint} = require('../../config.json');
 
 function MessagingSection() {
@@ -45,7 +47,7 @@ function MessagingSection() {
             content: currentMessage,
         };
         try {
-            handleStateMessage({...request, date: Date.now().toLocaleString()});
+            handleStateMessage({...request, date: moment().format("MMM Do, h:mm a")});
 
             await socketRef.current.emit('sendMessage', request);
         } catch (ex) {

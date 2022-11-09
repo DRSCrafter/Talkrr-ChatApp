@@ -54,16 +54,13 @@ function PrivateDialog({open, onClose}) {
         formDataTalk.append('members', JSON.stringify([user._id, target._id]));
         formDataTalk.append('isPrivate', true);
 
-        try {
-            const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
+        const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
 
-            const id = {id: data._id};
-            const talks = [...user.talks, id];
-            handleUpdateUser('talks', talks);
-            socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [target._id]});
-            onClose();
-        } catch (ex) {
-        }
+        const id = {id: data._id};
+        const talks = [...user.talks, id];
+        handleUpdateUser('talks', talks);
+        socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [target._id]});
+        onClose();
     }
 
     useEffect(() => {

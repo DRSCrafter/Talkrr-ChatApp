@@ -114,7 +114,7 @@ function TalkDialog({open, onClose, talkInfo, members}) {
                     talkInfo={talkInfo}
                     onLeaveGroup={leaveGroupTalk}
                     onDeletePrivate={deletePrivateTalk}
-                    middleware={onClose}
+                    callback={onClose}
                 />
             </DialogContainer>
         </>

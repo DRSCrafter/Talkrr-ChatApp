@@ -9,19 +9,19 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
-function ControlSection({talkInfo, onDeletePrivate, onLeaveGroup, middleware}) {
+function ControlSection({talkInfo, onDeletePrivate, onLeaveGroup, callback}) {
     const {user, handleUpdateUser} = useContext(UserContext);
 
     const addContact = async () => {
         await handleAddContact(talkInfo._id, user, handleUpdateUser);
-        if (middleware)
-            middleware();
+        if (callback)
+            callback();
     }
 
     const removeContact = async () => {
         await handleRemoveContact(talkInfo._id, user, handleUpdateUser);
-        if (middleware)
-            middleware();
+        if (callback)
+            callback();
     }
 
     return (

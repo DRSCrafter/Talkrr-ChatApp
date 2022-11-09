@@ -51,7 +51,7 @@ function MainPage() {
     }, [user]);
 
     useEffect(() => {
-        if (currentTalk) {
+        if (socketRef.current && currentTalk) {
             socketRef.current.on('message', (data) => {
                 console.log(currentTalk._id);
                 console.log(data.talkID);

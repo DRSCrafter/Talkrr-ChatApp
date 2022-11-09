@@ -10,6 +10,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ContactsIcon from '@mui/icons-material/Contacts';
 
 import GroupDialog from "../groupDialog";
+import ContactsDialog from "../contactsDialog";
 
 const {apiEndpoint} = require('../../config.json');
 
@@ -17,9 +18,11 @@ function SideBar({open, onToggle}) {
     const {user} = useContext(UserContext);
     const [privateDialog, setPrivateDialog] = useState(false);
     const [groupDialog, setGroupDialog] = useState(false);
+    const [contactDialog, setContactDialog] = useState(false);
 
     const handleTogglePrivateDialog = () => setPrivateDialog(!privateDialog);
     const handleToggleGroupDialog = () => setGroupDialog(!groupDialog);
+    const handleToggleContactDialog = () => setContactDialog(!contactDialog);
 
     const drawerList1 = [
         {
@@ -40,7 +43,7 @@ function SideBar({open, onToggle}) {
         {
             text: 'Contacts',
             icon: <ContactsIcon/>,
-            onClick: logout
+            onClick: handleToggleContactDialog
         },
     ]
 
@@ -113,6 +116,7 @@ function SideBar({open, onToggle}) {
             </Drawer>
             <PrivateDialog open={privateDialog} onClose={handleTogglePrivateDialog}/>
             <GroupDialog open={groupDialog} onClose={handleToggleGroupDialog}/>
+            <ContactsDialog open={contactDialog} onClose={handleToggleContactDialog}/>
         </>
     );
 }
