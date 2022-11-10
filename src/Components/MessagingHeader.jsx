@@ -41,7 +41,9 @@ function MessagingHeader({members}) {
                 <img src={`${apiEndpoint}/${talkInfo?.talkImage}`} className="messaging-header-profile-image"/>
                 <span className="messaging-header-profile-info">
                 <div style={{fontSize: 25}}>{talkInfo?.name}</div>
-                <div style={{fontSize: 15}}>{talkInfo.members?.length} members</div>
+                <div style={{fontSize: 15}}>
+                    {talkInfo.isPrivate ? 'Private Talk' : `${talkInfo.members?.length} members`}
+                </div>
             </span>
             </div>
             <TalkDialog open={talkDialog} onClose={handleCloseDialog} talkInfo={talkInfo} members={members}/>

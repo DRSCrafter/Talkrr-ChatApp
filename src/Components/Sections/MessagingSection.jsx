@@ -1,13 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import '../../Styles/Components/Sections/MessagingSection.css';
 
+import TryIcon from '@mui/icons-material/Try';
+
 import Message from "../Message";
 import TypingBox from "../TypingBox";
 import MessagingHeader from "../MessagingHeader";
 import UserContext from "../../Context/userContext";
 import TalkContext from "../../Context/talkContext";
 import httpConnection from "../../utils/httpConnection";
-import {useParams} from "react-router-dom";
 
 import moment from 'moment';
 
@@ -56,15 +57,12 @@ function MessagingSection() {
         setCurrentMessage('');
     }
 
-    const {talkID} = useParams();
-
     useEffect(() => {
-        console.log(talkID);
-    }, [talkID]);
-
-    useEffect(() => {
-        scrollEnd();
+        if (messagesEnd.current)
+            scrollEnd();
     }, [currentTalk])
+
+    const addEmoji = (emoji) => setCurrentMessage(currentMessage + emoji.native);
 
     const handleDeleteMessage = async (id) => {
         const backup = [...currentTalk.messages];
@@ -103,16 +101,31 @@ function MessagingSection() {
         <span className="messaging-panel-root">
             <div className="messaging-panel-container">
                 <MessagingHeader members={members}/>
-                <div className="messages-container">
-                    {currentTalk?.messages && currentTalk?.messages.map((message, index) => (
-                        <Message message={message} key={index} isSent={message.sender === user._id}
-                                 onGetMember={handleGetMember} onDelete={handleDeleteMessage}
-                                 onCopy={handleCopyMessage}/>
-                    ))}
-                    <div ref={messagesEnd}/>
-                </div>
+                {currentTalk?.messages.length !== 0 ?
+                    <div className="messages-container">
+                        {currentTalk?.messages && currentTalk?.messages.map((message, index) => (
+                            <Message message={message} key={index} isSent={message.sender === user._id}
+                                     onGetMember={handleGetMember} onDelete={handleDeleteMessage}
+                                     onCopy={handleCopyMessage}/>
+                        ))}
+                        <div ref={messagesEnd}/>
+                    </div> :
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '87%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        color: '#ffffff'
+                    }}>
+                        <TryIcon style={{fontSize: '120px'}}/>
+                        <div>
+                            Be the first to message!
+                        </div>
+                    </div>
+                }
             </div>
-            <TypingBox value={currentMessage} onChange={handleChangeMessage} onSend={handleSendMessage}/>
+            <TypingBox value={currentMessage} onChange={handleChangeMessage} onSend={handleSendMessage} onEmojiAdd={addEmoji}/>
         </span>
     );
 }

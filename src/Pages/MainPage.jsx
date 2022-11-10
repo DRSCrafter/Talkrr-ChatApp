@@ -53,9 +53,6 @@ function MainPage() {
     useEffect(() => {
         if (socketRef.current && currentTalk) {
             socketRef.current.on('message', (data) => {
-                console.log(currentTalk._id);
-                console.log(data.talkID);
-                console.log(data.talkID === currentTalk._id);
                 if (data.talkID === currentTalk._id) {
                     const messages = [...currentTalk.messages];
                     messages.push(data._doc);
@@ -74,7 +71,7 @@ function MainPage() {
         }
         if (socketRef.current) {
             socketRef.current.on('notify', (data) => {
-                if (currentTalk._id === data.talkID) {
+                if (currentTalk && currentTalk._id === data.talkID) {
                     let Talks = [...talks];
                     const target = Talks.findIndex(talk => talk.id === data.talkID);
                     Talks[target].triggered = false;

@@ -29,7 +29,8 @@ function ContactsDialog({open, onClose}) {
     }
 
     useEffect(() => {
-        getContactsInfo();
+        if (user)
+            getContactsInfo();
     }, [user]);
 
     const removeContact = async (id) => {
@@ -40,7 +41,6 @@ function ContactsDialog({open, onClose}) {
     const handleAddPrivateTalk = async (id) => {
         const exists = await httpConnection.get(`${apiEndpoint}/api/talks/${user._id}/private/${id}`);
         if (exists.data) {
-            console.log(exists.data);
             navigate(`../../talk/${exists.data._id}`);
             onClose();
             return;
@@ -112,12 +112,13 @@ function ContactsDialog({open, onClose}) {
                             </span>
                         </span>
                         <span>
-                            <IconButton style={{color: 'dodgerblue', marginRight: 10}}>
-                                <QuestionAnswerIcon fontSize={"medium"}
-                                                    onClick={() => handleAddPrivateTalk(contact._id)}/>
+                            <IconButton
+                                style={{color: 'dodgerblue', marginRight: 10}}
+                                onClick={() => handleAddPrivateTalk(contact._id)}>
+                                <QuestionAnswerIcon fontSize={"medium"}/>
                             </IconButton>
-                            <IconButton style={{color: 'red'}}>
-                                <PersonRemoveIcon fontSize={"medium"} onClick={() => removeContact(contact._id)}/>
+                            <IconButton style={{color: 'red'}} onClick={() => removeContact(contact._id)}>
+                                <PersonRemoveIcon fontSize={"medium"}/>
                             </IconButton>
                         </span>
                     </div>

@@ -70,7 +70,9 @@ function TalkDialog({open, onClose, talkInfo, members}) {
                     </span>
                     <div className="dialog-header-profile-info">
                         <div style={{fontSize: 22}}>{talkInfo?.name}</div>
-                        <div style={{fontSize: 13}}>{talkInfo?.members?.length} members</div>
+                        <div style={{fontSize: 13}}>
+                            {talkInfo.isPrivate ? 'Private Talk' : `${talkInfo?.members?.length} members`}
+                        </div>
                     </div>
                 </div>
                 <span style={{display: "flex", flexDirection: 'column', rowGap: '5px'}} className="dialog-sections">

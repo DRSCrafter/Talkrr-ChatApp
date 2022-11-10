@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 import MessagingSection from "./MessagingSection";
 import ContactPanel from "./ContactPanel";
@@ -12,18 +12,23 @@ function TalkSection() {
     const {talkID} = useParams();
     const {socketRef} = useContext(UserContext);
     const {setCurrentTalk} = useContext(TalkContext);
+    const navigate = useNavigate();
 
     const isPhone = useMediaQuery('(max-width: 768px)');
 
     const handleRoomConnection = async (id) => {
-        console.log(id);
         await socketRef.current.emit('joinRoom', id);
     }
 
     useEffect(() => {
         if (talkID) {
-            handleRoomConnection(talkID);
-            getCurrentTalk(talkID, setCurrentTalk);
+            getCurrentTalk(talkID, setCurrentTalk).then(async (res) => {
+                if (!res) {
+                    navigate('../../');
+                    return;
+                }
+                await handleRoomConnection(talkID);
+            });
         }
     }, [talkID])
 

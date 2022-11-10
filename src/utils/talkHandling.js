@@ -51,8 +51,14 @@ export const getTalks = async (user, setTalks) => {
 export const getCurrentTalk = async (id, setCurrentTalk) => {
     if (!id) return;
 
-    const talkInfo = await httpConnection.get(`${apiEndpoint}/api/talks/${id}`);
-    setCurrentTalk(talkInfo.data);
+    let talkInfo;
+    try {
+        talkInfo = await httpConnection.get(`${apiEndpoint}/api/talks/${id}`);
+        setCurrentTalk(talkInfo.data);
+        return true;
+    } catch (ex) {
+        return false;
+    }
 }
 
 export const handleDeletePrivateTalk = async (id, user, handleUpdateUser) => {

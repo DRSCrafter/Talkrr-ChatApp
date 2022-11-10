@@ -85,7 +85,9 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete, triggered}) {
                 </span>
                 <span className="user-button-profile-text">
                     <div className="user-button-profile-name">{talk.name}</div>
-                    <div className="user-button-profile-message">{`${talk.members.length} members`}</div>
+                    <div className="user-button-profile-message">
+                        {talk.isPrivate ? 'Private Talk' : `${talk.members.length} members`}
+                    </div>
                 </span>
                 {Pin && <PushPinIcon fontSize={"small"} style={styles.pin}/>}
                 {newMessage && <AnnouncementIcon fontSize={"small"} style={{...styles.pin, ...styles.trigger}}/>}

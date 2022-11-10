@@ -1,6 +1,6 @@
 .typing-box-container {
     display: flex;
-    flex-basis: 10%;
+    flex-basis: 7%;
     align-items: center;
     width: 100%;
     height: 100%;
@@ -13,18 +13,29 @@
 .typing-box-input {
     width: 90%;
     height: 100%;
+    background: none;
     margin-left: 15px;
     outline: 0;
-    background: none;
     border: 0;
     font-size: 15px;
 }
 
 .typing-box-btn {
     display: flex;
-    width: 10%;
-    height: 90%;
+    width: 55px;
+    height: 55px;
     border-radius: 100%;
-    background-color: dodgerblue;
-    margin-inline: 5px;
+}
+
+.typing-box-emoji {
+    visibility: visible;
+    right: 0;
+    bottom: 75px;
+    position: absolute;
+    transition: visibility 0.5s;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
 }
