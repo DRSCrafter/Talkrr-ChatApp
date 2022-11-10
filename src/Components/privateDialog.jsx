@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import UserContext from "../Context/userContext";
 import httpConnection from "../utils/httpConnection";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const {apiEndpoint} = require('../config.json');
 
@@ -17,6 +18,8 @@ function PrivateDialog({open, onClose}) {
     const [userList, setUserList] = useState([]);
     const [choice, setChoice] = useState('');
     const [onlyContacts, showOnlyContacts] = useState(true);
+
+    const navigate = useNavigate();
 
     const handleChoose = (event, value) => setChoice(value);
 
@@ -48,6 +51,13 @@ function PrivateDialog({open, onClose}) {
 
         const target = userList[userIndex];
 
+        const exists = await httpConnection.get(`${apiEndpoint}/api/talks/${user._id}/private/${target._id}`);
+        if (exists.data) {
+            navigate(`../../talk/${exists.data._id}`);
+            onClose();
+            return toast.info('Private Talk with this user already exists!');
+        }
+
         const formDataTalk = new FormData();
         formDataTalk.append('name', 'name');
         formDataTalk.append('about', 'about');
@@ -56,8 +66,7 @@ function PrivateDialog({open, onClose}) {
 
         const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
 
-        const id = {id: data._id};
-        const talks = [...user.talks, id];
+        const talks = [...user.talks, {id: data._id}];
         handleUpdateUser('talks', talks);
         socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [target._id]});
         onClose();
@@ -87,13 +96,17 @@ function PrivateDialog({open, onClose}) {
                             onInputChange={handleChoose}
                             options={userList.map(user => user.name)}
                             renderInput={(params) => (
-                                <TextField {...params} label="Search the Username"
-                                           InputProps={{...params.InputProps, type: 'search',}}
+                                <TextField
+                                    {...params}
+                                    label="Search the Username"
+                                    InputProps={{...params.InputProps, type: 'search',}}
                                 />
                             )}
                         />
-                        <FormControlLabel control={<Checkbox checked={onlyContacts} onChange={toggleBox}/>}
-                                          label="Only show the contacts"/>
+                        <FormControlLabel
+                            control={<Checkbox checked={onlyContacts} onChange={toggleBox}/>}
+                            label="Only show the contacts"
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button style={{width: '40%'}} variant="contained" onClick={handleAddPrivateTalk}>

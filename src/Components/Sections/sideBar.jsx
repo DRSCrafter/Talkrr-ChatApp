@@ -8,9 +8,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import PeopleIcon from "@mui/icons-material/People";
 import LogoutIcon from '@mui/icons-material/Logout';
 import ContactsIcon from '@mui/icons-material/Contacts';
+import InfoIcon from '@mui/icons-material/Info';
 
 import GroupDialog from "../groupDialog";
 import ContactsDialog from "../contactsDialog";
+import AboutDialog from "../aboutDialog";
 
 const {apiEndpoint} = require('../../config.json');
 
@@ -19,12 +21,14 @@ function SideBar({open, onToggle}) {
     const [privateDialog, setPrivateDialog] = useState(false);
     const [groupDialog, setGroupDialog] = useState(false);
     const [contactDialog, setContactDialog] = useState(false);
+    const [aboutDialog, setAboutDialog] = useState(false);
 
     const handleTogglePrivateDialog = () => setPrivateDialog(!privateDialog);
     const handleToggleGroupDialog = () => setGroupDialog(!groupDialog);
     const handleToggleContactDialog = () => setContactDialog(!contactDialog);
+    const handleToggleAboutDialog = () => setAboutDialog(!aboutDialog);
 
-    const drawerList1 = [
+    const talkList = [
         {
             text: 'New Private Talk',
             icon: <PersonIcon/>,
@@ -39,13 +43,17 @@ function SideBar({open, onToggle}) {
 
     const logout = () => localStorage.removeItem('token');
 
-    const drawerList2 = [
-        {
-            text: 'Contacts',
-            icon: <ContactsIcon/>,
-            onClick: handleToggleContactDialog
-        },
-    ]
+    const contact = {
+        text: 'Contacts',
+        icon: <ContactsIcon/>,
+        onClick: handleToggleContactDialog
+    }
+
+    const aboutButton = {
+        text: 'About US',
+        icon: <InfoIcon/>,
+        onClick: handleToggleAboutDialog
+    }
 
     const logoutButton = {
         text: 'Logout',
@@ -80,7 +88,7 @@ function SideBar({open, onToggle}) {
                     </div>
                     <Divider style={{marginBlock: 10}}/>
                     <List>
-                        {drawerList1.map((item, index) => (
+                        {talkList.map((item, index) => (
                             <ListItem key={index} disablePadding>
                                 <ListItemButton onClick={item.onClick}>
                                     <ListItemIcon>
@@ -93,16 +101,25 @@ function SideBar({open, onToggle}) {
                     </List>
                     <Divider style={{marginBlock: 10}}/>
                     <List>
-                        {drawerList2.map((item, index) => (
-                            <ListItem key={index} disablePadding>
-                                <ListItemButton onClick={item.onClick}>
-                                    <ListItemIcon>
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.text}/>
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={contact.onClick}>
+                                <ListItemIcon>
+                                    {contact.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={contact.text}/>
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                    <Divider/>
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={aboutButton.onClick}>
+                                <ListItemIcon>
+                                    {aboutButton.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={aboutButton.text}/>
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                     <ListItem disablePadding style={{position: 'absolute', bottom: 10, color: 'red'}}>
                         <ListItemButton onClick={logoutButton.onClick}>
@@ -117,6 +134,7 @@ function SideBar({open, onToggle}) {
             <PrivateDialog open={privateDialog} onClose={handleTogglePrivateDialog}/>
             <GroupDialog open={groupDialog} onClose={handleToggleGroupDialog}/>
             <ContactsDialog open={contactDialog} onClose={handleToggleContactDialog}/>
+            <AboutDialog open={aboutDialog} onClose={handleToggleAboutDialog}/>
         </>
     );
 }
