@@ -50,11 +50,11 @@ function GroupDialog({open, onClose}) {
         e.preventDefault();
 
         let idList = choice.map(choice => choice._id);
-        idList = JSON.stringify([user._id, ...idList]);
+        const requestList= JSON.stringify([user._id, ...idList]);
         const formDataTalk = new FormData();
         formDataTalk.append('name', nameRef.current.value);
         formDataTalk.append('about', aboutRef.current.value);
-        formDataTalk.append('members', idList);
+        formDataTalk.append('members', requestList);
         formDataTalk.append('isPrivate', false);
         formDataTalk.append('talkImage', talkImage);
         try {
@@ -63,7 +63,7 @@ function GroupDialog({open, onClose}) {
             const id = {id: data._id};
             const talks = [...user.talks, id];
             handleUpdateUser('talks', talks);
-            socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [idList]});
+            socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [user._id, ...idList]});
             onClose();
         } catch (ex) {
         }

@@ -61,13 +61,14 @@ export const getCurrentTalk = async (id, setCurrentTalk) => {
     }
 }
 
-export const handleDeletePrivateTalk = async (id, user, handleUpdateUser) => {
+export const handleDeletePrivateTalk = async (id, user, handleUpdateUser, socketRef) => {
     const backup = [...user.talks];
     let talks = [...user.talks];
     try {
         talks = talks.filter(talk => talk.id !== id);
         handleUpdateUser('talks', talks);
-        await httpConnection.delete(`${apiEndpoint}/api/talks/${id}`);
+        await socketRef.current.emit('deleteTalk', {talkID: id});
+        // await httpConnection.delete(`${apiEndpoint}/api/talks/${id}`);
     } catch (ex) {
         handleUpdateUser('talks', backup);
     }

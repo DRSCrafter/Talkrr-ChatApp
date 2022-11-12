@@ -13,7 +13,7 @@ import {useMediaQuery} from "@mui/material";
 import TalkSection from "../Components/Sections/talkSection";
 
 function MainPage() {
-    const {user, socketRef} = useContext(UserContext);
+    const {user, handleUpdateUser, socketRef} = useContext(UserContext);
     const navigate = useNavigate();
 
     const [talks, setTalks] = useState([]);
@@ -67,22 +67,26 @@ function MainPage() {
                     handleUpdateTalk('messages', filteredMessages);
                 }
             });
-
         }
         if (socketRef.current) {
             socketRef.current.on('notify', (data) => {
-                if (currentTalk && currentTalk._id === data.talkID) {
-                    let Talks = [...talks];
-                    const target = Talks.findIndex(talk => talk.id === data.talkID);
-                    Talks[target].triggered = false;
-                    setTalks(Talks);
-                } else {
+                if (currentTalk && currentTalk._id !== data.talkID) {
                     let Talks = [...talks];
                     const target = Talks.findIndex(talk => talk.id === data.talkID);
                     Talks[target].triggered = true;
                     setTalks(Talks);
                 }
             })
+
+            socketRef.current.on('removeTalk', (data) => {
+                console.log('reached!');
+                if (currentTalk?._id === data.talkID)
+                    navigate('../../');
+
+                let talks = [...user.talks];
+                talks = talks.filter(talk => talk.id !== data.talkID);
+                handleUpdateUser('talks', talks);
+            });
         }
     }, [user, currentTalk, socketRef.current])
 

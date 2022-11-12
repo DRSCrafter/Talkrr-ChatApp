@@ -9,7 +9,7 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.4",
-    "@tauri-apps/api": "^1.0.0-rc.6",
+    "@tauri-apps/api": "^1.2.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -55,7 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.0-rc.13",
+    "@tauri-apps/cli": "^1.2.0",
     "cross-env": "^7.0.3"
   }
 }

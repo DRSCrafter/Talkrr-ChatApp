@@ -74,7 +74,7 @@ function SidePanel({talks, onToggleDrawer}) {
 
     const handleFilter = (event) => setFilter(event.target.value);
 
-    const deletePrivateTalk = (id) => handleDeletePrivateTalk(id, user, handleUpdateUser);
+    const deletePrivateTalk = (id) => handleDeletePrivateTalk(id, user, handleUpdateUser, socketRef);
     const leaveGroupTalk = (id) => handleLeaveGroupTalk(id, user, handleUpdateUser);
 
     return (
