@@ -1,4 +1,3 @@
-import '../App.css';
 import '../Styles/Components/WindowBar.css';
 import React from "react";
 import {IconButton} from "@mui/material";

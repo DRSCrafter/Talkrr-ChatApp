@@ -1,4 +1,3 @@
-import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';
@@ -6,7 +5,7 @@ import jwtDecode from "jwt-decode";
 import {io} from "socket.io-client";
 
 import MainPage from "./Pages/MainPage";
-import WindowBar from "./Components/WindowBar";
+import WindowBar from "./Layout/WindowBar";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import httpConnection from "./utils/httpConnection";

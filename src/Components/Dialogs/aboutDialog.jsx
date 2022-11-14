@@ -1,4 +1,4 @@
-import '../Styles/Components/aboutDialog.css';
+import '../../Styles/Components/Dialogs/aboutDialog.css';
 import React from 'react';
 
 import {Button, Dialog, IconButton, useMediaQuery} from "@mui/material";
@@ -43,7 +43,7 @@ function AboutDialog({open, onClose}) {
                 </div>
                 <div className="about-dialog-body-container">
                     <div className="about-dialog-logo-container">
-                        <img src={require('../Assets/logo.png')} className="about-dialog-logo-image"/>
+                        <img src={require('../../Assets/logo.png')} className="about-dialog-logo-image"/>
                         <span>Talkrr</span>
                     </div>
                     Talkrr is an open-source project powered by ReactJS. The server-side coding is done in ExpressJS and

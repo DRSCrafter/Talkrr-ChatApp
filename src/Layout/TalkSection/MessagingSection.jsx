@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import '../../Styles/Components/Sections/MessagingSection.css';
+import '../../Styles/Layout/TalkSection/MessagingSection.css';
 
 import TryIcon from '@mui/icons-material/Try';
 
-import Message from "../Message";
-import TypingBox from "../TypingBox";
-import MessagingHeader from "../MessagingHeader";
+import Message from "../../Components/Message";
+import TypingBox from "./MessagingSection/TypingBox";
+import MessagingHeader from "./MessagingSection/MessagingHeader";
 import UserContext from "../../Context/userContext";
 import TalkContext from "../../Context/talkContext";
 import httpConnection from "../../utils/httpConnection";

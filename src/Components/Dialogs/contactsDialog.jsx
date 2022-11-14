@@ -1,4 +1,4 @@
-import '../Styles/Components/contactsDialog.css';
+import '../../Styles/Components/Dialogs/contactsDialog.css';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {Dialog, IconButton, useMediaQuery} from "@mui/material";
@@ -7,14 +7,14 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
-import UserContext from "../Context/userContext";
-import httpConnection from "../utils/httpConnection";
-import {handleRemoveContact} from "../utils/talkHandling";
+import UserContext from "../../Context/userContext";
+import httpConnection from "../../utils/httpConnection";
+import {handleRemoveContact} from "../../utils/talkHandling";
 import {toast} from "react-toastify";
-import TalkContext from "../Context/talkContext";
+import TalkContext from "../../Context/talkContext";
 import {useNavigate} from "react-router-dom";
 
-const {apiEndpoint} = require('../config.json');
+const {apiEndpoint} = require('../../config.json');
 
 function ContactsDialog({open, onClose}) {
     const isPC = useMediaQuery('(min-width: 1024px)');

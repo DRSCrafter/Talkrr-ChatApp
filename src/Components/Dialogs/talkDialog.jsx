@@ -1,4 +1,4 @@
-import '../Styles/Components/talkDialog.css';
+import '../../Styles/Components/Dialogs/talkDialog.css';
 import React, {useContext} from 'react';
 
 import {styled} from '@mui/material/styles';
@@ -7,13 +7,13 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import PeopleIcon from '@mui/icons-material/People';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../utils/talkHandling";
-import TalkContext from "../Context/talkContext";
-import ControlSection from "./controlSection";
-import UserContext from "../Context/userContext";
+import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../../utils/talkHandling";
+import TalkContext from "../../Context/talkContext";
+import ControlSection from "../controlSection";
+import UserContext from "../../Context/userContext";
 import InfoIcon from "@mui/icons-material/Info";
 
-const {apiEndpoint} = require('../config.json');
+const {apiEndpoint} = require('../../config.json');
 
 function TalkDialog({open, onClose, talkInfo, members}) {
     const {user, handleUpdateUser} = useContext(UserContext);

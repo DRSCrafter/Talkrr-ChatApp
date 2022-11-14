@@ -1,4 +1,4 @@
-import '../../Styles/Components/Sections/ContactPanel.css';
+import '../../Styles/Layout/TalkSection/ContactPanel.css';
 import React, {useContext, useEffect, useState} from "react";
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
@@ -9,7 +9,7 @@ import TalkContext from "../../Context/talkContext";
 import UserContext from "../../Context/userContext";
 import {handleDeletePrivateTalk, handleLeaveGroupTalk, processTalkData}
     from "../../utils/talkHandling";
-import ControlSection from "../controlSection";
+import ControlSection from "../../Components/controlSection";
 
 const {apiEndpoint} = require("../../config.json");
 

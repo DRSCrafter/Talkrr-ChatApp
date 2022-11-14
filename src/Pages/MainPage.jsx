@@ -1,16 +1,15 @@
-import '../App.css';
 import React, {useContext, useEffect, useState} from "react";
 import UserContext from "../Context/userContext";
 import TalkContext from "../Context/talkContext";
 
-import SidePanel from "../Components/Sections/SidePanel";
-import Root from "../Components/Sections/Root";
-import SideBar from "../Components/Sections/sideBar";
+import SidePanel from "../Layout/SidePanel";
+import Root from "../Layout/Root";
+import SideBar from "../Layout/sideBar";
 import {getTalks} from "../utils/talkHandling";
-import NotFound from "../Components/Sections/notFound";
+import NotFound from "../Layout/notFound";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {useMediaQuery} from "@mui/material";
-import TalkSection from "../Components/Sections/talkSection";
+import TalkSection from "../Layout/talkSection";
 
 function MainPage() {
     const {user, handleUpdateUser, socketRef} = useContext(UserContext);

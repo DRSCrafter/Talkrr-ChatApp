@@ -1,7 +1,7 @@
-import '../Styles/Components/UserButton.css';
+import '../../Styles/Layout/SidePanel/UserButton.css';
 import React, {useContext, useEffect, useState} from "react";
-import TalkContext from "../Context/talkContext";
-import ContextMenu from "./contextMenu";
+import TalkContext from "../../Context/talkContext";
+import ContextMenu from "../../Components/contextMenu";
 
 import Button from "@mui/material/Button";
 import PushPinIcon from '@mui/icons-material/PushPin';
@@ -10,7 +10,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 
-const {apiEndpoint} = require("../config.json");
+const {apiEndpoint} = require("../../config.json");
 
 function UserButton({talk, Pin, onPin, onUnpin, onDelete, triggered}) {
     const {confirmRead, disconnectLastRoom} = useContext(TalkContext);

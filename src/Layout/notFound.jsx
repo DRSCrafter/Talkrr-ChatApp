@@ -1,4 +1,4 @@
-import '../../Styles/Components/notFound.css';
+import '../Styles/Layout/notFound.css';
 import React from 'react';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 

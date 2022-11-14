@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
-import '../Styles/Components/MessagingHeader.css';
-import TalkContext from "../Context/talkContext";
-import {processTalkData} from "../utils/talkHandling";
-import UserContext from "../Context/userContext";
-import TalkDialog from "./talkDialog";
+import '../../../Styles/Layout/TalkSection/MessagingSection/MessagingHeader.css';
+import TalkContext from "../../../Context/talkContext";
+import {processTalkData} from "../../../utils/talkHandling";
+import UserContext from "../../../Context/userContext";
+import TalkDialog from "../../../Components/Dialogs/talkDialog";
 import {IconButton, useMediaQuery} from "@mui/material";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate} from "react-router-dom";
 
-const {apiEndpoint} = require("../config.json");
+const {apiEndpoint} = require("../../../config.json");
 
 function MessagingHeader({members}) {
     const {currentTalk} = useContext(TalkContext);

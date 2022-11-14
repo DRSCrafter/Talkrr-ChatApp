@@ -1,7 +1,7 @@
-import '../../Styles/Components/Sections/sideBar.css';
+import '../Styles/Layout/sideBar.css';
 import React, {useContext, useState} from 'react';
-import UserContext from "../../Context/userContext";
-import PrivateDialog from "../privateDialog";
+import UserContext from "../Context/userContext";
+import PrivateDialog from "../Components/Dialogs/privateDialog";
 
 import {Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
@@ -10,11 +10,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import InfoIcon from '@mui/icons-material/Info';
 
-import GroupDialog from "../groupDialog";
-import ContactsDialog from "../contactsDialog";
-import AboutDialog from "../aboutDialog";
+import GroupDialog from "../Components/Dialogs/groupDialog";
+import ContactsDialog from "../Components/Dialogs/contactsDialog";
+import AboutDialog from "../Components/Dialogs/aboutDialog";
 
-const {apiEndpoint} = require('../../config.json');
+const {apiEndpoint} = require('../config.json');
 
 function SideBar({open, onToggle}) {
     const {user} = useContext(UserContext);

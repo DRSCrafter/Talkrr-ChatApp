@@ -1,14 +1,14 @@
-import '../../Styles/Components/Sections/SidePanel.css';
+import '../Styles/Layout/SidePanel.css';
 import React, {useContext, useEffect, useState} from "react";
 
-import UserButton from "../UserButton";
-import SearchBar from "../SearchBar";
-import Banner from "../Banner";
-import httpConnection from "../../utils/httpConnection";
-import UserContext from "../../Context/userContext";
-import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../../utils/talkHandling";
+import UserButton from "./SidePanel/UserButton";
+import SearchBar from "./SidePanel/SearchBar";
+import Banner from "./SidePanel/Banner";
+import httpConnection from "../utils/httpConnection";
+import UserContext from "../Context/userContext";
+import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../utils/talkHandling";
 
-const {apiEndpoint} = require('../../config.json');
+const {apiEndpoint} = require('../config.json');
 
 function SidePanel({talks, onToggleDrawer}) {
     const {user, handleUpdateUser} = useContext(UserContext);

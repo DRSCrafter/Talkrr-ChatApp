@@ -1,7 +1,7 @@
-import '../Styles/Components/privateDialog.css';
+import '../../Styles/Components/Dialogs/privateDialog.css';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import UserContext from "../Context/userContext";
-import httpConnection from "../utils/httpConnection";
+import UserContext from "../../Context/userContext";
+import httpConnection from "../../utils/httpConnection";
 
 import {
     Autocomplete, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, IconButton, TextField
@@ -9,7 +9,7 @@ import {
 import Button from "@mui/material/Button";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-const {apiEndpoint} = require('../config.json');
+const {apiEndpoint} = require('../../config.json');
 
 function GroupDialog({open, onClose}) {
     const {user, handleUpdateUser, socketRef} = useContext(UserContext);

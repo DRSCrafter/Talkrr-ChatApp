@@ -1,11 +1,11 @@
 import React, {useContext, useEffect} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 
-import MessagingSection from "./MessagingSection";
-import ContactPanel from "./ContactPanel";
-import {getCurrentTalk} from "../../utils/talkHandling";
-import UserContext from "../../Context/userContext";
-import TalkContext from "../../Context/talkContext";
+import MessagingSection from "./TalkSection/MessagingSection";
+import ContactPanel from "./TalkSection/ContactPanel";
+import {getCurrentTalk} from "../utils/talkHandling";
+import UserContext from "../Context/userContext";
+import TalkContext from "../Context/talkContext";
 import {useMediaQuery} from "@mui/material";
 
 function TalkSection() {

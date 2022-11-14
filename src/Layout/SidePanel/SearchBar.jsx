@@ -1,4 +1,4 @@
-import '../Styles/Components/SearchBar.css';
+import '../../Styles/Layout/SidePanel/SearchBar.css';
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 

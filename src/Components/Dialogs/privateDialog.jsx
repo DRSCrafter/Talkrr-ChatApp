@@ -1,16 +1,16 @@
-import '../Styles/Components/privateDialog.css';
+import '../../Styles/Components/Dialogs/privateDialog.css';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {
     Autocomplete, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, TextField
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import UserContext from "../Context/userContext";
-import httpConnection from "../utils/httpConnection";
+import UserContext from "../../Context/userContext";
+import httpConnection from "../../utils/httpConnection";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
-const {apiEndpoint} = require('../config.json');
+const {apiEndpoint} = require('../../config.json');
 
 function PrivateDialog({open, onClose}) {
     const {user, handleUpdateUser, socketRef} = useContext(UserContext);
