@@ -14,7 +14,7 @@ export const processTalkData = async (user, talk) => {
         let userID;
         userID = members.find(member => member !== user._id);
         const userInfo = await httpConnection.get(`${apiEndpoint}/api/users/strict/${userID}`);
-        return {
+        const result =  {
             id: talk._id,
             isPrivate: true,
             members: [user._id, userID],
@@ -23,9 +23,14 @@ export const processTalkData = async (user, talk) => {
             triggered: false,
             ...userInfo.data
         };
+
+        if (!result.talkImage)
+            result.defaultImage = require('../Assets/undefinedUser.jpg');
+
+        return result;
     }
 
-    return {
+    const result = {
         id: _id,
         name: name,
         about: about,
@@ -34,6 +39,11 @@ export const processTalkData = async (user, talk) => {
         talkImage: talkImage,
         triggered: false,
     };
+
+    if (result.talkImage === undefined)
+        result.defaultImage = require('../Assets/undefinedGroup.jpg');
+
+    return result;
 }
 
 export const getTalks = async (user, setTalks) => {
@@ -68,7 +78,6 @@ export const handleDeletePrivateTalk = async (id, user, handleUpdateUser, socket
         talks = talks.filter(talk => talk.id !== id);
         handleUpdateUser('talks', talks);
         await socketRef.current.emit('deleteTalk', {talkID: id});
-        // await httpConnection.delete(`${apiEndpoint}/api/talks/${id}`);
     } catch (ex) {
         handleUpdateUser('talks', backup);
     }

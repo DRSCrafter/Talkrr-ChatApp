@@ -38,7 +38,10 @@ function MessagingHeader({members}) {
                         </IconButton>
                     </div>
                 }
-                <img src={`${apiEndpoint}/${talkInfo?.talkImage}`} className="messaging-header-profile-image"/>
+                <img
+                    src={talkInfo?.talkImage ? `${apiEndpoint}/${talkInfo?.talkImage}` : talkInfo?.defaultImage}
+                    className="messaging-header-profile-image"
+                />
                 <span className="messaging-header-profile-info">
                 <div style={{fontSize: 25}}>{talkInfo?.name}</div>
                 <div style={{fontSize: 15}}>

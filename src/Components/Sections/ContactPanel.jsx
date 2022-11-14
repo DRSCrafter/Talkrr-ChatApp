@@ -35,7 +35,10 @@ function ContactPanel() {
         <div className="contact-panel-root">
             <div className="contact-panel-container">
                 <div className="identity-container">
-                    <img src={`${apiEndpoint}/${talkInfo?.talkImage}`} className="profile-image"/>
+                    <img
+                        src={talkInfo?.talkImage ? `${apiEndpoint}/${talkInfo?.talkImage}` : talkInfo?.defaultImage}
+                        className="profile-image"
+                    />
                     <span className="profile-name">{talkInfo?.name}</span>
                 </div>
 

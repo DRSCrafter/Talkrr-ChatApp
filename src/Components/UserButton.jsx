@@ -77,11 +77,18 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete, triggered}) {
 
     return (
         <>
-            <Button className="user-button-container" style={styles.sideUserContainer} onClick={handleClick}
-                    onContextMenu={handleContextMenu}>
+            <Button
+                className="user-button-container"
+                style={styles.sideUserContainer}
+                onClick={handleClick}
+                onContextMenu={handleContextMenu}
+            >
                 <span className="user-button-profile-image-container">
-                    <img src={`${apiEndpoint}/${talk?.talkImage}`} className="user-button-profile-image"
-                         alt="user profile"/>
+                    <img
+                        src={talk?.talkImage ? `${apiEndpoint}/${talk?.talkImage}` : talk?.defaultImage}
+                        className="user-button-profile-image"
+                        alt="user profile"
+                    />
                 </span>
                 <span className="user-button-profile-text">
                     <div className="user-button-profile-name">{talk.name}</div>
