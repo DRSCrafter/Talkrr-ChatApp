@@ -76,3 +76,33 @@ code {
 .toast-style {
     font-family: Yekan, "Segoe UI Light", sans-serif!important;
 }
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+            local("Segoe UI Light"),
+            url(../fonts/segoeuilight/light.woff2) format("woff2"),
+            url(../fonts/segoeuilight/light.woff) format("woff"),
+            url(../fonts/segoeuilight/light.ttf) format("truetype");
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: 'Yekan';
+    src:
+            local("Yekan"),
+            url(../fonts/yekan/Yekan.woff2) format('woff2'),
+            url(../fonts/yekan/Yekan.woff) format('woff'),
+            url(../fonts/yekan/Yekan.ttf) format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Debby Script';
+    src:
+            local("Debby Script"),
+            url(../fonts/debby/Debby.woff2) format('woff2'),
+            url(../fonts/debby/Debby.woff) format('woff'),
+            url(../fonts/debby/Debby.ttf) format('truetype');
+    font-weight: normal;
+}
