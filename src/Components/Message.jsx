@@ -8,13 +8,13 @@ import ContextMenu from "./contextMenu";
 function Message({isSent, message, onGetMember, onDelete, onCopy}) {
     const [contextMenu, setContextMenu] = React.useState(null);
 
-    const handleContextMenu = (event) => {
-        event.preventDefault();
+    const handleContextMenu = (e) => {
+        e.preventDefault();
         setContextMenu(
             contextMenu === null
                 ? {
-                    mouseX: event.clientX + 2,
-                    mouseY: event.clientY - 6,
+                    mouseX: e.clientX + 2,
+                    mouseY: e.clientY - 6,
                 }
                 : null
         );
@@ -28,19 +28,11 @@ function Message({isSent, message, onGetMember, onDelete, onCopy}) {
     const member = onGetMember(sender);
 
     const contextUserList = [
-        // {
-        //     text: "Reply",
-        //     icon: <ReplyIcon style={styles.menuItem}/>,
-        // },
         {
             text: "Copy",
             icon: <ContentCopyIcon style={styles.menuItem}/>,
             onClick: () => onCopy(message.content)
         },
-        // {
-        //     text: "Edit",
-        //     icon: <EditIcon style={styles.menuItem}/>
-        // },
         {
             text: "Delete",
             icon: <DeleteIcon style={styles.menuItem}/>,
@@ -49,10 +41,6 @@ function Message({isSent, message, onGetMember, onDelete, onCopy}) {
     ]
 
     const contextOthersList = [
-        // {
-        //     text: "Reply",
-        //     icon: <ReplyIcon style={styles.menuItem}/>,
-        // },
         {
             text: "Copy",
             icon: <ContentCopyIcon style={styles.menuItem}/>,

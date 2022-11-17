@@ -28,14 +28,14 @@ function SideBar({open, onToggle}) {
     const handleToggleContactDialog = () => setContactDialog(!contactDialog);
     const handleToggleAboutDialog = () => setAboutDialog(!aboutDialog);
 
-    const talkList = [
+    const chatList = [
         {
-            text: 'New Private Talk',
+            text: 'New Private Chat',
             icon: <PersonIcon/>,
             onClick: handleTogglePrivateDialog
         },
         {
-            text: 'New Group Talk',
+            text: 'New Group Chat',
             icon: <PeopleIcon/>,
             onClick: handleToggleGroupDialog
         }
@@ -88,13 +88,13 @@ function SideBar({open, onToggle}) {
                     </div>
                     <Divider style={{marginBlock: 10}}/>
                     <List>
-                        {talkList.map((item, index) => (
+                        {chatList.map((chat, index) => (
                             <ListItem key={index} disablePadding>
-                                <ListItemButton onClick={item.onClick}>
+                                <ListItemButton onClick={chat.onClick}>
                                     <ListItemIcon>
-                                        {item.icon}
+                                        {chat.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={item.text}/>
+                                    <ListItemText primary={chat.text}/>
                                 </ListItemButton>
                             </ListItem>
                         ))}

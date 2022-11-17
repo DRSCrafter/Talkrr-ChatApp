@@ -1,6 +1,6 @@
 import '../../Styles/Layout/SidePanel/UserButton.css';
 import React, {useContext, useEffect, useState} from "react";
-import TalkContext from "../../Context/talkContext";
+import ChatContext from "../../Context/chatContext";
 import ContextMenu from "../../Components/contextMenu";
 
 import Button from "@mui/material/Button";
@@ -12,8 +12,8 @@ import AnnouncementIcon from '@mui/icons-material/Announcement';
 
 const {apiEndpoint} = require("../../config.json");
 
-function UserButton({talk, Pin, onPin, onUnpin, onDelete, triggered}) {
-    const {confirmRead, disconnectLastRoom} = useContext(TalkContext);
+function UserButton({chat, Pin, onPin, onUnpin, onDelete, triggered}) {
+    const {confirmRead, disconnectLastRoom} = useContext(ChatContext);
 
     const [contextMenu, setContextMenu] = React.useState(null);
     const [newMessage, setNewMessage] = useState(false);
@@ -36,39 +36,39 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete, triggered}) {
     const pinContext = {
         text: "Pin",
         icon: <PushPinIcon style={styles.menuItem}/>,
-        onClick: () => onPin(talk.id)
+        onClick: () => onPin(chat.id)
     }
     const unpinContext = {
         text: "Unpin",
         icon: <WrongLocationIcon style={styles.menuItem}/>,
-        onClick: () => onUnpin(talk.id)
+        onClick: () => onUnpin(chat.id)
     }
 
-    const deleteTalk = {
-        text: "Delete Talk",
+    const deleteChat = {
+        text: "Delete Chat",
         icon: <DeleteIcon style={styles.menuItem}/>,
-        onClick: () => onDelete(talk.id)
+        onClick: () => onDelete(chat.id)
     }
     const leaveGroup = {
         text: "Leave Group",
         icon: <LogoutIcon style={styles.menuItem}/>,
-        onClick: () => onDelete(talk.id)
+        onClick: () => onDelete(chat.id)
     }
 
     const contextPin = Pin ? unpinContext : pinContext;
-    const contextDelete = talk.isPrivate ? deleteTalk : leaveGroup;
+    const contextDelete = chat.isPrivate ? deleteChat : leaveGroup;
 
     const contextList = [
         contextPin,
         contextDelete
     ]
 
-    const {setTalkID} = useContext(TalkContext);
+    const {setChatID} = useContext(ChatContext);
 
     const handleClick = () => {
         disconnectLastRoom();
-        confirmRead(talk.id);
-        setTalkID(talk.id);
+        confirmRead(chat.id);
+        setChatID(chat.id);
     }
 
     useEffect(() => {
@@ -85,15 +85,15 @@ function UserButton({talk, Pin, onPin, onUnpin, onDelete, triggered}) {
             >
                 <span className="user-button-profile-image-container">
                     <img
-                        src={talk?.talkImage ? `${apiEndpoint}/${talk?.talkImage}` : talk?.defaultImage}
+                        src={chat?.chatImage ? `${apiEndpoint}/${chat?.chatImage}` : chat?.defaultImage}
                         className="user-button-profile-image"
                         alt="user profile"
                     />
                 </span>
                 <span className="user-button-profile-text">
-                    <div className="user-button-profile-name">{talk.name}</div>
+                    <div className="user-button-profile-name">{chat.name}</div>
                     <div className="user-button-profile-message">
-                        {talk.isPrivate ? 'Private Talk' : `${talk.members.length} members`}
+                        {chat.isPrivate ? 'Private Chat' : `${chat.members.length} members`}
                     </div>
                 </span>
                 {Pin && <PushPinIcon fontSize={"small"} style={styles.pin}/>}

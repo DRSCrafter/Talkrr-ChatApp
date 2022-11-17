@@ -20,7 +20,7 @@ function GroupDialog({open, onClose}) {
 
     const nameRef = useRef('');
     const aboutRef = useRef('');
-    const [talkImage, setTalkImage] = useState(null);
+    const [chatImage, setChatImage] = useState(null);
 
     const handleChoose = (event, value) => setChoice(value);
 
@@ -44,26 +44,26 @@ function GroupDialog({open, onClose}) {
         return result;
     }
 
-    const handleFileChange = event => setTalkImage(event.target.files[0]);
+    const handleFileChange = event => setChatImage(event.target.files[0]);
 
-    const handleAddGroupTalk = async (e) => {
+    const handleAddGroupChat = async (e) => {
         e.preventDefault();
 
         let idList = choice.map(choice => choice._id);
         const requestList= JSON.stringify([user._id, ...idList]);
-        const formDataTalk = new FormData();
-        formDataTalk.append('name', nameRef.current.value);
-        formDataTalk.append('about', aboutRef.current.value);
-        formDataTalk.append('members', requestList);
-        formDataTalk.append('isPrivate', false);
-        formDataTalk.append('talkImage', talkImage);
+        const formDataChat = new FormData();
+        formDataChat.append('name', nameRef.current.value);
+        formDataChat.append('about', aboutRef.current.value);
+        formDataChat.append('members', requestList);
+        formDataChat.append('isPrivate', false);
+        formDataChat.append('chatImage', chatImage);
         try {
-            const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
+            const {data} = await httpConnection.post(`${apiEndpoint}/api/chats/`, formDataChat);
 
             const id = {id: data._id};
-            const talks = [...user.talks, id];
-            handleUpdateUser('talks', talks);
-            socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [user._id, ...idList]});
+            const chats = [...user.chats, id];
+            handleUpdateUser('chats', chats);
+            socketRef.current.emit('createRoom', {chatID: data._id, userIDs: [user._id, ...idList]});
             onClose();
         } catch (ex) {
         }
@@ -82,7 +82,7 @@ function GroupDialog({open, onClose}) {
             >
                 <div style={{paddingInline: '10px'}}>
                     <DialogTitle>
-                        {"ُStart a new Private Talk"}
+                        {"ُStart a new Group Chat"}
                     </DialogTitle>
                     <DialogContent sx={{overflow: 'visible'}}>
                         <div style={{display: 'flex', flexDirection: 'column', rowGap: '10px'}}>
@@ -106,9 +106,9 @@ function GroupDialog({open, onClose}) {
                                 filterSelectedOptions
                                 renderInput={(params) => (
                                     <TextField
-                                        {...params}
                                         label="Choose the members"
                                         placeholder="Favorites"
+                                        {...params}
                                     />
                                 )}
                             />
@@ -117,8 +117,8 @@ function GroupDialog({open, onClose}) {
                                           label="Only show the contacts"/>
                     </DialogContent>
                     <DialogActions>
-                        <Button style={{width: '40%'}} variant="contained" onClick={handleAddGroupTalk}>
-                            {"Create Talk"}
+                        <Button style={{width: '40%'}} variant="contained" onClick={handleAddGroupChat}>
+                            {"Create Chat"}
                         </Button>
                         <Button style={{width: '15%', color: '#707070'}} variant="text" onClick={onClose}>
                             {"Cancel"}

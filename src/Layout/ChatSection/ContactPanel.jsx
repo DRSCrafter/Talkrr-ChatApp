@@ -1,34 +1,34 @@
-import '../../Styles/Layout/TalkSection/ContactPanel.css';
+import '../../Styles/Layout/ChatSection/ContactPanel.css';
 import React, {useContext, useEffect, useState} from "react";
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PhoneIcon from '@mui/icons-material/Phone';
 import InfoIcon from '@mui/icons-material/Info';
 
-import TalkContext from "../../Context/talkContext";
+import ChatContext from "../../Context/chatContext";
 import UserContext from "../../Context/userContext";
-import {handleDeletePrivateTalk, handleLeaveGroupTalk, processTalkData}
-    from "../../utils/talkHandling";
+import {handleDeletePrivateChat, handleLeaveGroupChat, processChatData}
+    from "../../utils/chatHandling";
 import ControlSection from "../../Components/controlSection";
 
 const {apiEndpoint} = require("../../config.json");
 
 function ContactPanel() {
-    const [talkInfo, setTalkInfo] = useState({});
-    const {setTalkID, currentTalk} = useContext(TalkContext);
+    const [chatInfo, setChatInfo] = useState({});
+    const {setChatID, currentChat} = useContext(ChatContext);
     const {user, handleUpdateUser} = useContext(UserContext);
 
     useEffect(() => {
-        processTalkData(user, currentTalk).then(res => setTalkInfo(res));
-    }, [currentTalk]);
+        processChatData(user, currentChat).then(res => setChatInfo(res));
+    }, [currentChat]);
 
-    const deletePrivateTalk = async () => {
-        await handleDeletePrivateTalk(talkInfo.id, user, handleUpdateUser);
-        setTalkID('');
+    const deletePrivateChat = async () => {
+        await handleDeletePrivateChat(chatInfo.id, user, handleUpdateUser);
+        setChatID('');
     }
-    const leaveGroupTalk = async () => {
-        await handleLeaveGroupTalk(talkInfo.id, user, handleUpdateUser);
-        setTalkID('');
+    const leaveGroupChat = async () => {
+        await handleLeaveGroupChat(chatInfo.id, user, handleUpdateUser);
+        setChatID('');
     }
 
     return (
@@ -36,37 +36,37 @@ function ContactPanel() {
             <div className="contact-panel-container">
                 <div className="identity-container">
                     <img
-                        src={talkInfo?.talkImage ? `${apiEndpoint}/${talkInfo?.talkImage}` : talkInfo?.defaultImage}
+                        src={chatInfo?.chatImage ? `${apiEndpoint}/${chatInfo?.chatImage}` : chatInfo?.defaultImage}
                         className="profile-image"
                     />
-                    <span className="profile-name">{talkInfo?.name}</span>
+                    <span className="profile-name">{chatInfo?.name}</span>
                 </div>
 
                 <div className="details-container">
-                    {talkInfo?.isPrivate &&
+                    {chatInfo?.isPrivate &&
                         <>
                             <div className="profile-details">
                                 <AlternateEmailIcon fontSize="medium"/>
-                                <span style={{marginLeft: 10,}}>{talkInfo?.email}</span>
+                                <span style={{marginLeft: 10,}}>{chatInfo?.email}</span>
                             </div>
-                            {talkInfo?.phoneNumber &&
+                            {chatInfo?.phoneNumber &&
                                 <div className="profile-details">
                                     <PhoneIcon fontSize="medium"/>
-                                    <span style={{marginLeft: 10,}}>{talkInfo?.phoneNumber}</span>
+                                    <span style={{marginLeft: 10,}}>{chatInfo?.phoneNumber}</span>
                                 </div>
                             }
                         </>
                     }
                     <div className="profile-details">
                         <InfoIcon fontSize="medium"/>
-                        <span style={{marginLeft: 10,}}>{talkInfo?.about}</span>
+                        <span style={{marginLeft: 10,}}>{chatInfo?.about}</span>
                     </div>
                 </div>
 
                 <ControlSection
-                    talkInfo={talkInfo}
-                    onDeletePrivate={deletePrivateTalk}
-                    onLeaveGroup={leaveGroupTalk}
+                    chatInfo={chatInfo}
+                    onDeletePrivate={deletePrivateChat}
+                    onLeaveGroup={leaveGroupChat}
                 />
             </div>
         </div>

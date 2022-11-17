@@ -9,9 +9,9 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 import UserContext from "../../Context/userContext";
 import httpConnection from "../../utils/httpConnection";
-import {handleRemoveContact} from "../../utils/talkHandling";
+import {handleRemoveContact} from "../../utils/chatHandling";
 import {toast} from "react-toastify";
-import TalkContext from "../../Context/talkContext";
+import ChatContext from "../../Context/chatContext";
 import {useNavigate} from "react-router-dom";
 
 const {apiEndpoint} = require('../../config.json');
@@ -19,7 +19,7 @@ const {apiEndpoint} = require('../../config.json');
 function ContactsDialog({open, onClose}) {
     const isPC = useMediaQuery('(min-width: 1024px)');
     const {user, handleUpdateUser} = useContext(UserContext);
-    const {socketRef} = useContext(TalkContext);
+    const {socketRef} = useContext(ChatContext);
     const navigate = useNavigate();
     const [contacts, setContacts] = useState([]);
 
@@ -38,10 +38,10 @@ function ContactsDialog({open, onClose}) {
         onClose();
     }
 
-    const handleAddPrivateTalk = async (id) => {
-        const exists = await httpConnection.get(`${apiEndpoint}/api/talks/${user._id}/private/${id}`);
+    const handleAddPrivateChat = async (id) => {
+        const exists = await httpConnection.get(`${apiEndpoint}/api/chats/${user._id}/private/${id}`);
         if (exists.data) {
-            navigate(`../../talk/${exists.data._id}`);
+            navigate(`../../chat/${exists.data._id}`);
             onClose();
             return;
         }
@@ -53,18 +53,18 @@ function ContactsDialog({open, onClose}) {
 
         const target = contacts[userIndex];
 
-        const formDataTalk = new FormData();
-        formDataTalk.append('name', 'name');
-        formDataTalk.append('about', 'about');
-        formDataTalk.append('members', JSON.stringify([user._id, target._id]));
-        formDataTalk.append('isPrivate', true);
+        const formDataChat = new FormData();
+        formDataChat.append('name', 'name');
+        formDataChat.append('about', 'about');
+        formDataChat.append('members', JSON.stringify([user._id, target._id]));
+        formDataChat.append('isPrivate', true);
 
-        const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
+        const {data} = await httpConnection.post(`${apiEndpoint}/api/chats/`, formDataChat);
 
-        const talks = [...user.talks, {id: data._id}];
+        const chats = [...user.chats, {id: data._id}];
         onClose();
-        handleUpdateUser('talks', talks);
-        socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [target._id]});
+        handleUpdateUser('chats', chats);
+        socketRef.current.emit('createRoom', {chatID: data._id, userIDs: [target._id]});
     }
 
     const DialogContainer = styled(Dialog)(() => ({
@@ -114,7 +114,7 @@ function ContactsDialog({open, onClose}) {
                         <span>
                             <IconButton
                                 style={{color: 'dodgerblue', marginRight: 10}}
-                                onClick={() => handleAddPrivateTalk(contact._id)}>
+                                onClick={() => handleAddPrivateChat(contact._id)}>
                                 <QuestionAnswerIcon fontSize={"medium"}/>
                             </IconButton>
                             <IconButton style={{color: 'red'}} onClick={() => removeContact(contact._id)}>

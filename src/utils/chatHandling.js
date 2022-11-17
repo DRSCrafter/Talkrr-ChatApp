@@ -2,29 +2,29 @@ import httpConnection from "./httpConnection";
 
 const {apiEndpoint} = require('../config.json');
 
-export const getTalkInfo = async (id) => {
-    const {data} = await httpConnection.get(`${apiEndpoint}/api/talks/${id}`)
+export const getChatInfo = async (id) => {
+    const {data} = await httpConnection.get(`${apiEndpoint}/api/chats/${id}`)
     return data;
 };
 
-export const processTalkData = async (user, talk) => {
-    const {_id, name, about, isPrivate, members, talkImage} = talk;
+export const processChatData = async (user, chat) => {
+    const {_id, name, about, isPrivate, members, chatImage} = chat;
 
     if (isPrivate) {
         let userID;
         userID = members.find(member => member !== user._id);
         const userInfo = await httpConnection.get(`${apiEndpoint}/api/users/strict/${userID}`);
         const result =  {
-            id: talk._id,
+            id: chat._id,
             isPrivate: true,
             members: [user._id, userID],
-            talkImage: userInfo.data.profileImage,
+            chatImage: userInfo.data.profileImage,
             about: userInfo.data.bio,
             triggered: false,
             ...userInfo.data
         };
 
-        if (!result.talkImage)
+        if (!result.chatImage)
             result.defaultImage = require('../Assets/undefinedUser.jpg');
 
         return result;
@@ -36,65 +36,65 @@ export const processTalkData = async (user, talk) => {
         about: about,
         members: members,
         isPrivate: false,
-        talkImage: talkImage,
+        chatImage: chatImage,
         triggered: false,
     };
 
-    if (result.talkImage === undefined)
+    if (result.chatImage === undefined)
         result.defaultImage = require('../Assets/undefinedGroup.jpg');
 
     return result;
 }
 
-export const getTalks = async (user, setTalks) => {
+export const getChats = async (user, setChats) => {
     if (!user) return;
 
-    const talksList = [];
-    for (let talk of user.talks) {
-        const talkData = await getTalkInfo(talk.id);
-        const talkInfo = await processTalkData(user, talkData);
-        talksList.push(talkInfo);
+    const chatsList = [];
+    for (let chat of user.chats) {
+        const chatData = await getChatInfo(chat.id);
+        const chatInfo = await processChatData(user, chatData);
+        chatsList.push(chatInfo);
     }
-    setTalks(talksList);
+    setChats(chatsList);
 }
 
-export const getCurrentTalk = async (id, setCurrentTalk) => {
+export const getCurrentChat = async (id, setCurrentChat) => {
     if (!id) return;
 
-    let talkInfo;
+    let chatInfo;
     try {
-        talkInfo = await httpConnection.get(`${apiEndpoint}/api/talks/${id}`);
-        setCurrentTalk(talkInfo.data);
+        chatInfo = await httpConnection.get(`${apiEndpoint}/api/chats/${id}`);
+        setCurrentChat(chatInfo.data);
         return true;
     } catch (ex) {
         return false;
     }
 }
 
-export const handleDeletePrivateTalk = async (id, user, handleUpdateUser, socketRef) => {
-    const backup = [...user.talks];
-    let talks = [...user.talks];
+export const handleDeletePrivateChat = async (id, user, handleUpdateUser, socketRef) => {
+    const backup = [...user.chats];
+    let chats = [...user.chats];
     try {
-        talks = talks.filter(talk => talk.id !== id);
-        handleUpdateUser('talks', talks);
-        await socketRef.current.emit('deleteTalk', {talkID: id});
+        chats = chats.filter(chat => chat.id !== id);
+        handleUpdateUser('chats', chats);
+        await socketRef.current.emit('deleteChat', {chatID: id});
     } catch (ex) {
-        handleUpdateUser('talks', backup);
+        handleUpdateUser('chats', backup);
     }
 }
 
-export const handleLeaveGroupTalk = async (id, user, handleUpdateUser) => {
-    const backup = [...user.talks];
-    let talks = [...user.talks];
+export const handleLeaveGroupChat = async (id, user, handleUpdateUser) => {
+    const backup = [...user.chats];
+    let chats = [...user.chats];
     const request = JSON.stringify({id: user._id});
     try {
-        talks = talks.filter(talk => talk.id !== id);
-        handleUpdateUser('talks', talks);
-        await httpConnection.put(`${apiEndpoint}/api/talks/${id}/members`, request, {
+        chats = chats.filter(chat => chat.id !== id);
+        handleUpdateUser('chats', chats);
+        await httpConnection.put(`${apiEndpoint}/api/chats/${id}/members`, request, {
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         });
     } catch (ex) {
-        handleUpdateUser('talks', backup);
+        handleUpdateUser('chats', backup);
     }
 }
 

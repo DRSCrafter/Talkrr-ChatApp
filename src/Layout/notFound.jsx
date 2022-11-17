@@ -8,7 +8,7 @@ function NotFound() {
             <div className="not-found-root">
                 <div className="not-found-container">
                     <QuestionAnswerIcon style={{fontSize: '150px'}}/>
-                    No talks selected
+                    No Chats Selected
                 </div>
             </div>
         </>

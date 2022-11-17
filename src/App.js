@@ -38,7 +38,7 @@ function App() {
             socketRef.current = io.connect(apiEndpoint)
             socketRef.current.on('log', data => console.log(data));
             socketRef.current.on('getRoom', (data) => {
-                handleUpdateUser('talks', [...user.talks, {id: data}]);
+                handleUpdateUser('chats', [...user.chats, {id: data}]);
             });
             socketRef.current.emit('login', user._id);
         }

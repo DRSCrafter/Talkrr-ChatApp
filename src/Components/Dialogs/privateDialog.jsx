@@ -43,7 +43,7 @@ function PrivateDialog({open, onClose}) {
         return result;
     }
 
-    const handleAddPrivateTalk = async () => {
+    const handleAddPrivateChat = async () => {
         const userIndex = userList.findIndex(target => target.name === choice);
         if (userIndex === -1) {
             toast.error('Not a valid Username');
@@ -51,24 +51,24 @@ function PrivateDialog({open, onClose}) {
 
         const target = userList[userIndex];
 
-        const exists = await httpConnection.get(`${apiEndpoint}/api/talks/${user._id}/private/${target._id}`);
+        const exists = await httpConnection.get(`${apiEndpoint}/api/chats/${user._id}/private/${target._id}`);
         if (exists.data) {
-            navigate(`../../talk/${exists.data._id}`);
+            navigate(`../../chat/${exists.data._id}`);
             onClose();
-            return toast.info('Private Talk with this user already exists!');
+            return toast.info('Private Chat with this user already exists!');
         }
 
-        const formDataTalk = new FormData();
-        formDataTalk.append('name', 'name');
-        formDataTalk.append('about', 'about');
-        formDataTalk.append('members', JSON.stringify([user._id, target._id]));
-        formDataTalk.append('isPrivate', true);
+        const formDataChat = new FormData();
+        formDataChat.append('name', 'name');
+        formDataChat.append('about', 'about');
+        formDataChat.append('members', JSON.stringify([user._id, target._id]));
+        formDataChat.append('isPrivate', true);
 
-        const {data} = await httpConnection.post(`${apiEndpoint}/api/talks/`, formDataTalk);
+        const {data} = await httpConnection.post(`${apiEndpoint}/api/chats/`, formDataChat);
 
-        const talks = [...user.talks, {id: data._id}];
-        handleUpdateUser('talks', talks);
-        socketRef.current.emit('createRoom', {talkID: data._id, userIDs: [target._id]});
+        const chats = [...user.chats, {id: data._id}];
+        handleUpdateUser('chats', chats);
+        socketRef.current.emit('createRoom', {chatID: data._id, userIDs: [target._id]});
         onClose();
     }
 
@@ -86,7 +86,7 @@ function PrivateDialog({open, onClose}) {
             >
                 <div style={{paddingInline: '10px'}}>
                     <DialogTitle>
-                        {"ُStart a new Private Talk"}
+                        {"ُStart a new Private Chat"}
                     </DialogTitle>
                     <DialogContent sx={{overflow: 'visible'}}>
                         <Autocomplete
@@ -97,9 +97,9 @@ function PrivateDialog({open, onClose}) {
                             options={userList.map(user => user.name)}
                             renderInput={(params) => (
                                 <TextField
-                                    {...params}
                                     label="Search the Username"
                                     InputProps={{...params.InputProps, type: 'search',}}
+                                    {...params}
                                 />
                             )}
                         />
@@ -109,8 +109,8 @@ function PrivateDialog({open, onClose}) {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button style={{width: '40%'}} variant="contained" onClick={handleAddPrivateTalk}>
-                            {"Create Talk"}
+                        <Button style={{width: '40%'}} variant="contained" onClick={handleAddPrivateChat}>
+                            {"Create Chat"}
                         </Button>
                         <Button style={{width: '15%', color: '#707070'}} variant="text" onClick={onClose}>
                             {"Cancel"}

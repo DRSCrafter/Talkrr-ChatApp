@@ -6,41 +6,41 @@ import SearchBar from "./SidePanel/SearchBar";
 import Banner from "./SidePanel/Banner";
 import httpConnection from "../utils/httpConnection";
 import UserContext from "../Context/userContext";
-import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../utils/talkHandling";
+import {handleDeletePrivateChat, handleLeaveGroupChat} from "../utils/chatHandling";
 
 const {apiEndpoint} = require('../config.json');
 
-function SidePanel({talks, onToggleDrawer}) {
+function SidePanel({chats, onToggleDrawer}) {
     const {user, handleUpdateUser} = useContext(UserContext);
 
-    const [filteredTalks, setFilteredTalks] = useState([]);
+    const [filteredChats, setFilteredChats] = useState([]);
     const [filter, setFilter] = useState("");
 
     const {socketRef} = useContext(UserContext);
 
-    const talksGet = async () => {
+    const ChatsGet = async () => {
         if (socketRef.current) {
-            const talkIDs = talks.map(talk => talk.id);
-            await socketRef.current.emit('watchRooms', talkIDs);
+            const ChatIDs = chats.map(chat => chat.id);
+            await socketRef.current.emit('watchRooms', ChatIDs);
         }
     }
 
     useEffect(() => {
-        talksGet();
-    }, [talks, user]);
+        ChatsGet();
+    }, [chats, user]);
 
     useEffect(() => {
-        const pinned = talks.filter(talk => user.pins.includes(talk.id));
-        pinned.forEach(talk => {
-            talk.isPinned = true;
+        const pinned = chats.filter(chat => user.pins.includes(chat.id));
+        pinned.forEach(chat => {
+            chat.isPinned = true;
         })
-        const notPinned = talks.filter(talk => !user.pins.includes(talk.id));
+        const notPinned = chats.filter(chat => !user.pins.includes(chat.id));
         let sorted = pinned.concat(notPinned);
         if (filter !== "")
-            sorted = sorted.filter(talk => talk.name.match(new RegExp(filter)));
+            sorted = sorted.filter(chat => chat.name.match(new RegExp(filter)));
 
-        setFilteredTalks(sorted);
-    }, [talks, filter, user]);
+        setFilteredChats(sorted);
+    }, [chats, filter, user]);
 
     const handlePin = async (id) => {
         const pins = [...user.pins];
@@ -74,8 +74,8 @@ function SidePanel({talks, onToggleDrawer}) {
 
     const handleFilter = (event) => setFilter(event.target.value);
 
-    const deletePrivateTalk = (id) => handleDeletePrivateTalk(id, user, handleUpdateUser, socketRef);
-    const leaveGroupTalk = (id) => handleLeaveGroupTalk(id, user, handleUpdateUser);
+    const deletePrivateChat = (id) => handleDeletePrivateChat(id, user, handleUpdateUser, socketRef);
+    const leaveGroupChat = (id) => handleLeaveGroupChat(id, user, handleUpdateUser);
 
     return (
         <>
@@ -83,15 +83,15 @@ function SidePanel({talks, onToggleDrawer}) {
                 <Banner onToggleDrawer={onToggleDrawer}/>
                 <SearchBar value={filter} onChange={handleFilter}/>
                 <div className="users-container">
-                    {filteredTalks?.map((talk, index) => (
+                    {filteredChats?.map((chat, index) => (
                         <UserButton
                             key={index}
-                            talk={talk}
+                            chat={chat}
                             onPin={handlePin}
                             onUnpin={handleUnpin}
-                            Pin={talk.isPinned}
-                            onDelete={talk.isPrivate ? deletePrivateTalk : leaveGroupTalk}
-                            triggered={talk.triggered}
+                            Pin={chat.isPinned}
+                            onDelete={chat.isPrivate ? deletePrivateChat : leaveGroupChat}
+                            triggered={chat.triggered}
                         />))}
                 </div>
             </span>

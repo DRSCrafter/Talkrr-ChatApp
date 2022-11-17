@@ -1,4 +1,4 @@
-import '../../Styles/Components/Dialogs/talkDialog.css';
+import '../../Styles/Components/Dialogs/chatDialog.css';
 import React, {useContext} from 'react';
 
 import {styled} from '@mui/material/styles';
@@ -7,17 +7,17 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import PeopleIcon from '@mui/icons-material/People';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import {handleDeletePrivateTalk, handleLeaveGroupTalk} from "../../utils/talkHandling";
-import TalkContext from "../../Context/talkContext";
+import {handleDeletePrivateChat, handleLeaveGroupChat} from "../../utils/chatHandling";
+import ChatContext from "../../Context/chatContext";
 import ControlSection from "../controlSection";
 import UserContext from "../../Context/userContext";
 import InfoIcon from "@mui/icons-material/Info";
 
 const {apiEndpoint} = require('../../config.json');
 
-function TalkDialog({open, onClose, talkInfo, members}) {
+function ChatDialog({open, onClose, chatInfo, members}) {
     const {user, handleUpdateUser} = useContext(UserContext);
-    const {setTalkID} = useContext(TalkContext);
+    const {setChatID} = useContext(ChatContext);
 
     const isPC = useMediaQuery('(min-width: 1024px)');
 
@@ -35,15 +35,15 @@ function TalkDialog({open, onClose, talkInfo, members}) {
         },
     }));
 
-    const deletePrivateTalk = async () => {
-        await handleDeletePrivateTalk(talkInfo.id, user, handleUpdateUser);
-        setTalkID('');
+    const deletePrivateChat = async () => {
+        await handleDeletePrivateChat(chatInfo.id, user, handleUpdateUser);
+        setChatID('');
         onClose();
     }
 
-    const leaveGroupTalk = async () => {
-        await handleLeaveGroupTalk(talkInfo.id, user, handleUpdateUser);
-        setTalkID('');
+    const leaveGroupChat = async () => {
+        await handleLeaveGroupChat(chatInfo.id, user, handleUpdateUser);
+        setChatID('');
         onClose();
     }
 
@@ -64,38 +64,38 @@ function TalkDialog({open, onClose, talkInfo, members}) {
                 <div className="dialog-header-container">
                     <span className="dialog-header-image-container">
                         <img
-                            src={talkInfo && `${apiEndpoint}/${talkInfo?.talkImage}`}
+                            src={chatInfo && `${apiEndpoint}/${chatInfo?.chatImage}`}
                             className="dialog-header-profile-image"
                         />
                     </span>
                     <div className="dialog-header-profile-info">
-                        <div style={{fontSize: 22}}>{talkInfo?.name}</div>
+                        <div style={{fontSize: 22}}>{chatInfo?.name}</div>
                         <div style={{fontSize: 13}}>
-                            {talkInfo.isPrivate ? 'Private Talk' : `${talkInfo?.members?.length} members`}
+                            {chatInfo.isPrivate ? 'Private Chat' : `${chatInfo?.members?.length} members`}
                         </div>
                     </div>
                 </div>
                 <span style={{display: "flex", flexDirection: 'column', rowGap: '5px'}} className="dialog-sections">
-                    {talkInfo?.isPrivate &&
+                    {chatInfo?.isPrivate &&
                         <>
                             <div className="dialog-details">
                                 <AlternateEmailIcon fontSize="medium"/>
-                                <span style={{marginLeft: 10,}}>{talkInfo?.email}</span>
+                                <span style={{marginLeft: 10,}}>{chatInfo?.email}</span>
                             </div>
-                            {talkInfo?.phoneNumber &&
+                            {chatInfo?.phoneNumber &&
                                 <div className="dialog-details">
                                     <PhoneIcon fontSize="medium"/>
-                                    <span style={{marginLeft: 10,}}>{talkInfo?.phoneNumber}</span>
+                                    <span style={{marginLeft: 10,}}>{chatInfo?.phoneNumber}</span>
                                 </div>
                             }
                         </>
                     }
                     <div className="dialog-details">
                         <InfoIcon fontSize="medium"/>
-                        <span style={{marginLeft: 10,}}>{talkInfo?.about}</span>
+                        <span style={{marginLeft: 10,}}>{chatInfo?.about}</span>
                     </div>
                 </span>
-                {!talkInfo?.isPrivate &&
+                {!chatInfo?.isPrivate &&
                     <span className="dialog-sections">
                         <div style={{margin: '10px', display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
                             <PeopleIcon style={{marginRight: '15px'}}/>
@@ -113,9 +113,9 @@ function TalkDialog({open, onClose, talkInfo, members}) {
                     </span>
                 }
                 <ControlSection
-                    talkInfo={talkInfo}
-                    onLeaveGroup={leaveGroupTalk}
-                    onDeletePrivate={deletePrivateTalk}
+                    chatInfo={chatInfo}
+                    onLeaveGroup={leaveGroupChat}
+                    onDeletePrivate={deletePrivateChat}
                     callback={onClose}
                 />
             </DialogContainer>
@@ -123,4 +123,4 @@ function TalkDialog({open, onClose, talkInfo, members}) {
     );
 }
 
-export default TalkDialog;
+export default ChatDialog;

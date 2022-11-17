@@ -1,22 +1,22 @@
 import React, {useContext, useEffect, useState} from "react";
 import UserContext from "../Context/userContext";
-import TalkContext from "../Context/talkContext";
+import ChatContext from "../Context/chatContext";
 
 import SidePanel from "../Layout/SidePanel";
 import Root from "../Layout/Root";
 import SideBar from "../Layout/sideBar";
-import {getTalks} from "../utils/talkHandling";
+import {getChats} from "../utils/chatHandling";
 import NotFound from "../Layout/notFound";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {useMediaQuery} from "@mui/material";
-import TalkSection from "../Layout/talkSection";
+import ChatSection from "../Layout/chatSection";
 
 function MainPage() {
     const {user, handleUpdateUser, socketRef} = useContext(UserContext);
     const navigate = useNavigate();
 
-    const [talks, setTalks] = useState([]);
-    const [currentTalk, setCurrentTalk] = useState(null);
+    const [chats, setChats] = useState([]);
+    const [currentChat, setCurrentChat] = useState(null);
 
     const [drawer, setDrawer] = useState(false);
 
@@ -28,14 +28,14 @@ function MainPage() {
     };
 
     const disconnectLastRoom = async () => {
-        if (currentTalk)
-            await socketRef.current.emit('leaveRoom', currentTalk._id);
+        if (currentChat)
+            await socketRef.current.emit('leaveRoom', currentChat._id);
     }
 
-    const setTalkID = (id) => navigate(`../talk/${id}`);
+    const setChatID = (id) => navigate(`../chat/${id}`);
 
     useEffect(() => {
-        document.addEventListener('keydown', detectKeyDown, true)
+        document.addEventListener('keydown', detectKeyDown, true);
     }, []);
 
     const detectKeyDown = (e) => {
@@ -46,73 +46,73 @@ function MainPage() {
     useEffect(() => {
         const jwtToken = localStorage.getItem('token');
         if (!jwtToken) navigate('/login');
-        getTalks(user, setTalks);
+        getChats(user, setChats);
     }, [user]);
 
     useEffect(() => {
-        if (socketRef.current && currentTalk) {
+        if (socketRef.current && currentChat) {
             socketRef.current.on('message', (data) => {
-                if (data.talkID === currentTalk._id) {
-                    const messages = [...currentTalk.messages];
+                if (data.chatID === currentChat._id) {
+                    const messages = [...currentChat.messages];
                     messages.push(data._doc);
-                    handleUpdateTalk('messages', messages);
+                    handleUpdateChat('messages', messages);
                 }
             });
 
             socketRef.current.on('removeMessage', (data) => {
-                if (currentTalk._id === data.talkID) {
-                    let messages = [...currentTalk.messages];
+                if (currentChat._id === data.chatID) {
+                    let messages = [...currentChat.messages];
                     const filteredMessages = messages.filter(message => message._id !== data.messageID);
-                    handleUpdateTalk('messages', filteredMessages);
+                    handleUpdateChat('messages', filteredMessages);
                 }
             });
         }
         if (socketRef.current) {
             socketRef.current.on('notify', (data) => {
-                if (currentTalk && currentTalk._id !== data.talkID) {
-                    let Talks = [...talks];
-                    const target = Talks.findIndex(talk => talk.id === data.talkID);
-                    Talks[target].triggered = true;
-                    setTalks(Talks);
+                if (currentChat && currentChat._id !== data.chatID) {
+                    let Chats = [...chats];
+                    const target = Chats.findIndex(chat => chat.id === data.chatID);
+                    Chats[target].triggered = true;
+                    setChats(Chats);
                 }
             })
 
-            socketRef.current.on('removeTalk', (data) => {
+            socketRef.current.on('removeChat', (data) => {
                 console.log('reached!');
-                if (currentTalk?._id === data.talkID)
+                if (currentChat?._id === data.chatID)
                     navigate('../../');
 
-                let talks = [...user.talks];
-                talks = talks.filter(talk => talk.id !== data.talkID);
-                handleUpdateUser('talks', talks);
+                let chats = [...user.chats];
+                chats = chats.filter(chat => chat.id !== data.chatID);
+                handleUpdateUser('chats', chats);
             });
         }
-    }, [user, currentTalk, socketRef.current])
+    }, [user, currentChat, socketRef.current])
 
-    const handleUpdateTalk = (key, value) => setCurrentTalk({...currentTalk, [key]: value});
+    const handleUpdateChat = (key, value) => setCurrentChat({...currentChat, [key]: value});
 
     const confirmRead = (id) => {
-        let Talks = [...talks];
-        const target = Talks.findIndex(talk => talk.id === id);
-        Talks[target].triggered = false;
-        setTalks(Talks);
+        let Chats = [...chats];
+        const target = Chats.findIndex(chat => chat.id === id);
+        Chats[target].triggered = false;
+        setChats(Chats);
     }
 
     return (
         <>
-            <TalkContext.Provider
-                value={{currentTalk, setCurrentTalk, handleUpdateTalk, setTalkID, confirmRead, disconnectLastRoom}}
+            <ChatContext.Provider
+                value={{currentChat, setCurrentChat, handleUpdateChat, setChatID, confirmRead, disconnectLastRoom}}
             >
                 <Root>
-                    {((isPhone && !currentTalk) || (!isPhone)) &&
-                        <SidePanel talks={talks} onToggleDrawer={toggleDrawer}/>}
+                    {((isPhone && !currentChat) || (!isPhone)) &&
+                        <SidePanel chats={chats} onToggleDrawer={toggleDrawer}/>}
                     <Routes>
                         <Route path="" element={<NotFound/>}/>
-                        <Route path="talk/:talkID" element={<TalkSection/>}/>
+                        <Route path="chat/:chatID" element={<ChatSection/>}/>
                     </Routes>
                 </Root>
                 <SideBar open={drawer} onToggle={toggleDrawer}/>
-            </TalkContext.Provider>
+            </ChatContext.Provider>
         </>
     );
 }

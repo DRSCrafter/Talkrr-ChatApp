@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import '../../Styles/Layout/TalkSection/MessagingSection.css';
+import '../../Styles/Layout/ChatSection/MessagingSection.css';
 
 import TryIcon from '@mui/icons-material/Try';
 
@@ -7,7 +7,7 @@ import Message from "../../Components/Message";
 import TypingBox from "./MessagingSection/TypingBox";
 import MessagingHeader from "./MessagingSection/MessagingHeader";
 import UserContext from "../../Context/userContext";
-import TalkContext from "../../Context/talkContext";
+import ChatContext from "../../Context/chatContext";
 import httpConnection from "../../utils/httpConnection";
 
 import moment from 'moment';
@@ -17,13 +17,13 @@ const {apiEndpoint} = require('../../config.json');
 function MessagingSection() {
     const [members, setMembers] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
-    const {currentTalk, setCurrentTalk, handleUpdateTalk} = useContext(TalkContext);
+    const {currentChat, setCurrentChat, handleUpdateChat} = useContext(ChatContext);
     const {user, socketRef} = useContext(UserContext);
     const messagesEnd = useRef(null);
 
     useEffect(() => {
         return () => {
-            setCurrentTalk(undefined);
+            setCurrentChat(undefined);
         }
     }, []);
 
@@ -32,18 +32,18 @@ function MessagingSection() {
     const handleChangeMessage = (event) => setCurrentMessage(event.target.value);
 
     const handleStateMessage = (message) => {
-        const messages = [...currentTalk.messages];
+        const messages = [...currentChat.messages];
         messages.push(message);
-        handleUpdateTalk('messages', messages);
+        handleUpdateChat('messages', messages);
     }
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (currentMessage === '') return;
-        const backup = [...currentTalk.messages];
+        const backup = [...currentChat.messages];
 
         const request = {
-            talkID: currentTalk._id,
+            chatID: currentChat._id,
             sender: user._id,
             content: currentMessage,
         };
@@ -52,7 +52,7 @@ function MessagingSection() {
 
             await socketRef.current.emit('sendMessage', request);
         } catch (ex) {
-            handleUpdateTalk('messages', backup);
+            handleUpdateChat('messages', backup);
         }
         setCurrentMessage('');
     }
@@ -60,28 +60,28 @@ function MessagingSection() {
     useEffect(() => {
         if (messagesEnd.current)
             scrollEnd();
-    }, [currentTalk])
+    }, [currentChat])
 
     const addEmoji = (emoji) => setCurrentMessage(currentMessage + emoji.native);
 
     const handleDeleteMessage = async (id) => {
-        const backup = [...currentTalk.messages];
-        const messages = [...currentTalk.messages];
+        const backup = [...currentChat.messages];
+        const messages = [...currentChat.messages];
         try {
             const filteredMessages = messages.filter(message => message._id !== id);
-            handleUpdateTalk('messages', filteredMessages);
-            await socketRef.current.emit('deleteMessage', {talkID: currentTalk._id, messageID: id});
+            handleUpdateChat('messages', filteredMessages);
+            await socketRef.current.emit('deleteMessage', {chatID: currentChat._id, messageID: id});
         } catch (ex) {
-            handleUpdateTalk('messages', backup);
+            handleUpdateChat('messages', backup);
         }
     }
 
     const handleCopyMessage = (content) => navigator.clipboard.writeText(content);
 
     const getMembers = async () => {
-        if (!currentTalk) return;
+        if (!currentChat) return;
         const membersList = [];
-        for (let member of currentTalk.members) {
+        for (let member of currentChat.members) {
             const user = await httpConnection.get(`${apiEndpoint}/api/users/strict/${member}`);
             membersList.push(user.data);
         }
@@ -95,15 +95,15 @@ function MessagingSection() {
 
     useEffect(() => {
         getMembers();
-    }, [currentTalk]);
+    }, [currentChat]);
 
     return (
         <span className="messaging-panel-root">
             <div className="messaging-panel-container">
                 <MessagingHeader members={members}/>
-                {currentTalk?.messages.length !== 0 ?
+                {currentChat?.messages.length !== 0 ?
                     <div className="messages-container">
-                        {currentTalk?.messages && currentTalk?.messages.map((message, index) => (
+                        {currentChat?.messages && currentChat?.messages.map((message, index) => (
                             <Message message={message} key={index} isSent={message.sender === user._id}
                                      onGetMember={handleGetMember} onDelete={handleDeleteMessage}
                                      onCopy={handleCopyMessage}/>

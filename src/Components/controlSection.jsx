@@ -1,7 +1,7 @@
 import '../Styles/Components/controlSection.css';
 import React, {useContext} from 'react';
 import UserContext from "../Context/userContext";
-import {handleAddContact, handleRemoveContact} from "../utils/talkHandling";
+import {handleAddContact, handleRemoveContact} from "../utils/chatHandling";
 
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -9,17 +9,17 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
-function ControlSection({talkInfo, onDeletePrivate, onLeaveGroup, callback}) {
+function ControlSection({ChatInfo, onDeletePrivate, onLeaveGroup, callback}) {
     const {user, handleUpdateUser} = useContext(UserContext);
 
     const addContact = async () => {
-        await handleAddContact(talkInfo._id, user, handleUpdateUser);
+        await handleAddContact(ChatInfo._id, user, handleUpdateUser);
         if (callback)
             callback();
     }
 
     const removeContact = async () => {
-        await handleRemoveContact(talkInfo._id, user, handleUpdateUser);
+        await handleRemoveContact(ChatInfo._id, user, handleUpdateUser);
         if (callback)
             callback();
     }
@@ -27,20 +27,20 @@ function ControlSection({talkInfo, onDeletePrivate, onLeaveGroup, callback}) {
     return (
         <>
             <div className="controls-container">
-                {talkInfo.isPrivate ?
+                {ChatInfo?.isPrivate ?
                     <Button className="control-btn" style={{...styles.button, color: "red"}}
                             onClick={onDeletePrivate}>
                         <DeleteIcon fontSize="medium"/>
-                        <span style={{marginLeft: 10}}>Delete Talk</span>
+                        <span style={{marginLeft: 10}}>Delete Chat</span>
                     </Button> :
                     <Button className="control-btn" style={styles.button} onClick={onLeaveGroup}>
                         <LogoutIcon fontSize="medium"/>
-                        <span style={{marginLeft: 10}}>Leave Talk</span>
+                        <span style={{marginLeft: 10}}>Leave Chat</span>
                     </Button>
                 }
-                {talkInfo?.isPrivate &&
+                {ChatInfo?.isPrivate &&
                     <>
-                        {user.contacts.includes(talkInfo._id) ?
+                        {user.contacts.includes(ChatInfo._id) ?
                             <Button
                                 className="control-btn"
                                 onClick={removeContact}
