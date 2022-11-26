@@ -124,10 +124,12 @@ class SignUp extends Component {
                             <TextField id="outlined-basic" variant="outlined" size="small"
                                        name="password" value={data.password} onChange={this.handleChange}
                                        label={errors.password ? "error" : "Password"}
+                                       type="password"
                                        error={errors.password} helperText={errors.password}/>
                             <TextField id="outlined-basic" variant="outlined" size="small"
                                        name="passwordConfirm" value={data.passwordConfirm} onChange={this.handleChange}
                                        label={errors.passwordConfirm ? "error" : "Repeat Password"}
+                                       type="password"
                                        error={errors.passwordConfirm} helperText={errors.passwordConfirm}/>
                             <TextField id="outlined-basic" variant="outlined" size="small"
                                        name="bio" value={data.bio} onChange={this.handleChange}

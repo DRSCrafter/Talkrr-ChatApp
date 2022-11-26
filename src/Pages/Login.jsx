@@ -39,7 +39,7 @@ function Login() {
                         <TextField style={{display: 'block', marginBottom: '1.25vh'}} id="outlined-basic"
                                    variant="outlined" size="medium" label="E-mail" inputRef={emailRef}/>
                         <TextField style={{display: 'block', marginBottom: '2vh'}} id="outlined-basic"
-                                   variant="outlined" size="medium" label="Password" inputRef={passwordRef}/>
+                                   variant="outlined" size="medium" type="password" label="Password" inputRef={passwordRef}/>
                         <span className="login-btn-section">
                             <Button className="login-btn" variant="contained" onClick={handleSubmit}>Login</Button>
                             <Button className="login-btn" variant="text" onClick={handleNavigate}>SignUp</Button>
