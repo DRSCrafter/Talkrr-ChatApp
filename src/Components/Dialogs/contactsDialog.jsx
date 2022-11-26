@@ -14,8 +14,6 @@ import {toast} from "react-toastify";
 import ChatContext from "../../Context/chatContext";
 import {useNavigate} from "react-router-dom";
 
-const {apiEndpoint} = require('../../config.json');
-
 function ContactsDialog({open, onClose}) {
     const isPC = useMediaQuery('(min-width: 1024px)');
     const {user, handleUpdateUser} = useContext(UserContext);
@@ -24,7 +22,7 @@ function ContactsDialog({open, onClose}) {
     const [contacts, setContacts] = useState([]);
 
     const getContactsInfo = async () => {
-        const {data} = await httpConnection.get(`${apiEndpoint}/api/users/${user._id}/contacts`);
+        const {data} = await httpConnection.get(`/users/${user._id}/contacts`);
         setContacts(data);
     }
 
@@ -39,7 +37,7 @@ function ContactsDialog({open, onClose}) {
     }
 
     const handleAddPrivateChat = async (id) => {
-        const exists = await httpConnection.get(`${apiEndpoint}/api/chats/${user._id}/private/${id}`);
+        const exists = await httpConnection.get(`/chats/${user._id}/private/${id}`);
         if (exists.data) {
             navigate(`../../chat/${exists.data._id}`);
             onClose();
@@ -59,7 +57,7 @@ function ContactsDialog({open, onClose}) {
         formDataChat.append('members', JSON.stringify([user._id, target._id]));
         formDataChat.append('isPrivate', true);
 
-        const {data} = await httpConnection.post(`${apiEndpoint}/api/chats/`, formDataChat);
+        const {data} = await httpConnection.post(`/chats/`, formDataChat);
 
         const chats = [...user.chats, {id: data._id}];
         onClose();
@@ -104,7 +102,7 @@ function ContactsDialog({open, onClose}) {
                     <div className="contact-info-container" key={contact._id}>
                         <span style={{display: 'flex', alignItems: 'center'}}>
                             <img
-                                src={`${apiEndpoint}/${contact?.profileImage}`}
+                                src={contact?.profileImage}
                                 className="contact-info-image"
                             />
                             <span className="contact-info-text">

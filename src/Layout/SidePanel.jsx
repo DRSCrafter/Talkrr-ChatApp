@@ -8,8 +8,6 @@ import httpConnection from "../utils/httpConnection";
 import UserContext from "../Context/userContext";
 import {handleDeletePrivateChat, handleLeaveGroupChat} from "../utils/chatHandling";
 
-const {apiEndpoint} = require('../config.json');
-
 function SidePanel({chats, onToggleDrawer}) {
     const {user, handleUpdateUser} = useContext(UserContext);
 
@@ -48,7 +46,7 @@ function SidePanel({chats, onToggleDrawer}) {
         try {
             pins.push(id);
             handleUpdateUser('pins', pins);
-            await httpConnection.post(`${apiEndpoint}/api/users/${user._id}/pin`, request, {
+            await httpConnection.post(`/users/${user._id}/pin`, request, {
                 headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
             });
         } catch (ex) {
@@ -63,7 +61,7 @@ function SidePanel({chats, onToggleDrawer}) {
         try {
             pins = pins.filter(pin => pin !== id);
             handleUpdateUser('pins', pins);
-            await httpConnection.put(`${apiEndpoint}/api/users/${user._id}/unpin`, request, {
+            await httpConnection.put(`/users/${user._id}/unpin`, request, {
                 headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
             });
         } catch (ex) {

@@ -12,8 +12,6 @@ import httpConnection from "../../utils/httpConnection";
 
 import moment from 'moment';
 
-const {apiEndpoint} = require('../../config.json');
-
 function MessagingSection() {
     const [members, setMembers] = useState([]);
     const [currentMessage, setCurrentMessage] = useState('');
@@ -82,7 +80,7 @@ function MessagingSection() {
         if (!currentChat) return;
         const membersList = [];
         for (let member of currentChat.members) {
-            const user = await httpConnection.get(`${apiEndpoint}/api/users/strict/${member}`);
+            const user = await httpConnection.get(`/users/strict/${member}`);
             membersList.push(user.data);
         }
         setMembers(membersList);

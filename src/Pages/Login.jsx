@@ -36,9 +36,9 @@ function Login() {
                 <form className="login-form-container">
                     <span className="login-title">Talkrr</span>
                     <span style={{display: 'flex', marginInline: 'auto', flexDirection: 'column', width: '100%'}}>
-                        <TextField style={{display: 'block', marginBottom: '1.25vh'}} id="outlined-basic"
+                        <TextField style={{display: 'block', marginBottom: '1.25vh'}}
                                    variant="outlined" size="medium" label="E-mail" inputRef={emailRef}/>
-                        <TextField style={{display: 'block', marginBottom: '2vh'}} id="outlined-basic"
+                        <TextField style={{display: 'block', marginBottom: '2vh'}}
                                    variant="outlined" size="medium" type="password" label="Password" inputRef={passwordRef}/>
                         <span className="login-btn-section">
                             <Button className="login-btn" variant="contained" onClick={handleSubmit}>Login</Button>

@@ -9,8 +9,6 @@ import {
 import Button from "@mui/material/Button";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
-const {apiEndpoint} = require('../../config.json');
-
 function GroupDialog({open, onClose}) {
     const {user, handleUpdateUser, socketRef} = useContext(UserContext);
 
@@ -27,7 +25,7 @@ function GroupDialog({open, onClose}) {
     const toggleBox = (event) => showOnlyContacts(event.target.checked);
 
     const handleGetList = async () => {
-        let list = await httpConnection.get(`${apiEndpoint}/api/users/strict/list`);
+        let list = await httpConnection.get('/users/strict/list');
         if (onlyContacts)
             list = handleFilterFriends(list.data);
         else
@@ -58,7 +56,7 @@ function GroupDialog({open, onClose}) {
         formDataChat.append('isPrivate', false);
         formDataChat.append('chatImage', chatImage);
         try {
-            const {data} = await httpConnection.post(`${apiEndpoint}/api/chats/`, formDataChat);
+            const {data} = await httpConnection.post('/chats/', formDataChat);
 
             const id = {id: data._id};
             const chats = [...user.chats, id];

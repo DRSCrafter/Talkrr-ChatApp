@@ -104,7 +104,7 @@ class SignUp extends Component {
                         <span className="signup-header">Welcome to Talkrr</span>
                         <div className="signUp-Window">
                             <div className="double-span">
-                                <TextField id="outlined-basic" variant="outlined" size="small"
+                                <TextField variant="outlined" size="small"
                                            name="name" value={data.name} onChange={this.handleChange}
                                            label={errors.name ? "error" : "Username"}
                                            error={errors.name} helperText={errors.name} style={{width: '94%'}}/>
@@ -113,25 +113,25 @@ class SignUp extends Component {
                                     <PhotoCameraIcon/>
                                 </IconButton>
                             </div>
-                            <TextField id="outlined-basic" variant="outlined" size="small"
+                            <TextField variant="outlined" size="small"
                                        name="email" value={data.email} onChange={this.handleChange}
                                        label={errors.email ? "error" : "E-mail"}
                                        error={errors.email} helperText={errors.email}/>
-                            <TextField id="outlined-basic" variant="outlined" size="small"
+                            <TextField variant="outlined" size="small"
                                        name="phoneNumber" value={data.phoneNumber} onChange={this.handleChange}
                                        label={errors.phoneNumber ? "error" : "Phone Number(Optional)"}
                                        error={errors.phoneNumber} helperText={errors.phoneNumber}/>
-                            <TextField id="outlined-basic" variant="outlined" size="small"
+                            <TextField variant="outlined" size="small"
                                        name="password" value={data.password} onChange={this.handleChange}
                                        label={errors.password ? "error" : "Password"}
                                        type="password"
                                        error={errors.password} helperText={errors.password}/>
-                            <TextField id="outlined-basic" variant="outlined" size="small"
+                            <TextField variant="outlined" size="small"
                                        name="passwordConfirm" value={data.passwordConfirm} onChange={this.handleChange}
                                        label={errors.passwordConfirm ? "error" : "Repeat Password"}
                                        type="password"
                                        error={errors.passwordConfirm} helperText={errors.passwordConfirm}/>
-                            <TextField id="outlined-basic" variant="outlined" size="small"
+                            <TextField variant="outlined" size="small"
                                        name="bio" value={data.bio} onChange={this.handleChange}
                                        label={errors.bio ? "error" : "Bio(100 Max characters)"}
                                        error={errors.bio} helperText={errors.bio} className="double-span"/>

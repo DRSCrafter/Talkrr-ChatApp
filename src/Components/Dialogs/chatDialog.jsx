@@ -13,8 +13,6 @@ import ControlSection from "../controlSection";
 import UserContext from "../../Context/userContext";
 import InfoIcon from "@mui/icons-material/Info";
 
-const {apiEndpoint} = require('../../config.json');
-
 function ChatDialog({open, onClose, chatInfo, members}) {
     const {user, handleUpdateUser} = useContext(UserContext);
     const {setChatID} = useContext(ChatContext);
@@ -64,7 +62,7 @@ function ChatDialog({open, onClose, chatInfo, members}) {
                 <div className="dialog-header-container">
                     <span className="dialog-header-image-container">
                         <img
-                            src={chatInfo && `${apiEndpoint}/${chatInfo?.chatImage}`}
+                            src={chatInfo?.chatImage}
                             className="dialog-header-profile-image"
                         />
                     </span>
@@ -104,7 +102,7 @@ function ChatDialog({open, onClose, chatInfo, members}) {
                         {members.map(member => (
                             <div style={{width: '100%', height: '70px', display: "flex", alignItems: "center"}}
                                  key={member._id}>
-                                <img src={`${apiEndpoint}/${member?.profileImage}`} className="dialog-member-image"/>
+                                <img src={member?.profileImage} className="dialog-member-image"/>
                                 <span className="dialog-member-text">
                                     {member?.name}
                                 </span>

@@ -14,8 +14,6 @@ import GroupDialog from "../Components/Dialogs/groupDialog";
 import ContactsDialog from "../Components/Dialogs/contactsDialog";
 import AboutDialog from "../Components/Dialogs/aboutDialog";
 
-const {apiEndpoint} = require('../config.json');
-
 function SideBar({open, onToggle}) {
     const {user} = useContext(UserContext);
     const [privateDialog, setPrivateDialog] = useState(false);
@@ -78,7 +76,7 @@ function SideBar({open, onToggle}) {
                     <div className="drawer-info-container">
                         <div className="user-personal-info">
                             <img
-                                src={`${apiEndpoint}/${user?.profileImage}`}
+                                src={user?.profileImage}
                                 style={{width: 180, height: 180, borderRadius: '50%'}}
                                 alt="تصویر کاربر"
                             />

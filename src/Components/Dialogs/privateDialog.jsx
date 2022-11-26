@@ -10,8 +10,6 @@ import httpConnection from "../../utils/httpConnection";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
-const {apiEndpoint} = require('../../config.json');
-
 function PrivateDialog({open, onClose}) {
     const {user, handleUpdateUser, socketRef} = useContext(UserContext);
 
@@ -26,7 +24,7 @@ function PrivateDialog({open, onClose}) {
     const toggleBox = (event) => showOnlyContacts(event.target.checked);
 
     const handleGetList = async () => {
-        let list = await httpConnection.get(`${apiEndpoint}/api/users/strict/list`);
+        let list = await httpConnection.get('/users/strict/list');
         if (onlyContacts)
             list = handleFilterFriends(list.data);
         else
@@ -51,7 +49,7 @@ function PrivateDialog({open, onClose}) {
 
         const target = userList[userIndex];
 
-        const exists = await httpConnection.get(`${apiEndpoint}/api/chats/${user._id}/private/${target._id}`);
+        const exists = await httpConnection.get(`/chats/${user._id}/private/${target._id}`);
         if (exists.data) {
             navigate(`../../chat/${exists.data._id}`);
             onClose();
@@ -64,7 +62,7 @@ function PrivateDialog({open, onClose}) {
         formDataChat.append('members', JSON.stringify([user._id, target._id]));
         formDataChat.append('isPrivate', true);
 
-        const {data} = await httpConnection.post(`${apiEndpoint}/api/chats/`, formDataChat);
+        const {data} = await httpConnection.post(`/chats/`, formDataChat);
 
         const chats = [...user.chats, {id: data._id}];
         handleUpdateUser('chats', chats);

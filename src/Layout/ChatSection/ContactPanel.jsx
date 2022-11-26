@@ -11,8 +11,6 @@ import {handleDeletePrivateChat, handleLeaveGroupChat, processChatData}
     from "../../utils/chatHandling";
 import ControlSection from "../../Components/controlSection";
 
-const {apiEndpoint} = require("../../config.json");
-
 function ContactPanel() {
     const [chatInfo, setChatInfo] = useState({});
     const {setChatID, currentChat} = useContext(ChatContext);
@@ -36,7 +34,7 @@ function ContactPanel() {
             <div className="contact-panel-container">
                 <div className="identity-container">
                     <img
-                        src={chatInfo?.chatImage ? `${apiEndpoint}/${chatInfo?.chatImage}` : chatInfo?.defaultImage}
+                        src={chatInfo?.chatImage ? chatInfo?.chatImage : chatInfo?.defaultImage}
                         className="profile-image"
                     />
                     <span className="profile-name">{chatInfo?.name}</span>

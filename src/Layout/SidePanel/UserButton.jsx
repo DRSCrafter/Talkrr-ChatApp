@@ -10,8 +10,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 
-const {apiEndpoint} = require("../../config.json");
-
 function UserButton({chat, Pin, onPin, onUnpin, onDelete, triggered}) {
     const {confirmRead, disconnectLastRoom} = useContext(ChatContext);
 
@@ -85,7 +83,7 @@ function UserButton({chat, Pin, onPin, onUnpin, onDelete, triggered}) {
             >
                 <span className="user-button-profile-image-container">
                     <img
-                        src={chat?.chatImage ? `${apiEndpoint}/${chat?.chatImage}` : chat?.defaultImage}
+                        src={chat?.chatImage ? chat?.chatImage : chat?.defaultImage}
                         className="user-button-profile-image"
                         alt="user profile"
                     />

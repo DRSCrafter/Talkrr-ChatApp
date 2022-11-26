@@ -8,8 +8,6 @@ import {IconButton, useMediaQuery} from "@mui/material";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate} from "react-router-dom";
 
-const {apiEndpoint} = require("../../../config.json");
-
 function MessagingHeader({members}) {
     const {currentChat} = useContext(ChatContext);
     const {user} = useContext(UserContext);
@@ -39,7 +37,7 @@ function MessagingHeader({members}) {
                     </div>
                 }
                 <img
-                    src={chatInfo?.chatImage ? `${apiEndpoint}/${chatInfo?.chatImage}` : chatInfo?.defaultImage}
+                    src={chatInfo?.chatImage ? chatInfo?.chatImage : chatInfo?.defaultImage}
                     className="messaging-header-profile-image"
                 />
                 <span className="messaging-header-profile-info">
