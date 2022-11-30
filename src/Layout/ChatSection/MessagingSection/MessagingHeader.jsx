@@ -7,6 +7,7 @@ import ChatDialog from "../../../Components/Dialogs/chatDialog";
 import {IconButton, useMediaQuery} from "@mui/material";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {useNavigate} from "react-router-dom";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 function MessagingHeader({members}) {
     const {currentChat} = useContext(ChatContext);
@@ -37,8 +38,9 @@ function MessagingHeader({members}) {
                         </IconButton>
                     </div>
                 }
-                <img
+                <LazyLoadImage
                     src={chatInfo?.chatImage ? chatInfo?.chatImage : chatInfo?.defaultImage}
+                    placeholderSrc={chatInfo?.isPrivate ? require('../../../Assets/undefinedUser.jpg') : require('../../../Assets/undefinedGroup.jpg')}
                     className="messaging-header-profile-image"
                 />
                 <span className="messaging-header-profile-info">

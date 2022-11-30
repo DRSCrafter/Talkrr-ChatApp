@@ -10,6 +10,7 @@ import UserContext from "../../Context/userContext";
 import {handleDeletePrivateChat, handleLeaveGroupChat, processChatData}
     from "../../utils/chatHandling";
 import ControlSection from "../../Components/controlSection";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 function ContactPanel() {
     const [chatInfo, setChatInfo] = useState({});
@@ -34,8 +35,9 @@ function ContactPanel() {
         <div className="contact-panel-root">
             <div className="contact-panel-container">
                 <div className="identity-container">
-                    <img
+                    <LazyLoadImage
                         src={chatInfo?.chatImage ? chatInfo?.chatImage : chatInfo?.defaultImage}
+                        placeholderSrc={chatInfo?.isPrivate ? require('../../Assets/undefinedUser.jpg') : require('../../Assets/undefinedGroup.jpg')}
                         className="profile-image"
                     />
                     <span className="profile-name">{chatInfo?.name}</span>

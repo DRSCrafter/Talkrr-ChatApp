@@ -13,6 +13,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import GroupDialog from "../Components/Dialogs/groupDialog";
 import ContactsDialog from "../Components/Dialogs/contactsDialog";
 import AboutDialog from "../Components/Dialogs/aboutDialog";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 function SideBar({open, onToggle}) {
     const {user} = useContext(UserContext);
@@ -75,10 +76,10 @@ function SideBar({open, onToggle}) {
                 >
                     <div className="drawer-info-container">
                         <div className="user-personal-info">
-                            <img
+                            <LazyLoadImage
                                 src={user?.profileImage}
-                                style={{width: 180, height: 180, borderRadius: '50%'}}
-                                alt="تصویر کاربر"
+                                placeholderSrc={require('../Assets/undefinedUser.jpg')}
+                                style={{display: 'block!important', width: 180, height: 180, borderRadius: '50%'}}
                             />
                             <div className="user-info-name">{user && user.name}</div>
                             <div className="user-info-email">{user && user.email}</div>

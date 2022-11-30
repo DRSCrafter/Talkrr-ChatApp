@@ -1,5 +1,6 @@
 import '../../Styles/Components/Dialogs/chatDialog.css';
 import React, {useContext} from 'react';
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 import {styled} from '@mui/material/styles';
 import {Dialog, IconButton, useMediaQuery} from "@mui/material";
@@ -61,8 +62,9 @@ function ChatDialog({open, onClose, chatInfo, members}) {
                 </div>
                 <div className="dialog-header-container">
                     <span className="dialog-header-image-container">
-                        <img
+                        <LazyLoadImage
                             src={chatInfo?.chatImage}
+                            placeholderSrc={chatInfo?.isPrivate ? require('../../Assets/undefinedUser.jpg') : require('../../Assets/undefinedGroup.jpg')}
                             className="dialog-header-profile-image"
                         />
                     </span>
@@ -102,7 +104,11 @@ function ChatDialog({open, onClose, chatInfo, members}) {
                         {members.map(member => (
                             <div style={{width: '100%', height: '70px', display: "flex", alignItems: "center"}}
                                  key={member._id}>
-                                <img src={member?.profileImage} className="dialog-member-image"/>
+                                <LazyLoadImage
+                                    src={member?.profileImage}
+                                    placeholderSrc={chatInfo?.isPrivate ? require('../../Assets/undefinedUser.jpg') : require('../../Assets/undefinedGroup.jpg')}
+                                    className="dialog-member-image"
+                                />
                                 <span className="dialog-member-text">
                                     {member?.name}
                                 </span>

@@ -13,6 +13,7 @@ import {handleRemoveContact} from "../../utils/chatHandling";
 import {toast} from "react-toastify";
 import ChatContext from "../../Context/chatContext";
 import {useNavigate} from "react-router-dom";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 function ContactsDialog({open, onClose}) {
     const isPC = useMediaQuery('(min-width: 1024px)');
@@ -101,8 +102,9 @@ function ContactsDialog({open, onClose}) {
                 {contacts.map(contact => (
                     <div className="contact-info-container" key={contact._id}>
                         <span style={{display: 'flex', alignItems: 'center'}}>
-                            <img
+                            <LazyLoadImage
                                 src={contact?.profileImage}
+                                placeholderSrc={require('../../Assets/undefinedUser.jpg')}
                                 className="contact-info-image"
                             />
                             <span className="contact-info-text">

@@ -9,6 +9,7 @@ import WrongLocationIcon from '@mui/icons-material/WrongLocation';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 function UserButton({chat, Pin, onPin, onUnpin, onDelete, triggered}) {
     const {confirmRead, disconnectLastRoom} = useContext(ChatContext);
@@ -82,10 +83,10 @@ function UserButton({chat, Pin, onPin, onUnpin, onDelete, triggered}) {
                 onContextMenu={handleContextMenu}
             >
                 <span className="user-button-profile-image-container">
-                    <img
+                    <LazyLoadImage
                         src={chat?.chatImage ? chat?.chatImage : chat?.defaultImage}
+                        placeholderSrc={chat?.isPrivate ? require('../../Assets/undefinedUser.jpg') : require('../../Assets/undefinedGroup.jpg')}
                         className="user-button-profile-image"
-                        alt="user profile"
                     />
                 </span>
                 <span className="user-button-profile-text">
