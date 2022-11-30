@@ -74,7 +74,7 @@ class SignUp extends Component {
         formData.append('password', data.password);
         formData.append('profileImage', profileImage);
 
-        const response = await httpConnection.post('http://localhost:3001/api/users/', formData);
+        const response = await httpConnection.post('/users/', formData);
         localStorage.setItem('token', response.headers['x-auth-token']);
         window.location = '../';
     };

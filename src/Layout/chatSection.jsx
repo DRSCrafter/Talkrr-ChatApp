@@ -17,7 +17,8 @@ function ChatSection() {
     const isPhone = useMediaQuery('(max-width: 768px)');
 
     const handleRoomConnection = async (id) => {
-        await socketRef.current.emit('joinRoom', id);
+        if (socketRef.current)
+            await socketRef.current.emit('joinRoom', id);
     }
 
     useEffect(() => {
@@ -30,7 +31,7 @@ function ChatSection() {
                 await handleRoomConnection(chatID);
             });
         }
-    }, [chatID])
+    }, [chatID, socketRef.current])
 
     return (
         <>

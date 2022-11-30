@@ -102,7 +102,7 @@ function MessagingSection() {
                 {currentChat?.messages.length !== 0 ?
                     <div className="messages-container">
                         {currentChat?.messages && currentChat?.messages.map((message, index) => (
-                            <Message message={message} key={index} isSent={message.sender === user._id}
+                            <Message message={message} key={index} isSent={message.sender === user?._id}
                                      onGetMember={handleGetMember} onDelete={handleDeleteMessage}
                                      onCopy={handleCopyMessage}/>
                         ))}

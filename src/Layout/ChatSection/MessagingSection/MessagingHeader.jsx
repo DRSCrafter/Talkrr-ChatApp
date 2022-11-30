@@ -21,8 +21,9 @@ function MessagingHeader({members}) {
     const handleCloseDialog = () => setChatDialog(false);
 
     useEffect(() => {
-        processChatData(user, currentChat).then(res => setChatInfo(res));
-    }, [currentChat]);
+        if (currentChat)
+            processChatData(user, currentChat).then(res => setChatInfo(res));
+    }, [currentChat, user]);
 
     const closeChat = () => navigate('../../');
 

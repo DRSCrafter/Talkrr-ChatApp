@@ -23,7 +23,7 @@ function App() {
         const jwtToken = localStorage.getItem('token');
         if (!jwtToken) return console.log('not connected!');
         const userID = jwtDecode(jwtToken)._id;
-        const user = await httpConnection.get('http://localhost:3001/api/users/' + userID);
+        const user = await httpConnection.get('/users/' + userID);
         setUser(user.data);
     }
 

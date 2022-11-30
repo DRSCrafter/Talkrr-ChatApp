@@ -78,7 +78,6 @@ function MainPage() {
             })
 
             socketRef.current.on('removeChat', (data) => {
-                console.log('reached!');
                 if (currentChat?._id === data.chatID)
                     navigate('../../');
 

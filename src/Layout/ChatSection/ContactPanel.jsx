@@ -17,8 +17,9 @@ function ContactPanel() {
     const {user, handleUpdateUser} = useContext(UserContext);
 
     useEffect(() => {
-        processChatData(user, currentChat).then(res => setChatInfo(res));
-    }, [currentChat]);
+        if (currentChat)
+            processChatData(user, currentChat).then(res => setChatInfo(res));
+    }, [currentChat, user]);
 
     const deletePrivateChat = async () => {
         await handleDeletePrivateChat(chatInfo.id, user, handleUpdateUser);

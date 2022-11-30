@@ -35,6 +35,10 @@
     transition: visibility 0.5s;
 }
 
+.typing-box-emoji-phone {
+    right: -35px;
+}
+
 .hidden {
     visibility: hidden;
     display: none;

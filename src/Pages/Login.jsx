@@ -19,7 +19,7 @@ function Login() {
             password: passwordRef.current.value
         })
 
-        const response = await httpConnection.put('http://localhost:3001/api/users/login', request, {
+        const response = await httpConnection.put('/users/login', request, {
             headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
         });
 

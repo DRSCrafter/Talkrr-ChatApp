@@ -22,8 +22,8 @@ function TypingBox({value, onChange, onSend, onEmojiAdd}) {
                 <IconButton className="typing-box-btn" onClick={handleToggleEmojiShow}>
                     <EmojiEmotionsIcon/>
                 </IconButton>
-                <div className={`typing-box-emoji ${!emojiShow && 'hidden'}`}>
-                    <Picker data={data} onEmojiSelect={onEmojiAdd}/>
+                <div className={`typing-box-emoji typing-box-emoji-phone ${!emojiShow && 'hidden'}`}>
+                    <Picker data={data} onEmojiSelect={onEmojiAdd} style={{width: '100px'}}/>
                 </div>
             </span>
             <IconButton className="typing-box-btn" type="submit">
