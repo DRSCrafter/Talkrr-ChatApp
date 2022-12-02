@@ -1,4 +1,4 @@
-import '../Styles/Pages/SignUp.css';
+import '../Styles/Pages/form.css';
 import React, {Component} from "react";
 import Joi from 'joi';
 
@@ -6,6 +6,7 @@ import httpConnection from "../utils/httpConnection";
 
 import {IconButton, TextField, Button} from "@mui/material";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import LottieLoader from "../utils/lottieLoader";
 
 class SignUp extends Component {
     state = {
@@ -98,54 +99,75 @@ class SignUp extends Component {
 
         return (
             <>
-                <img className="signup-background" src={require('../Assets/Background/login.jpg')} alt="background"/>
-                <div className="signup-root-container">
-                    <form className="signup-form-container">
-                        <span className="signup-header">Welcome to Talkrr</span>
-                        <div className="signUp-Window">
-                            <div className="double-span">
-                                <TextField variant="outlined" size="small"
-                                           name="name" value={data.name} onChange={this.handleChange}
-                                           label={errors.name ? "error" : "Username"}
-                                           error={errors.name} helperText={errors.name} style={{width: '94%'}}/>
-                                <IconButton color="primary" aria-label="upload picture" component="label">
-                                    <input hidden accept="image/*" type="file" onChange={this.handleFileChange}/>
-                                    <PhotoCameraIcon/>
-                                </IconButton>
-                            </div>
-                            <TextField variant="outlined" size="small"
-                                       name="email" value={data.email} onChange={this.handleChange}
-                                       label={errors.email ? "error" : "E-mail"}
-                                       error={errors.email} helperText={errors.email}/>
-                            <TextField variant="outlined" size="small"
-                                       name="phoneNumber" value={data.phoneNumber} onChange={this.handleChange}
-                                       label={errors.phoneNumber ? "error" : "Phone Number(Optional)"}
-                                       error={errors.phoneNumber} helperText={errors.phoneNumber}/>
-                            <TextField variant="outlined" size="small"
-                                       name="password" value={data.password} onChange={this.handleChange}
-                                       label={errors.password ? "error" : "Password"}
-                                       type="password"
-                                       error={errors.password} helperText={errors.password}/>
-                            <TextField variant="outlined" size="small"
-                                       name="passwordConfirm" value={data.passwordConfirm} onChange={this.handleChange}
-                                       label={errors.passwordConfirm ? "error" : "Repeat Password"}
-                                       type="password"
-                                       error={errors.passwordConfirm} helperText={errors.passwordConfirm}/>
-                            <TextField variant="outlined" size="small"
-                                       name="bio" value={data.bio} onChange={this.handleChange}
-                                       label={errors.bio ? "error" : "Bio(100 Max characters)"}
-                                       error={errors.bio} helperText={errors.bio} className="double-span"/>
-                            <span className="btn-section">
-                            <Button sx={{width: 100, height: 40, marginRight: 1}} variant="contained"
-                                    onClick={this.handleSubmit}>Submit</Button>
-                            <Button sx={{width: 100, height: 40}} variant="text"
-                                    onClick={handleNavigate}>Cancel</Button>
-                        </span>
+                <div className="form-root">
+                    <form className="form-container">
+                        <div className="form-logo-container">
+                            <img src={require('../Assets/logo.png')} className="form-logo-image"/>
+                            <span>Talkrr</span>
                         </div>
+                            <div className="form-grid">
+                                <div className="double-span">
+                                    <TextField variant="outlined" size="small"
+                                               name="name" value={data.name} onChange={this.handleChange}
+                                               label={errors.name ? "error" : "Username"}
+                                               error={errors.name} helperText={errors.name} style={{width: '94%'}}/>
+                                    <IconButton color="primary" aria-label="upload picture" component="label">
+                                        <input hidden accept="image/*" type="file" onChange={this.handleFileChange}/>
+                                        <PhotoCameraIcon/>
+                                    </IconButton>
+                                </div>
+                                <TextField variant="outlined" size="small"
+                                           name="email" value={data.email} onChange={this.handleChange}
+                                           label={errors.email ? "error" : "E-mail"}
+                                           error={errors.email} helperText={errors.email} className="double-span"/>
+                                <TextField variant="outlined" size="small"
+                                           name="phoneNumber" value={data.phoneNumber} onChange={this.handleChange}
+                                           label={errors.phoneNumber ? "error" : "Phone Number(Optional)"}
+                                           error={errors.phoneNumber} helperText={errors.phoneNumber}
+                                           className="double-span"/>
+                                <TextField variant="outlined" size="small"
+                                           name="password" value={data.password} onChange={this.handleChange}
+                                           label={errors.password ? "error" : "Password"}
+                                           type="password"
+                                           error={errors.password} helperText={errors.password}/>
+                                <TextField variant="outlined" size="small"
+                                           name="passwordConfirm" value={data.passwordConfirm}
+                                           onChange={this.handleChange}
+                                           label={errors.passwordConfirm ? "error" : "Repeat Password"}
+                                           type="password"
+                                           error={errors.passwordConfirm} helperText={errors.passwordConfirm}/>
+                                <TextField variant="outlined" size="small"
+                                           name="bio" value={data.bio} onChange={this.handleChange}
+                                           label={errors.bio ? "error" : "Bio(100 Max characters)"}
+                                           error={errors.bio} helperText={errors.bio} className="double-span"/>
+                            </div>
+                            <span className="form-btn-section">
+                                <Button style={{...styles.button, ...styles.containedButton}} variant="contained"
+                                        onClick={this.handleSubmit}>Submit</Button>
+                                <Button style={{...styles.button, ...styles.textButton}} variant="text"
+                                        onClick={handleNavigate}>Cancel</Button>
+                            </span>
                     </form>
+                    <div className="lottie-container">
+                        <LottieLoader animationData={require('../Assets/chat-icon-circle.json')}/>
+                    </div>
                 </div>
             </>
         );
+    }
+}
+
+const styles = {
+    button: {
+        display: 'block',
+        width: '100%',
+        padding: '10px 20px',
+    },
+    containedButton: {
+        backgroundColor: '#8b00ff'
+    },
+    textButton: {
+        color: '#8b00ff'
     }
 }
 

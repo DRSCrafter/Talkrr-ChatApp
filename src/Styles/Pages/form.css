@@ -1,0 +1,85 @@
+.form-root {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 600px;
+    background-color: white;
+    box-sizing: border-box;
+    padding-inline: 5%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.form-grid {
+    display: flex;
+    width: 100%;
+    row-gap: 10px;
+    flex-direction: column;
+}
+
+.form-logo-container {
+    display: flex;
+    justify-content: center;
+    font-family: Debby Script, serif;
+    font-size: 70px;
+    margin-bottom: 50px;
+}
+
+.form-logo-image {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.form-title {
+    font-size: 30px;
+    font-family: 'Segoe UI Light', serif;
+    margin-inline: auto;
+}
+
+.MuiInputBase-root {
+    width: 100%;
+}
+
+.form-btn-section {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    row-gap: 15px;
+    margin-top: 20px;
+}
+
+.lottie-container {
+    width: 450px;
+    height: 450px;
+    display: none;
+}
+
+@media (min-width: 1200px) {
+    .lottie-container {
+        display: block;
+    }
+}
+
+@media (min-width: 1024px) {
+    .form-grid {
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        margin-bottom: -20px;
+    }
+
+    .double-span {
+        grid-column: span 2;
+    }
+}
