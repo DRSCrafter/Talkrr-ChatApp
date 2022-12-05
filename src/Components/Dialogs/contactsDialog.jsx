@@ -6,6 +6,7 @@ import {styled} from "@mui/material/styles";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 
 import UserContext from "../../Context/userContext";
 import httpConnection from "../../utils/httpConnection";
@@ -14,6 +15,7 @@ import {toast} from "react-toastify";
 import ChatContext from "../../Context/chatContext";
 import {useNavigate} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import TryIcon from "@mui/icons-material/Try";
 
 function ContactsDialog({open, onClose}) {
     const isPC = useMediaQuery('(min-width: 1024px)');
@@ -99,30 +101,36 @@ function ContactsDialog({open, onClose}) {
                         Contacts
                     </span>
                 </div>
-                {contacts.map(contact => (
-                    <div className="contact-info-container" key={contact._id}>
-                        <span style={{display: 'flex', alignItems: 'center'}}>
-                            <LazyLoadImage
-                                src={contact?.profileImage}
-                                placeholderSrc={require('../../Assets/undefinedUser.jpg')}
-                                className="contact-info-image"
-                            />
-                            <span className="contact-info-text">
-                                {contact?.name}
+                {contacts.length !== 0 ? (contacts.map(contact => (
+                        <div className="contact-info-container" key={contact._id}>
+                            <span style={{display: 'flex', alignItems: 'center'}}>
+                                <LazyLoadImage
+                                    src={contact?.profileImage}
+                                    placeholderSrc={require('../../Assets/undefinedUser.jpg')}
+                                    className="contact-info-image"
+                                />
+                                <span className="contact-info-text">
+                                    {contact?.name}
+                                </span>
                             </span>
-                        </span>
-                        <span>
-                            <IconButton
-                                style={{color: 'dodgerblue', marginRight: 10}}
-                                onClick={() => handleAddPrivateChat(contact._id)}>
-                                <QuestionAnswerIcon fontSize={"medium"}/>
-                            </IconButton>
-                            <IconButton style={{color: 'red'}} onClick={() => removeContact(contact._id)}>
-                                <PersonRemoveIcon fontSize={"medium"}/>
-                            </IconButton>
-                        </span>
-                    </div>
-                ))}
+                            <span>
+                                <IconButton
+                                    style={{color: 'dodgerblue', marginRight: 10}}
+                                    onClick={() => handleAddPrivateChat(contact._id)}>
+                                    <QuestionAnswerIcon fontSize={"medium"}/>
+                                </IconButton>
+                                <IconButton style={{color: 'red'}} onClick={() => removeContact(contact._id)}>
+                                    <PersonRemoveIcon fontSize={"medium"}/>
+                                </IconButton>
+                            </span>
+                        </div>
+                    ))) :
+                    <div className="contact-not-found">
+                        <ConnectWithoutContactIcon style={{fontSize: '120px'}}/>
+                        <div>
+                            Connect to some people, will ya?
+                        </div>
+                    </div>}
             </DialogContainer>
         </>
     );

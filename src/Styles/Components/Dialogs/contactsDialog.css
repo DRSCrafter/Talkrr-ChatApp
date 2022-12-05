@@ -32,3 +32,12 @@
 .contact-dialog-header-title {
     font-size: 16px;
 }
+
+.contact-not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    color: #ffffff;
+}
