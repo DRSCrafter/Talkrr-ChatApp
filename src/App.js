@@ -5,7 +5,7 @@ import jwtDecode from "jwt-decode";
 import {io} from "socket.io-client";
 
 import MainPage from "./Pages/MainPage";
-// import WindowBar from "./Layout/WindowBar";
+import WindowBar from "./Layout/WindowBar";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import httpConnection from "./utils/httpConnection";
@@ -18,6 +18,8 @@ function App() {
     const [user, setUser] = useState(null);
 
     const socketRef = useRef();
+
+    const isNative = process.env.REACT_APP_DISTRIBUTION_MODE === 'App';
 
     const loginUser = async () => {
         const jwtToken = localStorage.getItem('token');
@@ -46,8 +48,8 @@ function App() {
 
     return (
         <>
-            <UserContext.Provider value={{user, handleUpdateUser, socketRef}}>
-                {/*<WindowBar/>*/}
+            <UserContext.Provider value={{user, handleUpdateUser, socketRef, isNative}}>
+                {isNative && <WindowBar/>}
                 <Routes>
                     <Route path="/*" element={<MainPage/>}/>
                     <Route path="/login" element={<Login/>}/>

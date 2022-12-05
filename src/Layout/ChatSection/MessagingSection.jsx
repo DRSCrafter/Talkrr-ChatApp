@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
 import '../../Styles/Layout/ChatSection/MessagingSection.css';
+import React, {useContext, useEffect, useRef, useState} from "react";
 
 import TryIcon from '@mui/icons-material/Try';
 
