@@ -54,13 +54,26 @@ function AboutDialog({open, onClose}) {
                     <br/>I also would be grateful if you could take a few minutes to visit my other projects as well.
                 </div>
                 <div className="about-dialog-btn-section">
-                    <Button variant="contained" style={{padding: 10}}>GitHub Repository</Button>
-                    <Button variant="text" style={{padding: 10}}>About Developer</Button>
+                    <Button variant="contained" style={{...styles.button, ...styles.contained}}>GitHub
+                        Repository</Button>
+                    <Button variant="text" style={{...styles.button, ...styles.textButton}}>About Developer</Button>
                 </div>
 
             </DialogContainer>
         </>
     );
+}
+
+const styles = {
+    button: {
+        padding: 10,
+    },
+    contained: {
+        backgroundColor: '#8b00ff'
+    },
+    textButton: {
+        color: '#8b00ff'
+    }
 }
 
 export default AboutDialog;

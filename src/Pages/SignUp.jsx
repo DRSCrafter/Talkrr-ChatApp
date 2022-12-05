@@ -7,6 +7,7 @@ import httpConnection from "../utils/httpConnection";
 import {IconButton, TextField, Button} from "@mui/material";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import LottieLoader from "../utils/lottieLoader";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 class SignUp extends Component {
     state = {
@@ -19,7 +20,8 @@ class SignUp extends Component {
             bio: ""
         },
         profileImage: null,
-        errors: {}
+        errors: {},
+        loading: false
     }
 
     schema = Joi.object({
@@ -63,6 +65,7 @@ class SignUp extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        this.setState({loading: true});
 
         const errors = this.validate();
         this.setState({errors: errors || {}});
@@ -75,7 +78,12 @@ class SignUp extends Component {
         formData.append('password', data.password);
         formData.append('profileImage', profileImage);
 
-        const response = await httpConnection.post('/users/', formData);
+        let response;
+        try {
+            response = await httpConnection.post('/users/', formData);
+        } catch (ex) {
+            this.setState({loading: false});
+        }
         localStorage.setItem('token', response.headers['x-auth-token']);
         window.location = '../';
     };
@@ -95,55 +103,60 @@ class SignUp extends Component {
 
     render() {
         const handleNavigate = () => window.location = '/login';
-        const {data, errors} = this.state;
+        const {data, errors, loading} = this.state;
 
         return (
             <>
                 <div className="form-root">
-                    <form className="form-container">
+                    <form className="form-container" onSubmit={this.handleSubmit}>
                         <div className="form-logo-container">
                             <img src={require('../Assets/logo.png')} className="form-logo-image"/>
                             <span>Talkrr</span>
                         </div>
-                            <div className="form-grid">
-                                <div className="double-span">
-                                    <TextField variant="outlined" size="small"
-                                               name="name" value={data.name} onChange={this.handleChange}
-                                               label={errors.name ? "error" : "Username"}
-                                               error={errors.name} helperText={errors.name} style={{width: '94%'}}/>
-                                    <IconButton color="primary" aria-label="upload picture" component="label">
-                                        <input hidden accept="image/*" type="file" onChange={this.handleFileChange}/>
-                                        <PhotoCameraIcon/>
-                                    </IconButton>
-                                </div>
+                        <div className="form-grid">
+                            <div className="double-span">
                                 <TextField variant="outlined" size="small"
-                                           name="email" value={data.email} onChange={this.handleChange}
-                                           label={errors.email ? "error" : "E-mail"}
-                                           error={errors.email} helperText={errors.email} className="double-span"/>
-                                <TextField variant="outlined" size="small"
-                                           name="phoneNumber" value={data.phoneNumber} onChange={this.handleChange}
-                                           label={errors.phoneNumber ? "error" : "Phone Number(Optional)"}
-                                           error={errors.phoneNumber} helperText={errors.phoneNumber}
-                                           className="double-span"/>
-                                <TextField variant="outlined" size="small"
-                                           name="password" value={data.password} onChange={this.handleChange}
-                                           label={errors.password ? "error" : "Password"}
-                                           type="password"
-                                           error={errors.password} helperText={errors.password}/>
-                                <TextField variant="outlined" size="small"
-                                           name="passwordConfirm" value={data.passwordConfirm}
-                                           onChange={this.handleChange}
-                                           label={errors.passwordConfirm ? "error" : "Repeat Password"}
-                                           type="password"
-                                           error={errors.passwordConfirm} helperText={errors.passwordConfirm}/>
-                                <TextField variant="outlined" size="small"
-                                           name="bio" value={data.bio} onChange={this.handleChange}
-                                           label={errors.bio ? "error" : "Bio(100 Max characters)"}
-                                           error={errors.bio} helperText={errors.bio} className="double-span"/>
+                                           name="name" value={data.name} onChange={this.handleChange}
+                                           label={errors.name ? "error" : "Username"}
+                                           error={errors.name} helperText={errors.name} style={{width: '94%'}}/>
+                                <IconButton color="primary" aria-label="upload picture" component="label">
+                                    <input hidden accept="image/*" type="file" onChange={this.handleFileChange}/>
+                                    <PhotoCameraIcon/>
+                                </IconButton>
                             </div>
-                            <span className="form-btn-section">
-                                <Button style={{...styles.button, ...styles.containedButton}} variant="contained"
-                                        onClick={this.handleSubmit}>Submit</Button>
+                            <TextField variant="outlined" size="small"
+                                       name="email" value={data.email} onChange={this.handleChange}
+                                       label={errors.email ? "error" : "E-mail"}
+                                       error={errors.email} helperText={errors.email} className="double-span"/>
+                            <TextField variant="outlined" size="small"
+                                       name="phoneNumber" value={data.phoneNumber} onChange={this.handleChange}
+                                       label={errors.phoneNumber ? "error" : "Phone Number(Optional)"}
+                                       error={errors.phoneNumber} helperText={errors.phoneNumber}
+                                       className="double-span"/>
+                            <TextField variant="outlined" size="small"
+                                       name="password" value={data.password} onChange={this.handleChange}
+                                       label={errors.password ? "error" : "Password"}
+                                       type="password"
+                                       error={errors.password} helperText={errors.password}/>
+                            <TextField variant="outlined" size="small"
+                                       name="passwordConfirm" value={data.passwordConfirm}
+                                       onChange={this.handleChange}
+                                       label={errors.passwordConfirm ? "error" : "Repeat Password"}
+                                       type="password"
+                                       error={errors.passwordConfirm} helperText={errors.passwordConfirm}/>
+                            <TextField variant="outlined" size="small"
+                                       name="bio" value={data.bio} onChange={this.handleChange}
+                                       label={errors.bio ? "error" : "Bio(100 Max characters)"}
+                                       error={errors.bio} helperText={errors.bio} className="double-span"/>
+                        </div>
+                        <span className="form-btn-section">
+                                <LoadingButton
+                                    loading={loading}
+                                    style={{...styles.button, ...styles.containedButton(loading)}}
+                                    variant="contained"
+                                    type="submit">
+                                    Submit
+                                </LoadingButton>
                                 <Button style={{...styles.button, ...styles.textButton}} variant="text"
                                         onClick={handleNavigate}>Cancel</Button>
                             </span>
@@ -163,9 +176,9 @@ const styles = {
         width: '100%',
         padding: '10px 20px',
     },
-    containedButton: {
-        backgroundColor: '#8b00ff'
-    },
+    containedButton: (loading) => ({
+        backgroundColor: loading ? 'rgba(0,0,0,0)' : '#8b00ff'
+    }),
     textButton: {
         color: '#8b00ff'
     }

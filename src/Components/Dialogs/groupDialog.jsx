@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function GroupDialog({open, onClose}) {
     const {user, handleUpdateUser, socketRef} = useContext(UserContext);
@@ -15,6 +16,8 @@ function GroupDialog({open, onClose}) {
     const [userList, setUserList] = useState([]);
     const [choice, setChoice] = useState('');
     const [onlyContacts, showOnlyContacts] = useState(true);
+
+    const [loading, setLoading] = useState(false);
 
     const nameRef = useRef('');
     const aboutRef = useRef('');
@@ -48,7 +51,7 @@ function GroupDialog({open, onClose}) {
         e.preventDefault();
 
         let idList = choice.map(choice => choice._id);
-        const requestList= JSON.stringify([user._id, ...idList]);
+        const requestList = JSON.stringify([user._id, ...idList]);
         const formDataChat = new FormData();
         formDataChat.append('name', nameRef.current.value);
         formDataChat.append('about', aboutRef.current.value);
@@ -83,7 +86,7 @@ function GroupDialog({open, onClose}) {
                         {"ُStart a new Group Chat"}
                     </DialogTitle>
                     <DialogContent sx={{overflow: 'visible'}}>
-                        <div style={{display: 'flex', flexDirection: 'column', rowGap: '10px'}}>
+                        <form style={{display: 'flex', flexDirection: 'column', rowGap: '10px'}} onSubmit={handleAddGroupChat}>
                             <div style={{display: 'flex', flexDirection: 'row', columnGap: '10px'}}>
                                 <IconButton color="primary" aria-label="upload picture" component="label"
                                             size={"large"}>
@@ -110,15 +113,20 @@ function GroupDialog({open, onClose}) {
                                     />
                                 )}
                             />
-                        </div>
+                        </form>
                         <FormControlLabel control={<Checkbox checked={onlyContacts} onChange={toggleBox}/>}
                                           label="Only show the contacts"/>
                     </DialogContent>
                     <DialogActions>
-                        <Button style={{width: '40%'}} variant="contained" onClick={handleAddGroupChat}>
+                        <LoadingButton
+                            loading={loading}
+                            style={styles.loadingButton(loading)}
+                            variant="contained"
+                            type="submit"
+                        >
                             {"Create Chat"}
-                        </Button>
-                        <Button style={{width: '15%', color: '#707070'}} variant="text" onClick={onClose}>
+                        </LoadingButton>
+                        <Button style={styles.cancelButton} variant="text" onClick={onClose}>
                             {"Cancel"}
                         </Button>
                     </DialogActions>
@@ -127,6 +135,17 @@ function GroupDialog({open, onClose}) {
         </>
     )
         ;
+}
+
+const styles = {
+    loadingButton: (loading) => ({
+        backgroundColor: loading ? 'rgba(0,0,0,0)' : '#8b00ff',
+        width: '40%'
+    }),
+    cancelButton: {
+        width: '15%',
+        color: '#707070'
+    }
 }
 
 export default GroupDialog;

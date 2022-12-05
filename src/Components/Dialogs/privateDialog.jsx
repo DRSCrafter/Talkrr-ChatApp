@@ -82,7 +82,7 @@ function PrivateDialog({open, onClose}) {
                 onClose={onClose}
                 fullWidth
             >
-                <div style={{paddingInline: '10px'}}>
+                <form style={{paddingInline: '10px'}} onSubmit={handleAddPrivateChat}>
                     <DialogTitle>
                         {"ُStart a new Private Chat"}
                     </DialogTitle>
@@ -102,19 +102,19 @@ function PrivateDialog({open, onClose}) {
                             )}
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={onlyContacts} onChange={toggleBox}/>}
+                            control={<Checkbox checked={onlyContacts} style={{color: '#8b00ff'}} onChange={toggleBox}/>}
                             label="Only show the contacts"
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button style={{width: '40%'}} variant="contained" onClick={handleAddPrivateChat}>
+                        <Button style={{width: '40%', backgroundColor: '#8b00ff'}} variant="contained" type="submit">
                             {"Create Chat"}
                         </Button>
-                        <Button style={{width: '15%', color: '#707070'}} variant="text" onClick={onClose}>
+                        <Button style={{width: '15%', color: '#8b00ff'}} variant="text" onClick={onClose}>
                             {"Cancel"}
                         </Button>
                     </DialogActions>
-                </div>
+                </form>
             </Dialog>
         </>
     )

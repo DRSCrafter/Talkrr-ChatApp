@@ -1,12 +1,17 @@
-import React, {useRef} from 'react';
 import '../Styles/Pages/form.css';
-import {TextField} from "@mui/material";
-import Button from '@mui/material/Button';
+import React, {useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
+
 import httpConnection from "../utils/httpConnection";
 import LottieLoader from "../utils/lottieLoader";
 
+import {TextField} from "@mui/material";
+import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 function Login() {
+    const [loading, setLoading] = useState(false);
+
     const emailRef = useRef();
     const passwordRef = useRef();
 
@@ -14,15 +19,21 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const request = JSON.stringify({
             email: emailRef.current.value,
             password: passwordRef.current.value
         })
 
-        const response = await httpConnection.put('/users/login', request, {
-            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-        });
+        let response;
+        try {
+            response = await httpConnection.put('/users/login', request, {
+                headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+            });
+        } catch (ex) {
+            setLoading(false);
+        }
 
         localStorage.setItem('token', response.headers['x-auth-token']);
         window.location = '../';
@@ -32,7 +43,7 @@ function Login() {
 
     return (
         <>
-            <div className="form-root">
+            <div className="form-root" onSubmit={handleSubmit}>
                 <form className="form-container">
                     <div className="form-logo-container">
                         <img src={require('../Assets/logo.png')} className="form-logo-image"/>
@@ -45,8 +56,11 @@ function Login() {
                                    variant="outlined" size="medium" type="password" label="Password"
                                    inputRef={passwordRef}/>
                         <span className="form-btn-section">
-                            <Button style={{...styles.button, ...styles.containedButton}} variant="contained" onClick={handleSubmit}>Login</Button>
-                            <Button style={{...styles.button, ...styles.textButton}} variant="text" onClick={handleNavigate}>SignUp</Button>
+                            <LoadingButton loading={loading}
+                                           style={{...styles.button, ...styles.containedButton(loading)}}
+                                           variant="contained" type="submit">Login</LoadingButton>
+                            <Button style={{...styles.button, ...styles.textButton}} variant="text"
+                                    onClick={handleNavigate}>SignUp</Button>
                         </span>
                     </span>
                 </form>
@@ -63,11 +77,10 @@ const styles = {
         display: 'block',
         width: '100%',
         padding: '10px 20px',
-        marginRight: '3px',
     },
-    containedButton: {
-        backgroundColor: '#8b00ff'
-    },
+    containedButton: (loading) => ({
+        backgroundColor: loading ? 'rgba(0,0,0,0)' : '#8b00ff'
+    }),
     textButton: {
         color: '#8b00ff'
     }
