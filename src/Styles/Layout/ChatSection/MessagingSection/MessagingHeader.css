@@ -11,8 +11,8 @@
 .messaging-header-profile-image {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
     margin: auto 0 auto 20px;
+    border-radius: 50%;
 }
 
 .messaging-header-profile-info {
@@ -22,4 +22,9 @@
     white-space: nowrap;
     color: white;
     font-family: 'Segoe UI Light', serif;
+}
+@media (min-width: 768px) {
+    .messaging-header-profile-image {
+        border-radius: 50%;
+    }
 }

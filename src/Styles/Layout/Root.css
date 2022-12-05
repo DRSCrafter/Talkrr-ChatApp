@@ -2,29 +2,28 @@
     display: flex;
     column-gap: 0;
     width: 100vw;
-    height: calc(100vh - 30px);
-    padding-inline: 5px;
+    height: 100%;
 }
 
 .root-background {
     width: 100vw;
-    height: calc(100vh - 30px);
+    height: 100%;
     position: absolute;
     z-index: -10;
     overflow-x: hidden;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
+    /*border-bottom-right-radius: 15px;*/
+    /*border-bottom-left-radius: 15px;*/
 }
 
 @media (min-width: 1024px) {
     .root-container {
         column-gap: 5px;
-        padding-inline: 0;
     }
 }
 
 @media (min-width: 768px) {
     .root-container {
-        padding-inline: 15px;
+        padding: 10px 5px;
+        box-sizing: border-box;
     }
 }

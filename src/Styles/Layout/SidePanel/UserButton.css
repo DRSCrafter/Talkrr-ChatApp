@@ -1,7 +1,7 @@
 .user-button-container {
     display: flex;
     justify-content: flex-start!important;
-    width: 95%;
+    width: 100%;
     height: 70px;
     margin-top: 10px;
     border-radius: 10px;

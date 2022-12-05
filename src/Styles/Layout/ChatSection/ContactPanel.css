@@ -1,6 +1,7 @@
 .contact-panel-root {
     display: none;
     height: 100%;
+    box-sizing: border-box;
     flex-basis: 25%;
 }
 
@@ -9,7 +10,7 @@
     flex-direction: column;
     justify-content: space-around;
     width: 95%;
-    height: 95%;
+    height: 100%;
     margin: auto;
     box-sizing: border-box;
     padding-bottom: 20px;

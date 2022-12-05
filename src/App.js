@@ -5,7 +5,7 @@ import jwtDecode from "jwt-decode";
 import {io} from "socket.io-client";
 
 import MainPage from "./Pages/MainPage";
-import WindowBar from "./Layout/WindowBar";
+// import WindowBar from "./Layout/WindowBar";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import httpConnection from "./utils/httpConnection";
@@ -47,7 +47,7 @@ function App() {
     return (
         <>
             <UserContext.Provider value={{user, handleUpdateUser, socketRef}}>
-                <WindowBar/>
+                {/*<WindowBar/>*/}
                 <Routes>
                     <Route path="/*" element={<MainPage/>}/>
                     <Route path="/login" element={<Login/>}/>

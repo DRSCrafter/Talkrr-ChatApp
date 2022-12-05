@@ -1,17 +1,17 @@
 .side-panel-container {
     min-width: 200px;
     min-height: 300px;
-    padding-left: 5px;
     flex-basis: 30%;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    padding-block: 20px;
+    padding-block: 5px;
 }
 
 .users-container {
     width: 95%;
     height: 100%;
+    padding-right: 5px;
     flex-basis: 85%;
     overflow: scroll;
     overflow-x: hidden;
