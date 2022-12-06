@@ -9,17 +9,17 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
-function ControlSection({ChatInfo, onDeletePrivate, onLeaveGroup, callback}) {
+function ControlSection({chatInfo, onDeletePrivate, onLeaveGroup, callback}) {
     const {user, handleUpdateUser} = useContext(UserContext);
 
     const addContact = async () => {
-        await handleAddContact(ChatInfo._id, user, handleUpdateUser);
+        await handleAddContact(chatInfo._id, user, handleUpdateUser);
         if (callback)
             callback();
     }
 
     const removeContact = async () => {
-        await handleRemoveContact(ChatInfo._id, user, handleUpdateUser);
+        await handleRemoveContact(chatInfo._id, user, handleUpdateUser);
         if (callback)
             callback();
     }
@@ -27,7 +27,7 @@ function ControlSection({ChatInfo, onDeletePrivate, onLeaveGroup, callback}) {
     return (
         <>
             <div className="controls-container">
-                {ChatInfo?.isPrivate ?
+                {chatInfo?.isPrivate ?
                     <Button className="control-btn" style={{...styles.button, color: "red"}}
                             onClick={onDeletePrivate}>
                         <DeleteIcon fontSize="medium"/>
@@ -38,9 +38,9 @@ function ControlSection({ChatInfo, onDeletePrivate, onLeaveGroup, callback}) {
                         <span style={{marginLeft: 10}}>Leave Chat</span>
                     </Button>
                 }
-                {ChatInfo?.isPrivate &&
+                {chatInfo?.isPrivate &&
                     <>
-                        {user.contacts.includes(ChatInfo._id) ?
+                        {user.contacts.includes(chatInfo._id) ?
                             <Button
                                 className="control-btn"
                                 onClick={removeContact}
