@@ -1,4 +1,4 @@
-import '../../Styles/Components/Dialogs/aboutDialog.css';
+import '../../Styles/Components/Dialogs/aboutDialog.scss';
 import React from 'react';
 
 import {Button, Dialog, IconButton, useMediaQuery} from "@mui/material";
@@ -34,19 +34,19 @@ function AboutDialog({open, onClose}: DialogProps) {
                 fullScreen={!isPC}
                 style={{backdropFilter: 'blur(10px)'}}
             >
-                <div className="about-dialog-header">
+                <div className="about__dialog__header">
                     <div>
                         <IconButton style={{color: 'white'}} onClick={onClose}>
                             <KeyboardBackspaceIcon fontSize={"medium"}/>
                         </IconButton>
                     </div>
-                    <span className="about-dialog-header-title">
+                    <span className="about__header__title">
                         About US
                     </span>
                 </div>
-                <div className="about-dialog-body-container">
-                    <div className="about-dialog-logo-container">
-                        <img src={logo} className="about-dialog-logo-image" alt="Logo"/>
+                <div className="about__body">
+                    <div className="about__dialog__logo">
+                        <img src={logo} className="about__logo__image" alt="Logo"/>
                         <span>Talkrr</span>
                     </div>
                     Talkrr is an open-source project powered by ReactJS. The server-side coding is done in ExpressJS and
@@ -56,7 +56,7 @@ function AboutDialog({open, onClose}: DialogProps) {
                     highly appreciate it.
                     <br/>I also would be grateful if you could take a few minutes to visit my other projects as well.
                 </div>
-                <div className="about-dialog-btn-section">
+                <div className="about__button__section">
                     <Button variant="contained" style={{...styles.button, ...styles.contained}}>GitHub
                         Repository</Button>
                     <Button variant="text" style={{...styles.button, ...styles.textButton}}>About Developer</Button>

@@ -1,4 +1,4 @@
-import '../../Styles/Components/Dialogs/chatDialog.css';
+import '../../Styles/Components/Dialogs/chatDialog.scss';
 import React, {useContext} from 'react';
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {styled} from '@mui/material/styles';
@@ -64,43 +64,43 @@ function ChatDialog({open, onClose, chatInfo, members}: ChatDialogProps) {
                         <KeyboardBackspaceIcon fontSize={"medium"}/>
                     </IconButton>
                 </div>
-                <div className="dialog-header-container">
-                    <span className="dialog-header-image-container">
+                <div className="dialog__header">
+                    <span className="dialog__header__image">
                         <LazyLoadImage
                             src={chatInfo?.chatImage}
                             placeholderSrc={chatInfo?.isPrivate ? undefinedUser : undefinedGroup}
-                            className="dialog-header-profile-image"
+                            className="dialog__profile__image"
                         />
                     </span>
-                    <div className="dialog-header-profile-info">
+                    <div className="dialog__profile__info">
                         <div style={{fontSize: 22}}>{chatInfo?.name}</div>
                         <div style={{fontSize: 13}}>
                             {chatInfo.isPrivate ? 'Private Chat' : `${chatInfo?.members?.length} members`}
                         </div>
                     </div>
                 </div>
-                <span style={{display: "flex", flexDirection: 'column', rowGap: '5px'}} className="dialog-sections">
+                <span style={{display: "flex", flexDirection: 'column', rowGap: '5px'}} className="dialog__sections">
                     {chatInfo?.isPrivate &&
                         <>
-                            <div className="dialog-details">
+                            <div className="dialog__details">
                                 <AlternateEmailIcon fontSize="medium"/>
                                 <span style={{marginLeft: 10}}>{chatInfo?.email}</span>
                             </div>
                             {chatInfo?.phoneNumber &&
-                                <div className="dialog-details">
+                                <div className="dialog__details">
                                     <PhoneIcon fontSize="medium"/>
                                     <span style={{marginLeft: 10,}}>{chatInfo?.phoneNumber}</span>
                                 </div>
                             }
                         </>
                     }
-                    <div className="dialog-details">
+                    <div className="dialog__details">
                         <InfoIcon fontSize="medium"/>
                         <span style={{marginLeft: 10,}}>{chatInfo?.about}</span>
                     </div>
                 </span>
                 {!chatInfo?.isPrivate &&
-                    <span className="dialog-sections">
+                    <span className="dialog__sections">
                         <div style={{margin: '10px', display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
                             <PeopleIcon style={{marginRight: '15px'}}/>
                             <span>Members</span>
@@ -111,9 +111,9 @@ function ChatDialog({open, onClose, chatInfo, members}: ChatDialogProps) {
                                 <LazyLoadImage
                                     src={member?.profileImage}
                                     placeholderSrc={chatInfo?.isPrivate ? undefinedUser : undefinedGroup}
-                                    className="dialog-member-image"
+                                    className="dialog__member__image"
                                 />
-                                <span className="dialog-member-text">
+                                <span className="dialog__member__content">
                                     {member?.name}
                                 </span>
                             </div>

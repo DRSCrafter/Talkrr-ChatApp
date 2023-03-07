@@ -1,0 +1,37 @@
+@import '../mixins';
+
+.loading__root {
+  @include flex(column, center, center);
+  height: 95vh;
+  font-size: 25px;
+  font-family: "Segoe UI Light", sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+
+.loading__text {
+  animation-name: blink;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  from {
+    opacity: 100%;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100%;
+  }
+}
+
+.loading__logo {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+}

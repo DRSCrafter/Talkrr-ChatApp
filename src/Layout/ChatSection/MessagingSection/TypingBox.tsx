@@ -1,4 +1,4 @@
-import "../../../Styles/Layout/ChatSection/MessagingSection/TypingBox.css";
+import "../../../Styles/Layout/ChatSection/MessagingSection/TypingBox.scss";
 import React, {useState} from "react";
 import {IconButton} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
@@ -12,22 +12,22 @@ function TypingBox({value, onChange, onSend, onEmojiAdd}: TypingBoxProps) {
     const handleToggleEmojiShow = () => setEmojiShow(!emojiShow);
 
     return (
-        <form className="typing-box-container" onSubmit={onSend}>
+        <form className="typing-box" onSubmit={onSend}>
             <input
-                className="typing-box-input input"
+                className="typing-box__input input"
                 placeholder="Type and Press Login to Send"
                 value={value}
                 onChange={onChange}
             />
             <span style={{position: 'relative', display: 'inline'}}>
-                <IconButton className="typing-box-btn" onClick={handleToggleEmojiShow}>
+                <IconButton className="typing-box__button" onClick={handleToggleEmojiShow}>
                     <EmojiEmotionsIcon/>
                 </IconButton>
-                <div className={`typing-box-emoji typing-box-emoji-phone ${!emojiShow && 'hidden'}`}>
+                <div className={`typing-box__emoji typing-box__emoji__mobile ${!emojiShow && 'hidden'}`}>
                     <Picker data={data} onEmojiSelect={onEmojiAdd} style={{width: '100px'}}/>
                 </div>
             </span>
-            <IconButton className="typing-box-btn" type="submit">
+            <IconButton className="typing-box__button" type="submit">
                 <SendIcon/>
             </IconButton>
         </form>

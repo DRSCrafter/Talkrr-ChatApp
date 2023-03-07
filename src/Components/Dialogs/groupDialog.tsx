@@ -1,6 +1,6 @@
 //@ts-nocheck
 
-import '../../Styles/Components/Dialogs/privateDialog.css';
+import '../../Styles/Components/Dialogs/privateDialog.scss';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import UserContext from "../../Context/userContext";
 import httpConnection from "../../utils/http";

@@ -1,4 +1,4 @@
-import '../../Styles/Layout/SidePanel/Banner.css';
+import '../../Styles/Layout/SidePanel/Banner.scss';
 import React from "react";
 
 import {IconButton} from "@mui/material";
@@ -9,12 +9,12 @@ import logo from '../../Assets/logo.png';
 
 function Banner({onToggleDrawer}: BannerProps) {
     return (
-        <div className="banner-container">
+        <div className="banner">
             <IconButton edge="start" style={{boxShadow: "none", color: '#ffffff', margin: '10px'}} onClick={onToggleDrawer(true)} size="large">
                 <MenuIcon fontSize="medium"/>
             </IconButton>
             <img src={logo} style={{width: 50}} alt="Logo"/>
-            <span className="banner-name">Talkrr</span>
+            <span className="banner__title">Talkrr</span>
         </div>
     );
 }

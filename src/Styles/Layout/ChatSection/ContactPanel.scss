@@ -1,0 +1,65 @@
+@import '../../mixins';
+
+.contact-panel {
+  display: none;
+  flex-basis: 25%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.contact-panel__container {
+  @include flex(column, space-around);
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 10px 0 20px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px #333333;
+  font-family: "Segoe UI Light", serif;
+  color: white;
+  overflow: hidden;
+}
+
+.panel__identity__container {
+  @include flex(column);
+  width: 90%;
+  height: 30%;
+  margin: 10px 0 auto;
+}
+
+.panel__profile__image {
+  display: block !important;
+  width: 150px;
+  height: 150px;
+  margin-inline: auto;
+  margin-top: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 7px #333333;
+}
+
+.panel__profile__title {
+  margin-inline: auto;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.panel__details__container {
+  @include flex(column);
+  width: 90%;
+  height: 25%;
+  margin: auto;
+}
+
+.panel__profile__details {
+  display: flex;
+  margin-block: 10px;
+  font-size: 15px;
+}
+
+@media (min-width: 1024px) {
+  .contact-panel {
+    display: flex;
+  }
+}

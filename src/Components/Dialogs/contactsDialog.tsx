@@ -1,4 +1,4 @@
-import '../../Styles/Components/Dialogs/contactsDialog.css';
+import '../../Styles/Components/Dialogs/contactsDialog.scss';
 import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
@@ -90,25 +90,25 @@ function ContactsDialog({open, onClose}: DialogProps) {
                 fullScreen={!isPC}
                 style={{backdropFilter: 'blur(10px)'}}
             >
-                <div className="contact-dialog-header">
+                <div className="contact__dialog__header">
                     <div>
                         <IconButton style={{color: 'white'}} onClick={onClose}>
                             <KeyboardBackspaceIcon fontSize={"medium"}/>
                         </IconButton>
                     </div>
-                    <span className="contact-dialog-header-title">
+                    <span className="contact__header__title">
                         Contacts
                     </span>
                 </div>
                 {contacts.length !== 0 ? (contacts.map((contact: User) => (
-                        <div className="contact-info-container" key={contact._id}>
+                        <div className="contact__dialog__info" key={contact._id}>
                             <span style={{display: 'flex', alignItems: 'center'}}>
                                 <LazyLoadImage
                                     src={contact?.profileImage}
                                     placeholderSrc={undefinedUser}
-                                    className="contact-info-image"
+                                    className="contact__info__image"
                                 />
-                                <span className="contact-info-text">
+                                <span className="contact__info__content">
                                     {contact?.name}
                                 </span>
                             </span>
@@ -125,7 +125,7 @@ function ContactsDialog({open, onClose}: DialogProps) {
                             </span>
                         </div>
                     ))) :
-                    <div className="contact-not-found">
+                    <div className="contact__not-found">
                         <ConnectWithoutContactIcon style={{fontSize: '120px'}}/>
                         <div>
                             Connect to some people, will ya?

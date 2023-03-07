@@ -1,4 +1,4 @@
-import '../Styles/Layout/SidePanel.css';
+import '../Styles/Layout/SidePanel.scss';
 import React, {useContext, useEffect, useState} from "react";
 
 import UserButton from "./SidePanel/UserButton";
@@ -80,10 +80,10 @@ function SidePanel({chats, onToggleDrawer}: SidePanelProps) {
 
     return (
         <>
-            <span className="side-panel-container">
+            <span className="side__panel">
                 <Banner onToggleDrawer={onToggleDrawer}/>
                 <SearchBar value={filter} onChange={handleFilter}/>
-                <div className="users-container">
+                <div className="side__users">
                     {filteredChats?.map((chat: RenderedChat, index) => (
                         <UserButton
                             key={index}

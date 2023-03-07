@@ -1,0 +1,15 @@
+@import '../mixins';
+
+.controls__container {
+    @include flex(column);
+    width: 90%;
+}
+
+.control__button {
+    @include flex(row, flex-start);
+    flex-wrap: nowrap;
+    margin: 0 10px;
+    font-size: 15px;
+    cursor: pointer;
+    white-space: nowrap;
+}

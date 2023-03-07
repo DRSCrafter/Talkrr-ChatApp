@@ -1,4 +1,4 @@
-import '../../Styles/Layout/ChatSection/MessagingSection.css';
+import '../../Styles/Layout/ChatSection/MessagingSection.scss';
 import React, {FormEvent, useContext, useEffect, useRef, useState} from "react";
 
 import TryIcon from '@mui/icons-material/Try';
@@ -100,11 +100,11 @@ function MessagingSection() {
     }, [currentChat]);
 
     return (
-        <span className="messaging-panel-root">
-            <div className="messaging-panel-container">
+        <span className="messaging-panel">
+            <div className="messaging-panel__container">
                 <MessagingHeader members={members}/>
                 {currentChat?.messages && currentChat.messages.length !== 0 ?
-                    <div className="messages-container">
+                    <div className="panel__messages__container">
                         {currentChat?.messages && currentChat?.messages.map((message, index) => (
                             <Message
                                 message={message} key={index}

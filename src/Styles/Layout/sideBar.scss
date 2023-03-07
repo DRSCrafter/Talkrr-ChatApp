@@ -1,0 +1,26 @@
+@import '../mixins';
+
+.drawer__info {
+  @include flex(column, space-around, center);
+  padding: 10px;
+  border-radius: 10px;
+  row-gap: 30px;
+  background-color: white;
+  direction: rtl;
+}
+
+.drawer__user__info {
+  @include flex(column, space-around, center);
+  flex-basis: 0;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  row-gap: 30px;
+  box-shadow: 0 5px 8px -3px rgb(0 0 0 / 10%);
+  direction: rtl;
+}
+
+.drawer__user__details {
+  @include flex(column, normal, center);
+  row-gap: 10px;
+}

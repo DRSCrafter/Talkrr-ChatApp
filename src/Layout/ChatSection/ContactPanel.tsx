@@ -1,4 +1,4 @@
-import '../../Styles/Layout/ChatSection/ContactPanel.css';
+import '../../Styles/Layout/ChatSection/ContactPanel.scss';
 import React, {useContext, useEffect, useState} from "react";
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
@@ -35,33 +35,33 @@ function ContactPanel() {
     }
 
     return (
-        <div className="contact-panel-root">
-            <div className="contact-panel-container">
-                <div className="identity-container">
+        <div className="contact-panel">
+            <div className="contact-panel__container">
+                <div className="panel__identity__container">
                     <LazyLoadImage
                         src={chatInfo?.chatImage ? chatInfo?.chatImage : chatInfo?.defaultImage}
                         placeholderSrc={chatInfo?.isPrivate ? undefinedUser : undefinedGroup}
-                        className="profile-image"
+                        className="panel__profile__image"
                     />
-                    <span className="profile-name">{chatInfo?.name}</span>
+                    <span className="panel__profile__title">{chatInfo?.name}</span>
                 </div>
 
-                <div className="details-container">
+                <div className="panel__details__container">
                     {chatInfo?.isPrivate &&
                         <>
-                            <div className="profile-details">
+                            <div className="panel__profile__details">
                                 <AlternateEmailIcon fontSize="medium"/>
                                 <span style={{marginLeft: 10,}}>{chatInfo?.email}</span>
                             </div>
                             {chatInfo?.phoneNumber &&
-                                <div className="profile-details">
+                                <div className="panel__profile__details">
                                     <PhoneIcon fontSize="medium"/>
                                     <span style={{marginLeft: 10,}}>{chatInfo?.phoneNumber}</span>
                                 </div>
                             }
                         </>
                     }
-                    <div className="profile-details">
+                    <div className="panel__profile__details">
                         <InfoIcon fontSize="medium"/>
                         <span style={{marginLeft: 10,}}>{chatInfo?.about}</span>
                     </div>

@@ -1,4 +1,4 @@
-import '../Styles/Components/Message.css';
+import '../Styles/Components/Message.scss';
 import React from "react";
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -50,16 +50,16 @@ function Message({isSent, message, onGetMember, onDelete, onCopy}: MessageProps)
     ]
 
     return (
-        <div style={(styles.container(isSent) as React.CSSProperties)} className="message-container">
+        <div style={(styles.container(isSent) as React.CSSProperties)} className="message">
             <div
-                className={`message-body ${isSent ? "message-body-send" : "message-body-receive"}`}
+                className={`message__body ${isSent ? "message__body--send" : "message__body--receive"}`}
                 onContextMenu={handleContextMenu}
             >
                 {isSent ? null : <div style={{fontWeight: 'bold', marginBottom: 10}}>{member?.name}</div>}
                 <span>
                 {content}
                     </span>
-                <div className="message-data">{date}</div>
+                <div className="message__content">{date}</div>
             </div>
             <ContextMenu
                 list={isSent ? contextUserList : contextOthersList}

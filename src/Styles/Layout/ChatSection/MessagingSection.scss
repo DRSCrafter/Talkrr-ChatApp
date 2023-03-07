@@ -1,0 +1,39 @@
+@import '../../mixins';
+
+.messaging-panel {
+  @include flex(column, center);
+  flex-basis: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.messaging-panel__container {
+  flex-basis: 93%;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 0 10px #333333;
+  backdrop-filter: blur(10px);
+}
+
+.panel__messages__container {
+  width: 100%;
+  height: 87%;
+  overflow-y: scroll;
+}
+
+@media (min-width: 1024px) {
+  .messaging-panel {
+    flex-basis: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .messaging-panel {
+    flex-basis: 67%;
+    padding-right: 0;
+  }
+  .messaging-panel__container {
+    border-radius: 30px;
+    margin-bottom: 15px;
+  }
+}

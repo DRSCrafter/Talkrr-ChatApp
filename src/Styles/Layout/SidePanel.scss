@@ -1,0 +1,31 @@
+@import '../mixins';
+
+.side__panel {
+  @include flex(column);
+  min-width: 200px;
+  min-height: 300px;
+  flex-basis: 30%;
+  padding-block: 5px;
+  row-gap: 10px;
+}
+
+.side__users {
+  width: 95%;
+  height: 100%;
+  padding-right: 5px;
+  flex-basis: 85%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+@media (min-width: 1024px) {
+  .side__panel {
+    flex-basis: 22%;
+  }
+}
+
+@media (max-width: 768px) {
+  .side__panel {
+    flex-basis: 100%;
+  }
+}

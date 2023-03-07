@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import './Styles/global.css';
+import './Styles/global.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';

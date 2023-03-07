@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import '../../../Styles/Layout/ChatSection/MessagingSection/MessagingHeader.css';
+import '../../../Styles/Layout/ChatSection/MessagingSection/MessagingHeader.scss';
 import ChatContext from "../../../Context/chatContext.js";
 import {processChatData} from "../../../services/chat";
 import UserContext from "../../../Context/userContext.js";
@@ -34,7 +34,7 @@ function MessagingHeader({members}: MessagingHeaderProps) {
 
     return (
         <>
-            <div className="messaging-header-container" onClick={handleOpenDialog}>
+            <div className="messaging-header" onClick={handleOpenDialog}>
                 {!isPC &&
                     <div style={{marginLeft: 15, marginRight: '-10px'}}>
                         <IconButton style={{color: 'white'}} onClick={closeChat}>
@@ -45,9 +45,9 @@ function MessagingHeader({members}: MessagingHeaderProps) {
                 <LazyLoadImage
                     src={chatInfo?.chatImage ? chatInfo?.chatImage : chatInfo?.defaultImage}
                     placeholderSrc={chatInfo?.isPrivate ? undefinedUser : undefinedGroup}
-                    className="messaging-header-profile-image"
+                    className="messaging-header__profile__image"
                 />
-                <span className="messaging-header-profile-info">
+                <span className="messaging-header__profile__info">
                 <div style={{fontSize: 25}}>{chatInfo?.name}</div>
                 <div style={{fontSize: 15}}>
                     {chatInfo.isPrivate ? 'Private Chat' : `${chatInfo.members?.length} members`}

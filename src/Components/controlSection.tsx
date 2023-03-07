@@ -1,4 +1,4 @@
-import '../Styles/Components/controlSection.css';
+import '../Styles/Components/controlSection.scss';
 import React, {useContext} from 'react';
 import UserContext from "../Context/userContext";
 import {handleAddContact, handleRemoveContact} from "../services/chat";
@@ -27,14 +27,14 @@ function ControlSection({chatInfo, onDeletePrivate, onLeaveGroup, callback}: Con
 
     return (
         <>
-            <div className="controls-container">
+            <div className="controls__container">
                 {chatInfo?.isPrivate ?
-                    <Button className="control-btn" style={{...styles.button, color: "red"}}
+                    <Button className="control__button" style={{...styles.button, color: "red"}}
                             onClick={onDeletePrivate}>
                         <DeleteIcon fontSize="medium"/>
                         <span style={{marginLeft: 10}}>Delete Chat</span>
                     </Button> :
-                    <Button className="control-btn" style={styles.button} onClick={onLeaveGroup}>
+                    <Button className="control__button" style={styles.button} onClick={onLeaveGroup}>
                         <LogoutIcon fontSize="medium"/>
                         <span style={{marginLeft: 10}}>Leave Chat</span>
                     </Button>
@@ -43,14 +43,14 @@ function ControlSection({chatInfo, onDeletePrivate, onLeaveGroup, callback}: Con
                     <>
                         {user.contacts.includes(chatInfo._id) ?
                             <Button
-                                className="control-btn"
+                                className="control__button"
                                 onClick={removeContact}
                                 style={{...styles.button, color: 'red'}}>
                                 <PersonRemoveAlt1Icon fontSize="medium"/>
                                 <span style={{marginLeft: 10,}}>Remove Contact</span>
                             </Button> :
                             <Button
-                                className="control-btn"
+                                className="control__button"
                                 onClick={addContact}
                                 style={{...styles.button, color: 'dodgerblue',}}>
                                 <PersonAddAlt1Icon fontSize="medium"/>

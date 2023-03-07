@@ -1,11 +1,11 @@
-.dialog-header-container {
+.dialog__header {
     width: 100%;
     height: 120px;
     display: flex;
     align-items: center;
 }
 
-.dialog-header-image-container {
+.dialog__header__image {
     display: flex;
     width: 80px;
     height: 80px;
@@ -14,14 +14,14 @@
     background-color: gray;
 }
 
-.dialog-header-profile-image {
+.dialog__profile__image {
     display: block!important;
     width: 80px;
     height: 80px;
     border-radius: 50%;
 }
 
-.dialog-header-profile-info {
+.dialog__profile__info {
     display: flex;
     margin-left: 12px;
     flex-direction: column;
@@ -29,27 +29,27 @@
     font-family: 'Segoe UI Light', serif;
 }
 
-.dialog-sections {
+.dialog__sections {
     background-color: rgba(150, 150, 150, 0.15);
     padding: 10px;
     border-radius: 10px;
 }
 
-.dialog-details {
+.dialog__details {
     display: flex;
     flex-wrap: nowrap;
     margin-block: 10px;
     font-size: 15px;
 }
 
-.dialog-member-text {
+.dialog__member__content {
     font-size: 15px;
     font-family: Segoe UI Light, sans-serif;
     margin-left: 10px;
     color: white;
 }
 
-.dialog-member-image {
+.dialog__member__image {
     display: block!important;
     width: 50px;
     height: 50px;

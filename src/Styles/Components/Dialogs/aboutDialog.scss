@@ -1,0 +1,42 @@
+@import '../../mixins';
+
+.about__info {
+    @include flex(row, space-between, center);
+    height: 70px;
+    border-radius: 10px;
+    background-color: rgba(150, 150, 150, 0.15);
+}
+
+.about__dialog__logo {
+    @include flex(row, center);
+    margin-bottom: 50px;
+    font-family: Debby Script, serif;
+    font-size: 45px;
+}
+
+.about__dialog__header {
+    @include flex(row, normal, center);
+    height: 50px;
+    column-gap: 10px;
+}
+
+.about__header__title {
+    font-size: 16px;
+}
+
+.about__logo__image {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+}
+
+.about__body {
+    margin: 15px;
+    font-family: "Segoe UI Light", sans-serif;
+}
+
+.about__button__section {
+    @include flex(row, flex-end, flex-end);
+    margin-top: 15px;
+    column-gap: 20px;
+}

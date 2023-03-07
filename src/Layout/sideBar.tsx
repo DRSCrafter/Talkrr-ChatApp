@@ -1,4 +1,4 @@
-import '../Styles/Layout/sideBar.css';
+import '../Styles/Layout/sideBar.scss';
 import React, {useContext, useState} from 'react';
 import UserContext from "../Context/userContext.js";
 import PrivateDialog from "../Components/Dialogs/privateDialog.js";
@@ -77,8 +77,8 @@ function SideBar({open, onToggle}: SideBarProps) {
                     onClick={onToggle(false)}
                     onKeyDown={onToggle(false)}
                 >
-                    <div className="drawer-info-container">
-                        <div className="user-personal-info">
+                    <div className="drawer__info">
+                        <div className="drawer__user__details">
                             <LazyLoadImage
                                 src={user?.profileImage}
                                 placeholderSrc={undefinedUser}

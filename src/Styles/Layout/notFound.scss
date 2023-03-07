@@ -1,0 +1,30 @@
+@import '../mixins';
+
+.not-found {
+  display: none;
+  flex-basis: 65%;
+  margin: 10px;
+  box-sizing: border-box;
+  border: 2px dashed white;
+  border-radius: 10px;
+}
+
+.not-found__container {
+  @include flex(column, normal, center);
+  margin: auto;
+  font-family: "Segoe UI Light", sans-serif;
+  font-size: 35px;
+  color: white;
+}
+
+@media (min-width: 1024px) {
+  .not-found {
+    flex-basis: 75%;
+  }
+}
+
+@media (min-width: 768px) {
+  .not-found {
+    display: flex;
+  }
+}

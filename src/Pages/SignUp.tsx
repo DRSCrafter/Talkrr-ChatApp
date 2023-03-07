@@ -1,4 +1,4 @@
-import '../Styles/Pages/form.css';
+import '../Styles/Pages/form.scss';
 import React, {Component} from "react";
 import Joi from 'joi';
 
@@ -111,13 +111,13 @@ class SignUp extends Component {
 
         return (
             <>
-                <div className="form-root">
-                    <form className="form-container" onSubmit={this.handleSubmit}>
-                        <div className="form-logo-container">
-                            <img src={logo} className="form-logo-image" alt="Logo"/>
+                <div className="form__root">
+                    <form className="form__container" onSubmit={this.handleSubmit}>
+                        <div className="form__logo__container">
+                            <img src={logo} className="form__logo__image" alt="Logo"/>
                             <span>Talkrr</span>
                         </div>
-                        <div className="form-grid">
+                        <div className="form__grid">
                             <div className="double-span">
                                 <TextField variant="outlined" size="small"
                                            name="name" value={data.name} onChange={this.handleChange}
@@ -165,7 +165,7 @@ class SignUp extends Component {
                                         onClick={handleNavigate}>Cancel</Button>
                             </span>
                     </form>
-                    <div className="lottie-container">
+                    <div className="lottie__container">
                         <LottieLoader animationData={animation}/>
                     </div>
                 </div>

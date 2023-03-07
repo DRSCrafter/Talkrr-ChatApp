@@ -1,4 +1,4 @@
-import '../Styles/Pages/form.css';
+import '../Styles/Pages/form.scss';
 import React, {FormEvent, useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
@@ -48,10 +48,10 @@ function Login() {
     return (
         <>
             {/*@ts-ignore*/}
-            <div className="form-root" onSubmit={handleSubmit}>
-                <form className="form-container">
-                    <div className="form-logo-container">
-                        <img src={logo} className="form-logo-image" alt="Logo"/>
+            <div className="form__root" onSubmit={handleSubmit}>
+                <form className="form__container">
+                    <div className="form__logo__container">
+                        <img src={logo} className="form__logo__image" alt="Logo"/>
                         <span>Talkrr</span>
                     </div>
                     <span style={{display: 'flex', flexDirection: 'column', padding: 10, width: '100%'}}>
@@ -69,7 +69,7 @@ function Login() {
                         </span>
                     </span>
                 </form>
-                <div className="lottie-container">
+                <div className="lottie__container">
                     <LottieLoader animationData={animationData}/>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import '../../Styles/Layout/SidePanel/UserButton.css';
+import '../../Styles/Layout/SidePanel/UserButton.scss';
 import React, {useContext, useEffect, useState} from "react";
 import ChatContext from "../../Context/chatContext.js";
 import ContextMenu from "../../Components/contextMenu.js";
@@ -82,21 +82,21 @@ function UserButton({chat, Pin, onPin, onUnpin, onDelete, triggered}: UserButton
     return (
         <>
             <Button
-                className="user-button-container"
+                className="user-button"
                 style={(styles.sideUserContainer as React.CSSProperties)}
                 onClick={handleClick}
                 onContextMenu={handleContextMenu}
             >
-                <span className="user-button-profile-image-container">
+                <span className="user-button__profile__image__container">
                     <LazyLoadImage
                         src={chat?.chatImage ? chat?.chatImage : chat?.defaultImage}
                         placeholderSrc={chat?.isPrivate ? undefinedUser : undefinedGroup}
-                        className="user-button-profile-image"
+                        className="user-button__profile__image"
                     />
                 </span>
-                <span className="user-button-profile-text">
-                    <div className="user-button-profile-name">{chat.name}</div>
-                    <div className="user-button-profile-message">
+                <span className="user-button__profile__text">
+                    <div className="user-button__profile__title">{chat.name}</div>
+                    <div className="user-button__profile__content">
                         {chat.isPrivate ? 'Private Chat' : `${chat.members.length} members`}
                     </div>
                 </span>

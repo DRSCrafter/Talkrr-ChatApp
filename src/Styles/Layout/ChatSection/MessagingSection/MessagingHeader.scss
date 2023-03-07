@@ -1,30 +1,30 @@
-.messaging-header-container {
+@import '../../../mixins';
+
+.messaging-header {
+    @include flex(row, normal, center);
     width: 100%;
     height: 13%;
     min-height: 75px;
     background-color: rgba(46, 47, 50, 0.59);
-    display: flex;
-    align-items: center;
     cursor: pointer;
 }
 
-.messaging-header-profile-image {
+.messaging-header__profile__image {
     width: 60px;
     height: 60px;
     margin: auto 0 auto 20px;
     border-radius: 50%;
 }
 
-.messaging-header-profile-info {
-    display: flex;
+.messaging-header__profile__info {
+    @include flex(column);
     margin: auto 0 auto 12px;
-    flex-direction: column;
-    white-space: nowrap;
-    color: white;
     font-family: 'Segoe UI Light', serif;
+    color: white;
+    white-space: nowrap;
 }
 @media (min-width: 768px) {
-    .messaging-header-profile-image {
+    .messaging-header__profile__image {
         border-radius: 50%;
     }
 }
